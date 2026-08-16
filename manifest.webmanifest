@@ -1,0 +1,24 @@
+{
+  "id":"./index.html",
+  "name":"MARKOVLAB — Personal Metrics Laboratory",
+  "short_name":"MARKOVLAB",
+  "description":"Offline-first personal metrics laboratory with transparent formulas, visible evidence and local data.",
+  "start_url":"./index.html#home",
+  "scope":"./",
+  "display":"standalone",
+  "display_override":["window-controls-overlay","standalone"],
+  "orientation":"any",
+  "background_color":"#f3f4ef",
+  "theme_color":"#173f37",
+  "lang":"ru",
+  "categories":["health","fitness","productivity","finance","utilities"],
+  "shortcuts":[
+    {"name":"Open laboratory","short_name":"Laboratory","url":"./index.html#calculators","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192"}]},
+    {"name":"Personal profile","short_name":"Profile","url":"./index.html#profile","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192"}]}
+  ],
+  "icons":[
+    {"src":"./assets/icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"./assets/icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
+    {"src":"./assets/icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}
+  ]
+}
