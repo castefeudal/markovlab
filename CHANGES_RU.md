@@ -1,4 +1,32 @@
-# Что исправлено / добавлено — MARKOVLAB 3.0.0
+# Что исправлено / добавлено — MARKOVLAB
+
+## 3.1.0 (17 августа 2026) — русский production-релиз
+
+### Главное
+
+- Публичная русская поверхность полностью очищена от случайных англоязычных строк: metadata, JSON-LD, manifest, PWA shortcuts, About, FAQ, единицы и result copy.
+- Для 85 калькуляторов создана проверяемая матрица полноты (`docs/CALCULATOR_COMPLETENESS_MATRIX.md`, `npm run docs:matrix`); индивидуальные ограничения и следующие шаги заменили массовый boilerplate.
+- Результаты локализуют внутренние единицы, выдерживают длинные числа и 200% reflow; печать содержит бренд, дату, входы, результат, формулу, ограничения и источники.
+- Версия согласована в package, конфигурации, интерфейсе, service worker и документации.
+
+### Инфраструктура
+
+- **`scripts/apply-production-url.mjs`** (`npm run release:metadata`) — единственная точка ввода production URL: canonical, sitemap, robots, OG URL и JSON-LD URL генерируются из `assets/js/config.js`.
+- **`scripts/build-completeness-matrix.mjs`** (`npm run docs:matrix`) — генерация матрицы полноты из текущего registry.
+- **`.github/workflows/deploy-pages.yml`** — CI/CD: test → deploy Pages (статический сайт публикуется из корня, без build-шага).
+- Продукт — статическое приложение без сборки; `npm run dev` для локального сервера.
+
+### Проверка
+
+- Автоматический release gate: **49 passed, 0 failed** (+22 теста валидации из 3.0.0, итого 71).
+- Реестр и матрица: **85/85**.
+- JavaScript/service worker: синтаксические проверки без ошибок.
+
+Ограничения среды реальной браузерной проверки перечислены честно в `docs/QA_REPORT.md`.
+
+---
+
+## 3.0.0 — полная инфраструктура (CI/CD, SEO build, validation tests)
 
 ## Добавлено
 

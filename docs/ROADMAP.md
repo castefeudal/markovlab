@@ -1,9 +1,9 @@
-# Roadmap after 3.0
+# Roadmap
 
-The product implementation is complete. The release path contains one required external input:
+Версия 3.1 является завершённой функциональной поверхностью текущего local‑first продукта. Отложенных внутренних задач релиза нет.
 
-1. Set the selected public URL in `assets/js/config.js → productionBaseUrl`, then publish the existing folder.
+Дальнейшие изменения допустимы только при появлении проверяемого основания: обновившейся официальной рекомендации, нового validated method, подтверждённой пользовательской проблемы или browser/platform regression.
 
-Optional release-environment verification (not new product development): repeat the supplied visual harness and core flows in Firefox/WebKit and run an auditory NVDA/VoiceOver smoke test when those runtimes are available.
+Не планируются регистрация, backend, telemetry, облачная синхронизация, непрозрачный AI score или декоративная геймификация.
 
-Not planned: accounts, telemetry, opaque AI scores, remote runtime dependencies, diagnosis/dosing tools or speculative features without complete formula/evidence/UX coverage.
+Внешний шаг релиза: указать production URL и выполнить зафиксированную в QA‑документах cross‑browser проверку на опубликованном HTTPS origin.

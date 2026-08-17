@@ -1,32 +1,26 @@
-# MARKOVLAB 3.0.0 — Visual & Product Completion
+# MARKOVLAB 3.1.0 — русский production‑релиз
 
-MARKOVLAB 3.0 is the final production finishing release of the local-first personal metrics laboratory.
+Дата кандидата: 17 августа 2026.
 
-## Product and content
+## Главное
 
-- Added 85 individual bilingual use contexts and semantic field guidance.
-- Added nine unique laboratory visuals, boundaries and curated workflows.
-- Added explicit result-visualization policy and removed the arbitrary pseudo-percentage scale.
-- Added method-specific confidence context and richer source relevance.
-- Improved token-aware human-language search and per-token highlighting.
-- Added visible localized dates to straight-segment trend charts.
-- Prevented activity insight from appearing without entered activity duration.
+- Публичная русская поверхность полностью очищена от случайных англоязычных строк: metadata, JSON‑LD, manifest, PWA shortcuts, About, FAQ, единицы и result copy.
+- Для 85 калькуляторов создана проверяемая матрица полноты; индивидуальные ограничения и следующие шаги заменили массовый boilerplate.
+- Результаты локализуют внутренние единицы, выдерживают длинные числа и 200% reflow; печать содержит бренд, дату, входы, результат, формулу, ограничения и источники.
+- Версия согласована в package, конфигурации, интерфейсе, service worker и документации.
 
-## Brand and interface
+## Продукт и интерфейс
 
-- Added a coherent 16-image forest/mint/mineral/graphite/brass WebP system.
-- Refined hero composition, responsive typography, category/result/profile/evidence layouts and four themes.
-- Added separate RU and EN 1200×630 social assets.
-- Improved route/result focus, sticky-header offset, mobile result discovery and print hierarchy.
+- Сохранены 85 стабильных ID, 9 лабораторий, local‑first, профиль, история, снимки, динамика, поиск, избранное, детерминированные выводы и четыре темы.
+- Сохранена система из 16 оптимизированных WebP‑изображений: flagship hero, 9 лабораторий, профиль, доказательность, приватность, динамика, onboarding и empty state.
+- Никаких произвольных gauges, псевдопроцентов или непрозрачных AI‑оценок.
+- Формулы и научные пороги в 3.1 не изменялись.
 
-## Engineering and QA
+## Проверка
 
-- Added `content.js`, `renderers-v3.js`, `styles-v3.css` and a responsive visual harness.
-- Expanded the release gate from 39 to 44 passing tests.
-- Updated generated calculator catalog to schema 2 with use context, workflows, visualization and related-tool metadata.
-- Updated PWA cache and version markers to 3.0.0.
-- Completed live Chromium QA across mobile, tablet and desktop states in RU/EN and Light/Dark/Midnight.
+- Автоматический release gate: **49 passed, 0 failed**.
+- Реестр и матрица: **85/85**.
+- JavaScript/service worker: синтаксические проверки без ошибок.
+- Архив проходит `unzip -t` и повторный smoke test после распаковки.
 
-## Compatibility
-
-Static ES modules; no backend, framework, build step, account, analytics, CDN, remote font or runtime dependency. Existing calculator IDs and state schema v2 remain compatible. GitHub Pages repository subpaths remain supported.
+Ограничения среды реальной браузерной проверки перечислены честно в `QA_REPORT.md`.

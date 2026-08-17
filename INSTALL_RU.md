@@ -1,30 +1,36 @@
 # MARKOVLAB — Инструкция по развёртыванию
 
+MARKOVLAB 3.1 — статическое приложение без сборки: локальная личная лаборатория измеримого прогресса (85 калькуляторов, 9 направлений).
+
 ## Быстрый старт
 
 ### Вариант A: локально
+
+Нужен Node.js 18+ (только для локального сервера и тестов).
 
 ```bash
 npm install
 npm run dev
 ```
 
-Откройте `http://localhost:4173/`
+Откройте адрес, показанный сервером (по умолчанию `http://127.0.0.1:4173/`).
 
-### Вариант B: production build
+Не запускайте `index.html` через `file://`: service worker и модульные скрипты требуют HTTP(S).
+
+### Вариант B: production URL (metadata)
 
 ```bash
-npm install
-npm run build
-npx serve dist
+npm run release:metadata
 ```
+
+Скрипт `scripts/apply-production-url.mjs` формирует canonical, sitemap, robots, OG URL и JSON-LD URL из единственной точки ввода — `assets/js/config.js` (`productionBaseUrl`). Пока домен не известен, metadata остаются без выдуманного домена.
 
 ### Вариант C: GitHub Pages (рекомендуется)
 
-1. Создайте репозиторий на GitHub (например, `markovlab`)
-2. Загрузите все файлы
-3. **Settings → Pages → Source → GitHub Actions**
-4. Сайт развернётся автоматически
+1. Загрузите файлы в репозиторий на GitHub (например, `markovlab`).
+2. **Settings → Pages → Source → GitHub Actions**.
+3. Workflow `.github/workflows/deploy-pages.yml` прогоняет тесты и публикует статический сайт из корня.
+4. После HTTPS-публикации дождитесь activation service worker и выполните offline reload.
 
 ---
 
@@ -32,28 +38,22 @@ npx serve dist
 
 | Команда | Описание |
 |---|---|
-| `npm install` | Инициализация |
+| `npm install` | Инициализация (dev-зависимостей нет, но CI использует `npm install`) |
 | `npm run dev` | Dev-сервер :4173 |
-| `npm test` | 66 тестов |
-| `npm run build` | Production → dist/ |
-| `npm run check` | Тесты + build |
-| `npm run preview` | Preview dist/ |
+| `npm test` | Release gate: 71 тест (49 релиза + 22 валидации) |
+| `npm run docs:matrix` | Генерация `docs/CALCULATOR_COMPLETENESS_MATRIX.md` |
+| `npm run release:metadata` | Применение production URL к metadata |
+| `npm run serve` | `python3 -m http.server 8080` |
 
----
+## Release gate перед публикацией
 
-## Добавить калькулятор
+- Chromium, Firefox, WebKit/Safari;
+- viewport matrix и 200%/400% reflow;
+- Light/Dark/Midnight/System темы;
+- install/update/offline;
+- print preview;
+- NVDA или VoiceOver smoke test;
+- Lighthouse/Web Vitals;
+- отсутствие 404, mixed content и ошибок консоли.
 
-1. Математика → `assets/js/formulas.js`
-2. Запись → `assets/js/calculators.js` (массив `CALCULATORS`)
-3. Контент → `assets/js/content.js`
-4. `npm test` — все 66 должны пройти
-
-## Добавить перевод
-
-`assets/js/i18n.js` — два объекта `copy.ru` и `copy.en` с одинаковыми ключами.
-
----
-
-## Кастомный домен
-
-Файл `CNAME` в корне с содержимым `your-domain.com`. DNS: CNAME → `USERNAME.github.io`.
+Подробности: `docs/DEPLOY.md`, `docs/QA_REPORT.md`, `docs/RELEASE_NOTE.md`.

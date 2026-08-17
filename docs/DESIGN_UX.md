@@ -1,54 +1,44 @@
-# MARKOVLAB 3.0 design and UX system
+# Дизайн и UX MARKOVLAB 3.1
 
-## Direction
+## Направление
 
-Modern scientific editorial system × precision instrument interface. The intended character is calm, exact, tactile, private and premium; clarity and evidence remain more important than decoration.
+Современная научная редакционная система × интерфейс точного измерительного прибора. Приоритет: **ясность → удобство → научная честность → иерархия → бренд → декор**.
 
-## Tokens
+Характер: спокойный, точный, премиальный, тактильный, приватный. Исключены generic SaaS, медицинские клише, purple AI gradients, декоративные gauges и ложная точность.
 
-`assets/css/styles.css` provides the stable component foundation. `assets/css/styles-v3.css` adds final semantic tokens for page/elevated/sunken surfaces, primary/secondary/tertiary text, subtle/normal/strong borders, semantic and evidence colors, chart colors, radii, shadows, typography, motion and responsive composition.
+## Система
 
-Light is mineral/ivory, Dark is deep forest/graphite, and Midnight uses a blue-black technical surface so it is visibly distinct from Dark. System maps to the OS preference. A deterministic system font stack supplies Cyrillic and avoids a missing or remote font request. Metrics use tabular numerals.
+- Цвета: forest, mint, mineral/ivory, graphite и один brass accent.
+- Семантика: page/elevated/sunken/inverse, три уровня текста и границ, positive/warning/danger/information, отдельные evidence states.
+- Типографика: локальный системный стек с полноценной кириллицей; tabular numerals для метрик; ограниченная длина строки.
+- Пространство: единая шкала tokens, два контролируемых контейнера, editorial density.
+- Motion: 100–250 мс только для объяснения состояния; полное уважение `prefers-reduced-motion`.
+- Иконки: единая локальная SVG‑система без Unicode‑заменителей.
 
-## Brand and imagery
+## Визуальные ресурсы
 
-The M/orbit/measurement-axis mark remains optically simple from favicon to horizontal lockup. The imagery system uses original local WebP assets: a product-loop hero, nine domain instruments, profile reuse, evidence axes, progress, privacy, onboarding and empty-state art. Images contain no readable text, stock people, clinical clichés or arbitrary gauges.
+16 оптимизированных WebP образуют одну серию: hero, 9 laboratory visuals, profile, evidence, privacy, progress, onboarding и empty state. Они объясняют измерение, связь данных или границу устройства, не имитируют UI и не содержат мелкого текста.
 
-## Domain language
+## Калькулятор
 
-| Laboratory | Visual model |
-| --- | --- |
-| Body | anthropometric axes, circumference and proportion planes |
-| Energy | calibrated input/transfer/output flow |
-| Nutrition | measured composition and energy-density planes |
-| Strength | force balance, load and vectors |
-| Cardio | cadence rollers, rhythm and timing |
-| Recovery | circadian rings and restoration reservoir |
-| Focus | time blocks, signal and noise |
-| Money | cash-flow modules and unsmoothed scenario paths |
-| Utility | coordinated scales and conversion bridge |
+Порядок: задача → применимость → необходимые данные → форма → результат → смысл → метод × основание → неопределённость → ограничение → действие → формула/источники → связанные инструменты.
 
-## Components and states
+Форма использует native labels, unit, help, диапазоны, comma/dot decimal, inline errors и focusable summary. Автозаполнение профиля помечено; локальное изменение профиль не меняет.
 
-Buttons, icon buttons, text actions, links, chips, method/evidence badges, inputs/selects, dialogs, command palette, cards, result/source/insight/history/trend cards, alerts, toast, empty states, breadcrumbs, sidebar, topbar and bottom navigation cover default, hover, focus-visible, active, selected, disabled/invalid and destructive states where applicable.
+Результат — главный визуальный акцент. Число и единица не разрываются бессмысленно; precision соответствует методу. Визуализация допускается только при семантической шкале, сценарии, составе, конвертации или реальной динамике.
 
-## Result ethics
+## Адаптивность
 
-The primary result is the visual climax. Supporting order is context → confidence → limitation → action → formula/source. Visualization is shown only when the value has a meaningful interval, composition, comparison, delta, conversion or scenario relationship. Exact results and estimates that would gain false precision remain numeric only.
+- Mobile: компактный hero, bottom navigation с safe area, быстрый переход form → result.
+- Tablet: deliberate двухколоночная композиция там, где она не мешает чтению.
+- Desktop: sidebar и ограниченная ширина контента.
+- Используются `minmax(0,1fr)`, wrapping чисел и отсутствие фиксированной высоты содержательных карточек.
+- Цель: 320–1920 px, 200%/400% reflow, touch targets около 44 px.
 
-## Responsive model
+## Доступность
 
-- ≥1180 px: fixed sidebar, sticky topbar and controlled 1480 px content width.
-- 900–1179 px: bottom navigation, deliberate tablet grids and one-column calculator/category flow.
-- ≤640 px: touch-first forms/actions, compact hero, full-width result, sheet dialogs and safe-area navigation.
-- ≤360 px and short landscape: additional density and navigation handling without hiding core actions.
+Native semantics, skip link, landmarks, последовательные headings, `:focus-visible`, route/result/error focus management, dialog semantics, live feedback, `aria-invalid`/`aria-describedby`, reduced motion и цвет не как единственный сигнал.
 
-Primary controls target roughly 44×44 CSS px. A successful mobile calculation scrolls to and focuses the result. Route navigation resets scroll and focuses the main landmark.
+## Печать
 
-## Accessibility
-
-Native semantics come first. The product includes a skip link, landmarks, heading order, `aria-current`, visible focus, labels/descriptions, focusable error summary, `aria-invalid`, polite result/toast regions, dialog focus behavior, accessible chart names/titles, reduced motion, forced-colors fallback, reflow and non-color evidence labels.
-
-## Motion
-
-State changes use restrained 140–220 ms transitions. No decorative loop runs continuously. `prefers-reduced-motion` removes nonessential motion and switches result scrolling to instant behavior.
+Печатный отчёт показывает логотип, дату, название инструмента, входы, результат, интерпретацию, ограничение, формулу и источники. Навигация и действия скрываются.

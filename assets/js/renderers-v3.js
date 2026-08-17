@@ -1,9 +1,9 @@
 import * as legacy from './renderers.js';
 import { CALCULATORS, calculatorMap } from './calculators.js';
 import { REFERENCES } from './references.js';
-import { categories, evidenceLabels, methodLabels, l, t, formatNumber } from './i18n.js';
+import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js';
 import { icon } from './icons.js';
-import { DOMAIN_CONTENT, WHEN_USEFUL, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js';
+import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js';
 
 const bi=(ru,en,lang)=>lang==='ru'?ru:en;
 const esc=legacy.esc;
@@ -18,7 +18,7 @@ export const toolCard=legacy.toolCard;
 
 export function evidencePage(state,query=''){
   const lang=state.lang;
-  return legacy.evidencePage(state,query).replace(/<\/header><div class="evidence-axis">/,`</header><figure class="evidence-hero-visual"><img src="./assets/images/core/evidence-method.webp" width="1400" height="1050" loading="eager" alt=""><figcaption>${bi('Тип метода и сила основания — независимые оси, а не единый score.','Method type and evidence strength are independent axes, not a combined score.',lang)}</figcaption></figure><div class="evidence-axis">`);
+  return legacy.evidencePage(state,query).replace(/<\/header><div class="evidence-axis">/,`</header><figure class="evidence-hero-visual"><img src="./assets/images/core/evidence-method.webp" width="1400" height="1050" loading="eager" alt=""><figcaption>${bi('Тип метода и сила основания — независимые оси, а не единая оценка.','Method type and evidence strength are independent axes, not a combined score.',lang)}</figcaption></figure><div class="evidence-axis">`);
 }
 
 export function onboarding(state){
@@ -50,16 +50,22 @@ export function categoryPage(state,id){
 export function calculatorPage(calc,state,session,resultData,errors={}){
   if(!calc)return notFoundPage(state);
   const lang=state.lang;
-  let html=legacy.calculatorPage(calc,state,session,resultData,errors);
+  const localizeResult=result=>result&&lang==='ru'?{...result,unit:formatUnit(result.unit,lang),secondary:result.secondary?.map(item=>({...item,unit:formatUnit(item.unit,lang)}))||[]}:result;
+  resultData=resultData?localizeResult(applyResultGuidance(calc,resultData)):resultData;
+  const displayCalc=lang==='ru'?{...calc,fields:calc.fields.map(field=>({...field,unit:formatUnit(field.unit,lang)})),calculate:(...args)=>localizeResult(applyResultGuidance(calc,calc.calculate(...args)))}:calc;
+  let html=legacy.calculatorPage(displayCalc,state,session,resultData,errors);
+  const printDate=new Intl.DateTimeFormat(lang==='ru'?'ru-RU':'en-US',{dateStyle:'long',timeStyle:'short'}).format(new Date());
+  const printInputs=displayCalc.fields.map(field=>{const value=session?.[field.id]??(field.profileKey?state.profile[field.profileKey]:undefined)??field.default;return `<div><dt>${esc(l(field.label,lang))}</dt><dd>${esc(value)}${field.unit?`&nbsp;${esc(field.unit)}`:''}</dd></div>`}).join('');
+  html=`<header class="print-brand"><img src="./assets/brand/logo-horizontal-dark.svg" width="220" height="48" alt="MARKOVLAB"><span>${esc(printDate)}</span></header>${html.replace('<div class="calc-grid">',`<section class="print-inputs"><h2>${bi('Исходные данные','Inputs',lang)}</h2><dl>${printInputs}</dl></section><div class="calc-grid">`)}`;
   html=html.replace('<aside class="panel result-panel" aria-live="polite">','<aside class="panel result-panel" tabindex="-1" aria-live="polite">');
   const generic=bi('Когда число способно уточнить решение или задать точку отсчёта для динамики.','When a number can clarify a decision or create a baseline for a trend.',lang);
   html=html.replace(esc(generic),esc(l(WHEN_USEFUL[calc.id],lang)));
-  for(const field of calc.fields){
+  for(const field of displayCalc.fields){
     const id=`hint-${field.id}`;
     const re=new RegExp(`(<small class="field-hint" id="${id}">)[\\s\\S]*?(<\\/small>)`);
     const prefilled=session?.[field.id]===undefined&&field.profileKey&&state.profile[field.profileKey]!==undefined;
     const prefix=prefilled?`${t('profileOverride',lang)} `:'';
-    html=html.replace(re,`$1${esc(prefix+fieldHelp(calc,field,lang))}$2`);
+    html=html.replace(re,`$1${esc(prefix+fieldHelp(displayCalc,field,lang))}$2`);
   }
   html=html.replace(/<div class="result-viz"[\s\S]*?<\/small><\/div>/,'');
   if(resultData){
@@ -108,6 +114,6 @@ export function insightsPage(state,historyQuery='',sort='newest'){
 export function aboutPage(state){
   const lang=state.lang;
   return legacy.aboutPage(state)
-    .replace(/MARKOVLAB \/ 2\.0\.0/g,'MARKOVLAB / 3.0.0')
-    .replace(/<p><strong>2\.0\.0<\/strong>/,`<p><strong>3.0.0</strong> — ${bi('финальная визуальная система, индивидуальный контент 85 инструментов, семантически честные визуализации, production imagery и real-browser QA.','final visual system, individualized content for 85 tools, semantically honest visualizations, production imagery and real-browser QA.',lang)}</p><p><strong>2.0.0</strong>`);
+    .replace(/MARKOVLAB \/ 2\.0\.0/g,'MARKOVLAB / 3.1.0')
+    .replace(/<p><strong>2\.0\.0<\/strong>/,`<p><strong>3.1.0</strong> — ${bi('полная русская release‑поверхность, индивидуальные пояснения результата, проверяемая матрица 85 инструментов и усиленный контроль качества.','complete Russian release surface, individualized result guidance, a verifiable 85-tool matrix and stronger quality controls.',lang)}</p><p><strong>3.0.0</strong> — ${bi('единая визуальная система, индивидуальный контекст 85 инструментов и семантически честные визуализации.','unified visual system, individualized context for 85 tools and semantically honest visualizations.',lang)}</p><p><strong>2.0.0</strong>`);
 }

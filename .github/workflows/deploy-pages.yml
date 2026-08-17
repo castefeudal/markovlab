@@ -32,8 +32,11 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Build project
-        run: node scripts/build.mjs
+      - name: Prepare static site
+        run: |
+          mkdir -p dist
+          cp -r . dist/
+          rm -rf dist/.git dist/.github dist/node_modules dist/dist
 
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3

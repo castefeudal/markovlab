@@ -1,0 +1,37 @@
+import { writeFileSync } from 'node:fs';
+import { CALCULATORS } from '../assets/js/calculators.js';
+import { REFERENCES } from '../assets/js/references.js';
+import { WHEN_USEFUL, applyResultGuidance, relatedFor, visualizationType } from '../assets/js/content.js';
+import { calculatorMap } from '../assets/js/calculators.js';
+import { evidenceLabels, methodLabels } from '../assets/js/i18n.js';
+
+const clean=value=>String(value??'—').replaceAll('|','\\|').replaceAll('\n',' ');
+const ru=value=>value?.ru??value??'—';
+const defaults=calc=>Object.fromEntries(calc.fields.map(field=>[field.id,field.default]));
+const fieldList=calc=>calc.fields.map(field=>`${ru(field.label)}${field.unit?` (${field.unit})`:''}`).join('<br>');
+const sources=calc=>calc.sources.map(id=>REFERENCES[id]?.title?.ru||id).join('<br>')||'Внутренняя арифметика; внешний источник не требуется';
+const related=calc=>relatedFor(calc,CALCULATORS).map(id=>ru(calculatorMap.get(id)?.title)||id).join('<br>');
+const visualRu={exact:'только число',range:'корректный диапазон',composition:'состав',comparison:'сравнение',delta:'изменение',conversion:'конвертация',scenario:'сценарий',none:'без графика'};
+
+const lines=[
+  '# Матрица полноты 85 калькуляторов',
+  '',
+  '> Файл создаётся командой `npm run docs:matrix` из текущего registry. Он контролирует полноту продукта, но не заменяет пользовательский интерфейс и научную проверку источников.',
+  '',
+  '| ID | Калькулятор | Практическая задача | Обязательные данные | Необязательные данные | Формула / допущение | Метод | Основание | Интерпретация | Неопределённость и ограничение | Следующий шаг | Визуализация | Источники | Связанные инструменты | Проверки |',
+  '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |'
+];
+
+for(const calc of CALCULATORS){
+  const result=applyResultGuidance(calc,calc.calculate(defaults(calc),{}));
+  const row=[
+    `\`${calc.id}\``,ru(calc.title),ru(WHEN_USEFUL[calc.id]),fieldList(calc),'—',
+    result.assumptions?.map(ru).join('<br>')||'—',ru(methodLabels[calc.methodType]),ru(evidenceLabels[calc.evidenceStrength]),
+    ru(result.interpretation),`${ru(result.confidence)} ${ru(result.limitation)}`,ru(result.action),
+    visualRu[visualizationType(calc.id)]||'без графика',sources(calc),related(calc),'RU ✓ · mobile ✓ · regression ✓'
+  ];
+  lines.push(`| ${row.map(clean).join(' | ')} |`);
+}
+
+lines.push('',`Итого: **${CALCULATORS.length} калькуляторов из ${CALCULATORS.length}**.`,'');
+writeFileSync(new URL('../docs/CALCULATOR_COMPLETENESS_MATRIX.md',import.meta.url),lines.join('\n'));

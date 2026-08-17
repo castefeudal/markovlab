@@ -1,70 +1,64 @@
-# MARKOVLAB 3.0
+# MARKOVLAB 3.1
 
-MARKOVLAB is a private, offline-first personal laboratory for measurable progress. It connects optional profile data to **85 transparent calculators across 9 domains**, explains method and evidence separately, shows uncertainty and limitations, and lets the user explicitly save results and profile snapshots.
+MARKOVLAB — локальная личная лаборатория измеримого прогресса: **85 прозрачных калькуляторов в 9 направлениях**, профиль, история, снимки, динамика, источники и практические следующие шаги.
 
-> **Profile → input → calculation → meaning → evidence → limitation → action → history → trend.**
+> Профиль → ввод → расчёт → значение → смысл → основание → ограничение → действие → история → динамика.
 
-![MARKOVLAB brand preview](assets/brand/og-markovlab-en-1200x630.png)
+Приложение не требует аккаунта, не имеет серверной части, аналитики, трекеров, непрозрачной оценки здоровья или диагностических обещаний. Пользовательские данные остаются в текущем браузере.
 
-No account, backend, analytics, tracker, remote runtime dependency, opaque AI score or diagnostic claim is present.
+## Возможности
 
-## 3.0 product finish
+- 85 инструментов для тела, энергии, питания, силы, кардио, восстановления, внимания, финансов и точных преобразований.
+- Для каждого результата отдельно показаны тип метода и сила основания, формула, допущения, неопределённость, ограничение и следующий шаг.
+- Необязательный профиль с явным автозаполнением и локальным переопределением.
+- Избранное, поиск по человеческим запросам, структурированная история, снимки и честные графики динамики без сглаживания.
+- Светлая, тёмная, «Полночь» и системная темы.
+- Импорт/экспорт JSON, миграция старого состояния, PWA и работа основных маршрутов офлайн после первого открытия.
+- Полностью локальные стили, скрипты, иконки и изображения; внешние запросы используются только при явном открытии источника.
 
-- Flagship editorial Home with product loop, trust model, nine laboratories, curated tools, profile, insights, progress, evidence, privacy and FAQ.
-- Nine visually distinct laboratory pages with original imagery, domain-specific boundaries and hand-curated workflows.
-- Individual bilingual use-case copy for every calculator, semantic input help, method-specific confidence language, honest visualization policy, worked examples and related paths.
-- Premium result hierarchy with locale-aware numbers, context, evidence, uncertainty, limitation, next action, formula, source relevance, copy/save/print actions and no arbitrary gauge.
-- Optional six-section profile, persistent history/reopen, snapshots, unsmoothed accessible SVG trends, favorites and token-aware RU/EN search.
-- Light, Dark, Midnight and System themes; responsive mobile/tablet/desktop compositions; keyboard command palette; reduced motion; print styling.
-- Local-first state schema v2 with v1 migration, session drafts, bounded sanitized import/export, versioned PWA cache, offline navigation and explicit updates.
-- Original M/orbit identity, unified SVG icons, RU/EN 1200×630 social assets and a coherent 16-image scientific-editorial WebP system.
+## Запуск
 
-## Run
-
-Production needs no build step:
+Нужен Node.js 18+ только для локального сервера и тестов. Сам продукт — статическое приложение без сборки.
 
 ```bash
-python3 -m http.server 8080
+npm run dev
 ```
 
-Open `http://localhost:8080/`. `file://` is unsupported because browsers restrict ES modules and service workers.
+Откройте адрес, показанный сервером. Не запускайте `index.html` через `file://`: service worker и модульные скрипты требуют HTTP(S).
 
-Development preview:
-
-```bash
-npm run dev -- --host 127.0.0.1 --port 4173
-```
-
-## Tests
+## Тесты
 
 ```bash
 npm test
+npm run docs:matrix
 ```
 
-Release gate: **44 tests, 0 failures**. Coverage includes formula vectors, 85 registry records, individualized content, 9 curated workflows, RU/EN renderers, accessibility invariants, deterministic recommendations, v1→v2 migration, import hardening, history/trends, PWA assets/lifecycle and absence of remote runtime JS/CSS.
+Release gate из 71 теста (49 релизных + 22 валидационных) проверяет реестр 85/85, формулы, источники, маршруты, русскую локализацию, содержательную полноту, импорт и миграцию, историю, PWA‑ресурсы, изображения, отсутствие удалённых runtime‑зависимостей и синтаксис JavaScript.
 
-## Architecture
+## Архитектура
 
-- `assets/js/formulas.js` — pure tested formulas.
-- `assets/js/calculators.js` — stable bilingual calculator registry and result models.
-- `assets/js/content.js` — individual use cases, workflows, field help and visualization policy.
-- `assets/js/references.js` — centralized evidence registry.
-- `assets/js/storage.js`, `validators.js` — schema v2, migration and import trust boundary.
-- `assets/js/recommendations.js` — transparent deterministic rules.
-- `assets/js/renderers.js`, `renderers-v3.js` — semantic base renderer and 3.0 product layer.
-- `assets/css/styles.css`, `styles-v3.css` — component foundation and final art direction.
-- `assets/js/app.js` — events, drafts, persistence, import/export and PWA lifecycle.
-- `assets/js/config.js` — the single release input for a future production URL.
-- `tests/visual-harness.html` — bounded responsive viewport QA harness.
+- `index.html`, `404.html` — оболочка и fallback GitHub Pages;
+- `assets/js/` — registry, формулы, состояние, хранилище, маршрутизация, renderers, i18n и PWA lifecycle;
+- `assets/css/` — токены, компоненты, адаптивность, темы и печатный отчёт;
+- `assets/brand/`, `assets/images/`, `assets/icons/` — локальная бренд‑ и визуальная система;
+- `data/` — переносимые каталоги калькуляторов и источников;
+- `tests/` — автоматический release gate;
+- `docs/` — продуктовая, научная, дизайн‑ и release‑документация.
 
-## Deployment
+Состояние хранится под версионированным ключом localStorage; черновики формы — только в sessionStorage. Экспорт выполняется исключительно по команде пользователя.
 
-The folder is deployable to GitHub Pages root or repository subpath. All runtime paths are relative, routes are hash-based, and `.nojekyll`/`404.html` are included. When the public URL is known, set `productionBaseUrl` once in `assets/js/config.js`; do not invent it earlier. See `docs/DEPLOY.md`.
+## Публикация
 
-## Scientific boundary
+Проект совместим с GitHub Pages и подпутями благодаря относительным ресурсам и hash‑маршрутам. Перед публикацией задайте реальный URL в единственной точке `assets/js/config.js`, затем следуйте [инструкции по выпуску](docs/DEPLOY.md).
 
-Method type and evidence strength are independent axes. Strong evidence for an equation does not imply precise individual prediction. Biological estimates are rounded to method-level precision. MARKOVLAB is not a diagnostic or clinical dosing system. Formula code was not changed in 3.0; the existing regression suite and documented registry remain authoritative. See `docs/EVIDENCE.md` and `docs/FORMULAS.md`.
+## Документы
 
-See `docs/QA_REPORT.md`, `docs/DESIGN_UX.md` and `docs/VISUAL_ASSETS.md` for the release record.
+- [Спецификация продукта](docs/PRODUCT_SPEC.md)
+- [Дизайн и UX](docs/DESIGN_UX.md)
+- [Доказательность и безопасность](docs/EVIDENCE.md)
+- [Формулы](docs/FORMULAS.md)
+- [Матрица 85 калькуляторов](docs/CALCULATOR_COMPLETENESS_MATRIX.md)
+- [QA‑отчёт](docs/QA_REPORT.md)
+- [Release note](docs/RELEASE_NOTE.md)
 
-License: MIT.
+Версия: **3.1.0**.

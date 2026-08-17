@@ -1,55 +1,38 @@
-# MARKOVLAB 3.0 — implemented product specification
+# Спецификация MARKOVLAB 3.1
 
-## Job to be done
+## Задача пользователя
 
-Enter shared data once, answer a measurable question, understand what the result means and how uncertain it is, take a proportionate next action, then compare later observations without sending personal data to a server.
+Один раз ввести общие данные, ответить на измеримый вопрос, понять значение и неопределённость результата, выбрать пропорциональное действие и позже сравнить наблюдения — без отправки персональных данных на сервер.
 
-## Information architecture
+## Информационная архитектура
 
-Hash routes: `#home`, `#calculators`, `#category/<id>`, `#calc/<id>`, `#profile`, `#insights`, `#evidence`, `#about`. Desktop uses a persistent sidebar; compact layouts use a five-item safe-area bottom navigation.
+Hash‑маршруты: `#home`, `#calculators`, `#category/<id>`, `#calc/<id>`, `#profile`, `#insights`, `#evidence`, `#about`. Desktop использует sidebar, компактные layouts — safe‑area bottom navigation.
 
-The nine domains are standalone editorial laboratory pages. Each calculator uses one scientific-communication template but has individual purpose/use copy, field help, limitations, worked example and semantic related path.
+Девять лабораторий имеют собственные вводные тексты, ограничения, visuals и вручную составленные workflows. Все 85 калькуляторов используют единый качественный шаблон, но индивидуальный content/result context.
 
-## State schema
+## Состояние
 
-Release 3.0 deliberately keeps storage schema v2 so existing users are not migrated without a data need:
+Storage schema остаётся v2: `lang`, `theme`, `profile`, `favorites`, `history`, `snapshots`, `recents`, `onboardingDismissed`. Старый `markovlab-state-v1` мигрирует однократно. Drafts живут только в sessionStorage. History и snapshots ограничены 200 записями.
 
-```json
-{
-  "version": 2,
-  "lang": "ru",
-  "theme": "system",
-  "profile": {},
-  "favorites": [],
-  "history": [],
-  "snapshots": [],
-  "recents": [],
-  "onboardingDismissed": false
-}
-```
+## Контракт калькулятора
 
-Legacy `markovlab-state-v1` migrates once. Calculator drafts live only in `sessionStorage`. History stores sanitized structured inputs and results so a record can reopen. History and snapshots are capped at 200.
+Стабильный ID, лаборатория, русское/английское название, цель, typed fields, чистая функция расчёта, тип метода, сила основания, source IDs, field help, limitation, uncertainty, action, example, visualization policy и связанные инструменты.
 
-## Calculator contract
+Разрешённые visuals: точное число, корректный interval, composition, scenario comparison, conversion, delta или честный trend. Произвольные проценты, speedometers и traffic‑light scales запрещены.
 
-Every registry entry has a stable ID, domain, RU/EN title and description, method type, evidence strength, source IDs, typed fields and pure calculation. `content.js` adds individual use context, semantic field guidance, a visualization policy and related calculators. Every result exposes primary/secondary values, interpretation, uncertainty context, limitation, action, assumptions/formula and source links.
+## UX‑контракт
 
-Visualization is opt-in: exact-number only, valid interval, composition, comparison, delta, conversion or scenario. No arbitrary percentages, speedometers or traffic-light scales are generated.
+- Профиль необязателен; prefill видим, override не изменяет профиль.
+- Ошибка имеет focusable summary и связь с конкретным field.
+- Успешный mobile calculation переводит внимание к результату.
+- Save, snapshot, export/import и destructive actions явны.
+- Search покрывает titles, aliases, descriptions, categories, keywords и человеческие запросы.
+- Trends используют только реальные точки и прямые сегменты.
 
-## UX contract
+## Приватность и безопасность
 
-- Profile values prefill calculators and are visibly identified; local overrides do not mutate the profile.
-- Invalid forms expose a focusable summary, labels, `aria-invalid` and described field errors.
-- Successful mobile calculation moves focus to the complete result with sticky-header offset.
-- Route changes reset scroll position and focus the main landmark.
-- Save result, snapshot, export and import remain explicit; destructive actions use contextual dialogs.
-- Token-aware search covers RU/EN titles, aliases, descriptions, categories, keywords and common questions.
-- Trends use straight segments only, expose dates and numeric current/previous/difference summaries.
+Нет backend, telemetry, analytics, trackers, remote runtime fonts/scripts/styles или CDN. Import ограничен 2 МБ, version‑checked, allowlisted, bounded и защищён от prototype pollution. Пользовательские значения экранируются. Внешние источники открываются с `noopener noreferrer`.
 
-## Privacy and security
+## Release‑архитектура
 
-No backend, telemetry, analytics, trackers, remote fonts/scripts/styles or runtime CDN. Import is limited to 2 MB, parsed defensively, version-checked, allowlisted, calculator-ID validated, date-normalized and bounded. Rendered user data is escaped. External sources use `target="_blank"` with `rel="noopener noreferrer"`.
-
-## Release architecture
-
-Static ES modules, relative assets, hash routing, same-origin service worker and no framework/build requirement preserve GitHub Pages subpath compatibility.
+Статические ES modules, относительные assets, hash routing и same‑origin service worker сохраняют GitHub Pages/subpath compatibility без обязательной сборки.

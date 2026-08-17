@@ -1,31 +1,34 @@
-# Evidence and safety policy
+# Доказательность и безопасность
 
-## Two axes
+## Две независимые оси
 
-Each tool exposes a **method type** (`math`, `guideline`, `validated-estimate`, `screening`, `heuristic`, `experimental`) and a separate **evidence strength** (`high`, `moderate`, `limited`, `experimental`). Evidence strength describes the basis of a method, not the accuracy of an individual result.
+Каждый инструмент отдельно показывает:
 
-## Source hierarchy
+- **тип метода**: математика, рекомендация, валидированная оценка, скрининг, эвристика или экспериментальный метод;
+- **силу основания**: высокая, умеренная, ограниченная или экспериментальная.
 
-Current official guidance and primary/original validation papers are preferred, followed by systematic reviews and authoritative institutional references. Source URLs are centralized in `assets/js/references.js` and mirrored to `data/sources.json`; access date is 2026-08-15.
+Сильное основание уравнения не гарантирует точный персональный прогноз. Точная арифметика также не исправляет неточный ввод.
 
-## Safety rules implemented
+## Иерархия источников
 
-- BMI, WHtR and WHR are screening ratios, never diagnoses.
-- Mifflin–St Jeor, Cunningham, body-fat, HRmax and field VO₂ tools are estimates, not measurements.
-- TDEE, calorie targets, hydration, TEF, readiness and financial-independence outputs are scenarios/heuristics.
-- A 7700 kcal/kg conversion is only an energy-equivalent arithmetic model, never a deterministic long-term weight forecast.
-- Every health-adjacent result carries an in-context non-diagnostic boundary.
-- Clinical dosing and diagnostic tools are excluded.
-- WHO-5 is excluded from public core because the release did not complete a current licensing/usage and clinical-review gate.
+Приоритет: действующие официальные рекомендации и первичные/оригинальные validation papers, затем систематические обзоры и авторитетные институциональные материалы. Реестр находится в `assets/js/references.js` и зеркалируется в `data/sources.json`. Дата доступа текущего набора: 15 августа 2026.
 
-## Interpretation hierarchy
+## Правила безопасности
 
-Read every result in this order: result → context → method/evidence → limitation → proportional next action → formula/source. Ranges are used where they better represent real uncertainty.
+- BMI, WHtR и WHR — скрининговые отношения, не диагнозы.
+- Mifflin–St Jeor, Cunningham, оценки жира, HRmax и полевые VO₂‑тесты — оценки, не измерения.
+- TDEE, calorie targets, hydration, TEF, readiness и financial independence — сценарии или эвристики.
+- 7700 ккал/кг используется только как арифметический энергетический эквивалент, а не линейный долгосрочный прогноз.
+- Health‑adjacent результаты всегда имеют недиагностическую границу.
+- Диагностические инструменты и расчёты клинической дозировки исключены.
+- WHO‑5 не включён: релиз не завершил отдельную проверку лицензии, использования и клинической коммуникации.
 
-MARKOVLAB 3.0 adds method-specific confidence language and an explicit visualization policy. Exact arithmetic may be deterministic while its inputs remain uncertain; population equations may be well supported while individual prediction error remains material. No single combined method/evidence score is computed.
+## Как читать результат
 
-## Source verification
+Результат → смысл → тип метода и основание → неопределённость → главное ограничение → пропорциональный следующий шаг → формула и источник.
 
-Key current values were checked against WHO, EFSA, AASM/SRS and primary PubMed records. Automated integrity tests verify that every referenced ID resolves. Link availability can change after release; link checking is recorded separately in QA.
+Диапазон используется вместо одной цифры там, где он честнее описывает метод. MARKOVLAB не вычисляет общий комбинированный score доказательности или здоровья.
 
-The 3.0 finishing pass re-opened representative official/primary records for WHO physical-activity guidance, the Mifflin–St Jeor paper, the AASM/SRS adult sleep consensus and EFSA caffeine guidance. WHO and PubMed records resolved; EFSA temporarily rate-limited the automated fetch, while its registry URL and source metadata were retained unchanged. No formula or threshold was modified from that review.
+## Верификация
+
+Representative значения проверены по WHO, EFSA, AASM/SRS и первичным PubMed‑записям. Автоматические тесты гарантируют разрешение каждого source ID. В 3.1 формулы и пороги не менялись; изменены только коммуникация результата, русская локализация и release‑контроль.

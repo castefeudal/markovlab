@@ -1,47 +1,35 @@
-# MARKOVLAB 3.0 release checklist
+# Release checklist MARKOVLAB 3.1.0
 
-## Automated — passed
+## Автоматически — выполнено
 
-- [x] `npm test`: 44 passed, 0 failed.
-- [x] All JS/service-worker files pass syntax check.
-- [x] 85 calculators execute finite defaults and resolve source IDs.
-- [x] Every calculator has bilingual individual use context, field help, related path and visualization policy.
-- [x] Nine domains have unique limits, imagery and curated four-step workflows.
-- [x] Formula regression vectors pass; formulas were unchanged.
-- [x] RU/EN dictionaries match.
-- [x] v1 migration, v2 import/export and structured history boundaries pass.
-- [x] Major pages and every calculator state render without broken values.
-- [x] No arbitrary result percentage or fake gauge remains.
-- [x] Manifest icons and PWA core paths exist; no remote runtime JS/CSS/font.
+- [x] `npm test`: 49 passed, 0 failed.
+- [x] 85/85 калькуляторов и 9/9 лабораторий.
+- [x] Formula regression vectors и source ID integrity.
+- [x] Полнота индивидуального контента и матрица 85 инструментов.
+- [x] Русские metadata, manifest, PWA shortcuts и result units.
+- [x] Согласованная версия 3.1.0.
+- [x] Migration, import security, structured history и trends.
+- [x] Нет произвольной шкалы результата или fake gauge.
+- [x] Локальные assets существуют; remote runtime JS/CSS/font отсутствуют.
+- [x] JavaScript и service worker проходят syntax gate.
+- [x] ZIP проходит проверку целостности и smoke test после распаковки.
 
-## Real Chromium — passed
+## Ранее проверено в реальном Chromium на базе 3.0
 
-- [x] Home, Library, Category, Calculator empty/result/error, Profile, Insights, History, Trends, Evidence, About, Search and Onboarding inspected.
-- [x] 390×844 RU Light, RU Dark and EN Light compositions rendered without horizontal overflow.
-- [x] 768×1024 Light/Dark compositions rendered without horizontal overflow.
-- [x] Desktop Light/Dark/Midnight and RU/EN inspected; Midnight is distinct.
-- [x] Profile save/reload, calculator prefill/override, calculation and validation exercised.
-- [x] History save/reopen and two-snapshot trend flow exercised.
-- [x] Multiword RU search and keyboard ArrowDown/Enter exercised.
-- [x] Language/theme persistence across reload exercised.
-- [x] Result and error-summary focus transitions verified.
-- [x] Application-origin console remained free of uncaught errors.
+- [x] Главная, библиотека, категория и калькулятор.
+- [x] Profile, history, trends, evidence, About, search и onboarding.
+- [x] Выборочные mobile/desktop layouts и темы.
 
-## Source/security inspection — passed
+## Обязательно проверить на production HTTPS origin
 
-- [x] No visible TODO, lorem ipsum, broken image or remote runtime dependency.
-- [x] No opaque AI/health score or diagnostic claim.
-- [x] Destructive actions use contextual confirmation dialogs.
-- [x] Malformed/future/oversized import, prototype keys and external-link isolation are covered.
-- [x] Light/Dark/Midnight/System tokens, reduced motion, forced colors and print rules exist.
-- [x] Version matches package/config/UI/cache/docs.
+- [ ] Полная screenshot matrix 320/390/768/1024/1440/1920.
+- [ ] Chromium, Firefox и WebKit/Safari.
+- [ ] Light, Dark, Midnight и System.
+- [ ] 200%/400% reflow и forced colors.
+- [ ] Нативный NVDA или VoiceOver smoke test.
+- [ ] Service worker: online install → disconnected reload → update.
+- [ ] Реальный browser print preview.
+- [ ] Install prompt и maskable crop на устройстве.
+- [ ] LCP, INP и CLS на опубликованном origin.
 
-## Honest external/manual limits
-
-- [ ] Firefox and WebKit: not exposed by this controlled browser runner.
-- [ ] Full NVDA/VoiceOver auditory pass: assistive-technology runtime not exposed.
-- [ ] Disconnected-origin reload: controlled browser blocked the stopped local origin; source/PWA tests pass.
-- [ ] Final secure-origin install prompt and OS icon masks: require the published HTTPS origin/device.
-- [ ] Set the real production URL and generate domain-bearing sitemap/canonical metadata.
-
-Unchecked entries are external environment/release inputs, not claimed as passes.
+Непроверенные в текущей среде пункты намеренно не помечены как пройденные.

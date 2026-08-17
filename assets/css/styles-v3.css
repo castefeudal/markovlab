@@ -21,6 +21,7 @@
 }
 
 @layer v3-components{
+  .print-brand,.print-inputs{display:none}
   .btn,.icon-btn,.chip,.input-wrap,.search-panel{border-color:var(--border-normal)}
   .btn:active,.icon-btn:active{transform:translateY(0) scale(.98)}
   .tool-card{isolation:isolate;background:linear-gradient(155deg,var(--surface) 0 74%,color-mix(in srgb,var(--accent-soft) 48%,var(--surface)) 100%)}
@@ -81,6 +82,7 @@
   .calc-explainer article:nth-child(2){border-top:3px solid var(--accent)}
   .calc-explainer p{font-size:12px;line-height:1.55}
   .result-panel{scroll-margin-top:calc(var(--topbar) + 16px);box-shadow:0 28px 80px rgba(5,17,12,.24)}
+  .result-value{min-width:0;flex-wrap:wrap}.result-value span{max-width:100%;overflow-wrap:anywhere}.result-sections p{overflow-wrap:anywhere}
   .profile-sample{display:grid;grid-template-columns:128px 1fr;gap:18px;margin:28px 0;align-items:center}
   .profile-sample img{width:128px;aspect-ratio:1;object-fit:cover;border-radius:18px}
   .profile-sample dl{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -125,8 +127,10 @@
 
 @layer v3-print{
   @media print{
-    @page{margin:16mm}
-    body::before{content:"MARKOVLAB · PERSONAL METRICS LABORATORY";display:block;padding-bottom:8mm;border-bottom:1px solid #888;font:700 10pt ui-sans-serif;letter-spacing:.08em}
+    @page{margin:14mm}
+    .print-brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:12mm;padding-bottom:5mm;border-bottom:1px solid #9ca7a1}.print-brand img{width:220px;height:auto}.print-brand span{font-size:10pt;color:#48534d}
+    .print-inputs{display:block;margin:0 0 8mm}.print-inputs h2{margin-bottom:4mm;font-size:14pt}.print-inputs dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2mm 8mm}.print-inputs dl div{display:flex;justify-content:space-between;gap:8mm;padding:2mm 0;border-bottom:1px solid #d9dfdc}.print-inputs dt{color:#59655f}.print-inputs dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
+    .formula-details>div,.formula-details:not([open])>:not(summary){display:block!important}.formula-details summary{list-style:none}.formula-details summary::-webkit-details-marker{display:none}
     .calc-head,.calc-explainer,.worked{display:block!important;break-inside:avoid}
     .category-illustration,.hero-image,.profile-page-visual,.progress-page-visual{display:none!important}
     .semantic-viz{border:1px solid #999;background:#fff;color:#111}

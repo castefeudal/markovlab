@@ -1,8 +1,8 @@
 {
   "id":"./index.html",
-  "name":"MARKOVLAB — Personal Metrics Laboratory",
+  "name":"MARKOVLAB — личная лаборатория измеримого прогресса",
   "short_name":"MARKOVLAB",
-  "description":"Offline-first personal metrics laboratory with transparent formulas, visible evidence and local data.",
+  "description":"Личная лаборатория измеримого прогресса с прозрачными формулами, видимыми ограничениями и локальными данными.",
   "start_url":"./index.html#home",
   "scope":"./",
   "display":"standalone",
@@ -13,8 +13,8 @@
   "lang":"ru",
   "categories":["health","fitness","productivity","finance","utilities"],
   "shortcuts":[
-    {"name":"Open laboratory","short_name":"Laboratory","url":"./index.html#calculators","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192"}]},
-    {"name":"Personal profile","short_name":"Profile","url":"./index.html#profile","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192"}]}
+    {"name":"Открыть лабораторию","short_name":"Лаборатория","description":"Найти расчёт по задаче или направлению","url":"./index.html#calculators","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]},
+    {"name":"Личный профиль","short_name":"Профиль","description":"Изменить локальные данные для повторного использования","url":"./index.html#profile","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]}
   ],
   "icons":[
     {"src":"./assets/icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},

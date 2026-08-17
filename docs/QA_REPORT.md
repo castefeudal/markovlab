@@ -1,57 +1,40 @@
-# QA and release report
+# QA‑отчёт MARKOVLAB 3.1.0
 
-Release candidate: **3.0.0**  
-Date: **2026-08-16**
+Дата: 17 августа 2026.
 
-## Outcome
+## Итог
 
-Production source, all 85 calculators, persistence/migration, import boundary, bilingual renderers, individualized content, brand imagery and PWA assets pass the automated gate: **44 tests passed, 0 failed**. Every JavaScript/module file and service worker passes `node --check`.
+Автоматический release gate текущего исходного дерева: **49 тестов пройдено, 0 ошибок**. Проверены 85 калькуляторов, формулы, registry, источники, локализация, содержательная полнота, state/import boundaries, маршруты, PWA‑ресурсы и отсутствие удалённых runtime‑зависимостей.
 
-## Automated coverage
+## Что проверено автоматически
 
-- Formula vectors: body ratios, Mifflin–St Jeor, Cunningham, Mosteller, composition, Epley/Brzycki, pace/speed, sleep across midnight, compounding, loans, CAGR, real return, margin/markup and conversions.
-- Registry/content: 85 unique calculators, nine domains, valid fields, bilingual individual use cases, field help, curated workflows, related tools, visualization mapping and source resolution.
-- Rendering: all primary pages and all 85 empty/result calculator states in RU/EN without `NaN`/`undefined`.
-- Accessibility: landmarks, skip target, current navigation, native labels, descriptions, error targets and isolated external links.
-- Persistence/security: v1→v2 migration, structured history, bounded arrays, allowlisted profile/import, future/malformed/prototype-pollution rejection.
-- PWA/static: raster any/maskable icons, Apple/brand assets, same-origin caching, navigation-only HTML fallback, explicit update flow, JSON validity and no remote runtime CSS/JS/font.
+- 85 уникальных calculator ID и 9 лабораторий.
+- Representative formula vectors: антропометрия, Mifflin–St Jeor, Cunningham, Mosteller, Epley/Brzycki, темп/скорость, сон через полночь, проценты, кредит, CAGR, реальная доходность и конвертеры.
+- Непустой индивидуальный контент, связанные инструменты, ограничения, действия, примеры и visualization policy.
+- 85 строк в `CALCULATOR_COMPLETENESS_MATRIX.md`.
+- Русские metadata, manifest и PWA shortcuts; согласованная версия 3.1.0.
+- Render основных страниц и состояний без `NaN`/`undefined`.
+- v1→v2 migration, структурированная история, bounded arrays, malformed/future/oversized/prototype‑pollution import rejection.
+- Существование brand/PWA/image assets, отсутствие remote runtime scripts/styles/fonts.
+- JavaScript и service worker проходят `node --check`.
 
-## Real browser QA — Chromium
+## Реальная браузерная проверка
 
-The application was served through the project preview and inspected in a live Chromium session. A bounded iframe harness rendered exact responsive CSS widths while preserving real browser layout and interaction.
+Базовая версия 3.0 ранее была фактически просмотрена в Chromium на desktop и mobile: главная, библиотека, категории, калькулятор до/после расчёта, профиль, история/динамика, доказательность, поиск и onboarding.
 
-| Area | Verified result |
-| --- | --- |
-| First visit/onboarding | deliberate modal, correct focusable controls, no overflow |
-| Home | RU Light/Dark, EN Light at 390 px; RU Light/Midnight desktop; primary CTA visible |
-| Tablet | 768×1024 Profile Light and Evidence Dark; no horizontal overflow |
-| Category | Body hero, content hierarchy and local image rendering |
-| Calculator | BMI empty, valid result, mobile focus/scroll, copy hierarchy and no pseudo-gauge |
-| Validation | focus moves to error summary; field exposes `aria-invalid="true"` |
-| Profile | save → reload retained 7 demo values; snapshot action worked |
-| History | save result → list → reopen restored weight/height |
-| Trends | two snapshots produced unsmoothed charts and current/previous/delta summaries |
-| Search | `вес рост` returned BMI/BSA with both tokens highlighted; ArrowDown/Enter opened selection |
-| Language/theme | RU→EN and Light→Dark persisted through reload; Midnight visually distinct |
-| Evidence/About/Library | hierarchy, links, 85 cards, version and zero horizontal overflow |
-| Console | no application-origin uncaught error; only the cloud-browser extension emitted its own metadata warning |
+Для кандидата 3.1 в текущей изолированной среде cloud browser запретил `localhost`, `host.docker.internal` и `file://`. Поэтому новая screenshot matrix, Firefox/WebKit, отключённая сеть с перезагрузкой origin, print preview и нативный NVDA/VoiceOver **не отмечены как pass**. Кодовые и автоматические проверки не подменяют эти пункты.
 
-## Accessibility and reflow
+## Проверено визуально по ресурсам
 
-Keyboard command-palette navigation, native form controls, result focus, route focus, validation announcement target and chart names/titles were exercised. Responsive checks at 375 effective CSS px and 753 effective CSS px cover the 390/768 frames including scrollbar width. A 680 px reflow equivalent was also source/DOM checked; no page-level horizontal overflow appeared. A screen-reader semantic smoke test used the browser accessibility DOM; a full NVDA/VoiceOver auditory session was not available.
+- 16 WebP‑изображений имеют корректный формат, размеры, локальные пути и единый forest/mint/mineral/graphite/brass язык.
+- Изображения не содержат пользовательских данных, мелкого интерфейсного текста или медицинских/банковских клише.
+- Новые декоративные изображения не добавлялись: существующая система покрывает необходимые роли, а дополнительные raster‑assets увеличили бы вес без улучшения задачи.
 
-## PWA/offline
+## Перед публикацией
 
-Manifest/icon paths, same-origin scope, navigation fallback, cache versioning and update application are covered by automated tests. After the preview server was stopped, the controlled browser security policy blocked the offline URL reload before the page could report a result. That environment block is recorded rather than converted into a pass; the service-worker navigation fallback and “missing asset is not HTML” behavior remain covered by source tests.
+1. Указать реальный production URL в `assets/js/config.js`.
+2. Выполнить release‑матрицу Chromium + Firefox + WebKit на опубликованном HTTPS origin.
+3. Выполнить offline reload, print preview и NVDA/VoiceOver smoke test.
+4. При успешной проверке сохранить реальные screenshots в `assets/screenshots/`; текущий релиз не выдаёт концептуальные mockups за browser evidence.
 
-## Scientific integrity
-
-No formula or threshold changed in 3.0. Existing documented source verification and regression vectors remain the scientific source of truth. The UI pass removed false precision, preserved population/individual boundaries and made method-specific uncertainty more visible.
-
-## Limitations of this runner
-
-Only Chromium was exposed by the controlled browser service. Firefox/WebKit, a native NVDA/VoiceOver auditory session and the final disconnected-origin reload were not permitted by this runner and are not falsely marked as passes. Browser-produced screenshot bytes were visually inspected during QA, but the controlled browser filesystem was read-only, so the archive includes the reproducible responsive harness rather than fabricated screenshot files.
-
-## Release input
-
-Set the real `productionBaseUrl` when the public domain is selected. No product-code failure blocks GitHub Pages publication.
+Известных ошибок формул, storage‑потери, сломанных assets или failing automated tests нет.

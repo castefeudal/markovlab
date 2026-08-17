@@ -1,32 +1,38 @@
-# Deploy MARKOVLAB 3.0 to GitHub Pages
+# Публикация MARKOVLAB
 
-## Ready archive
+## Единственный внешний ввод
 
-The release archive contains a `markovlab/` folder. Upload its **contents** to the publishing branch/root. Keep `.nojekyll`. No production build command is required.
+Укажите настоящий production URL в `assets/js/config.js`, затем выполните `npm run release:metadata`. Скрипт из этой единственной точки формирует canonical, sitemap, robots, OG URL и JSON‑LD URL.
 
-1. Create or open a GitHub repository.
-2. Place all files from `markovlab/` at the repository root.
-3. In **Settings → Pages**, choose the publishing branch and root folder.
-4. Wait for Pages to publish, then open `https://<owner>.github.io/<repository>/`.
-5. Test profile persistence, one calculation, explicit history save, export/import and offline reload.
+## Локальная проверка
 
-All runtime paths are relative, hash routes do not require server rewrites, and the manifest/service worker scope remains inside the repository subpath.
-
-## Final domain input
-
-When the public base URL is known, edit only:
-
-```js
-// assets/js/config.js
-productionBaseUrl: 'https://example.com'
+```bash
+npm test
+npm run docs:matrix
+npm run release:metadata
+npm run dev
 ```
 
-Do not add a trailing slash. The application will create canonical and social URL metadata from this value. Generate a domain-based sitemap only after this input is real; the included sitemap intentionally remains empty rather than inventing a URL.
+Проверьте русскую поверхность, профиль, расчёт, историю, снимки, import/export, темы, печать и консоль.
 
-## PWA notes
+## GitHub Pages
 
-- HTTPS is supplied by GitHub Pages.
-- Offline works after a successful first load.
-- A new release must change the cache version in `sw.js`.
-- Update UI appears when a new worker has installed and waits for explicit user action.
-- Keep all new runtime assets same-origin and relative so repository subpaths and offline scope remain correct.
+1. Публикуйте содержимое папки `markovlab/`.
+2. Сохраняйте относительные пути и `404.html`.
+3. Не меняйте scope/start URL service worker без проверки подпути.
+4. После HTTPS‑публикации дождитесь activation service worker и выполните offline reload.
+
+## Release gate на опубликованном origin
+
+- Chromium, Firefox, WebKit/Safari;
+- viewport matrix и 200%/400% reflow;
+- Light/Dark/Midnight/System;
+- install/update/offline;
+- print preview;
+- NVDA или VoiceOver smoke test;
+- Lighthouse/Web Vitals;
+- отсутствие 404, mixed content и ошибок консоли.
+
+## Обновление PWA
+
+При изменении shell/assets измените cache ID в `sw.js`. Не добавляйте тяжёлые декоративные изображения в precache. Отсутствующий asset не должен получать HTML fallback; fallback допустим только для navigation request.

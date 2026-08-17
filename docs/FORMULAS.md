@@ -1,112 +1,112 @@
-# Formula reference
+# Справочник формул
 
-Implementation source of truth: `assets/js/formulas.js`. Unless noted, arithmetic tools use the entered units exactly. Biological estimates are rounded to match method precision rather than JavaScript precision.
+Источник истины реализации: `assets/js/formulas.js`. Если не указано иное, арифметические инструменты используют введённые единицы напрямую. Биологические оценки округляются по точности метода, а не по технической точности JavaScript.
 
-## Body
+## Тело
 
-| Tool | Formula | Units / rounding | Scope and limitation | Source |
-|---|---|---|---|---|
-| BMI | `weight_kg / height_m²` | kg/m², 1 decimal | Adult population screening; does not distinguish muscle and fat | WHO anthropometry |
-| BMI-associated range | `BMI_bound × height_m²` | kg, 1 decimal | Scenario from chosen cut-offs; not an ideal weight | WHO anthropometry |
-| WHtR | `waist_cm / height_cm` | ratio, 2 decimals | Screening ratio; tape technique/population matter | WHO waist report; systematic review |
-| WHR | `waist_cm / hip_cm` | ratio, 2 decimals | Screening distribution ratio, not visceral-fat measurement | WHO waist report |
-| Navy circumference | Male: `86.01 log10(waist−neck) − 70.041 log10(height) + 36.76`; female: `163.205 log10(waist+hip−neck) − 97.684 log10(height) − 78.387` using inches | %, 1 decimal | Field estimate; not DXA; circumference protocol is critical | US Navy validation literature |
-| Relative Fat Mass | `64 − 20×height/waist + 12 if female` | %, 1 decimal | Adult anthropometric prediction | Woolcott & Bergman, 2018 |
-| Deurenberg | `1.2×BMI + 0.23×age − 10.8×male − 5.4` | %, 1 decimal | Population equation; ethnicity and training status affect error | Deurenberg et al., 1991 |
-| Fat / fat-free mass | `weight×BF%`; `weight−fat` | kg, 1 decimal | Inherits error of entered BF% | Arithmetic |
-| FFMI | `FFM / height_m²` | 1 decimal | Inherits body-composition error | Arithmetic index |
-| Normalized FFMI | `FFMI + 6.1×(1.80−height_m)` | 1 decimal | Comparison heuristic, not a clinical boundary | Published convention; limited evidence label |
-| Mosteller BSA | `sqrt(height_cm×weight_kg/3600)` | m², 2 decimals | Estimate; not for unsupervised clinical dosing | Mosteller, 1987 |
-| Weight change | `end−start`; `%=(end−start)/start×100` | kg / %, 1 decimal | Short windows are affected by body water | Arithmetic |
-| Weekly trend | `(end−start)/days×7` | kg/week, 2 decimals | Linear average, not tissue-specific change | Arithmetic |
-| Target waist scenario | `height×selected WHtR` | cm, 1 decimal | User-selected scenario, not prescription | WHtR screening literature |
-
-Regression vectors: BMI(80 kg, 180 cm) = 24.6914; Mosteller(80 kg, 180 cm) = 2.000 m²; composition(80 kg, 20%) = 16 kg fat and 64 kg FFM.
-
-## Energy and nutrition
-
-| Tool | Formula | Scope / limitation | Source |
-|---|---|---|---|
-| Mifflin–St Jeor | `10W + 6.25H − 5A + 5` male; `−161` female | Resting-energy prediction, not indirect calorimetry | Mifflin et al., 1990 |
-| Cunningham | `370 + 21.6×FFM` | Prediction that inherits FFM error | Cunningham, 1991 |
-| TDEE factor | `resting energy × activity factor` | Coarse scenario; TDEE is dynamic | Heuristic built on resting estimate |
-| Observed TDEE | `average intake − weight change×7700/days` | Calibration heuristic; water/adaptation distort short periods | Energy-equivalent arithmetic |
-| Calorie scenario | `maintenance×(1+adjustment%)` | Scenario, not guaranteed weight trajectory | Arithmetic/heuristic |
-| Energy equivalent | `kcal/7700` | Rough equivalent only; never a linear long-term forecast | Heuristic |
-| Protein range | `weight×low/high g·kg⁻¹` | Goal, age, diet and clinical context matter | ISSN position stand; EFSA DRV |
-| Protein per meal | `daily protein/meals` | Distribution heuristic, not a biological maximum | ISSN context |
-| Macro calories | `4P + 4C + 9F + 7Alcohol` | Standard metabolizable-energy factors; labels may differ | Arithmetic convention |
-| Carb remainder | `(kcal−4P−9F)/4` | Negative output indicates inconsistent targets | Arithmetic |
-| Fat range | `kcal×selected%/9` | User-selected share | Arithmetic scenario |
-| Fiber reference | `kcal/1000×selected g` | Scalable reference; tolerance differs | Guideline-style user-selectable reference |
-| Hydration | `weight×selected mL/kg` | Context-sensitive heuristic; heat, sweat, food and health matter | Explicit heuristic |
-| Caffeine dose | `mg/weight_kg` | Absolute single/daily dose and timing also matter | EFSA, 2015 |
-| TEF | `kcal×selected percentage range` | Model, not measured individual thermogenesis | Explicit heuristic |
-| Calorie density | `kcal/grams×100` | Exact within entered label data | Arithmetic |
-| Protein price | `price/protein_g×100` | Cost only, not food-quality score | Arithmetic |
-
-Regression vector: Mifflin male, 80 kg, 180 cm, 35 y = 1755 kcal/day.
-
-## Strength
-
-| Tool | Formula | Scope / limitation |
+| Инструмент | Формула | Область и главное ограничение |
 |---|---|---|
-| Epley e1RM | `load×(1+reps/30)` | Estimate; error increases with reps and context |
-| Brzycki e1RM | `load×36/(37−reps)` | Estimate; registry restricts reps to 20 |
-| Ensemble | arithmetic mean of Epley and Brzycki | Comparison estimate, not measured 1RM |
-| Load from %1RM | `1RM×percentage` | Depends on 1RM quality and daily readiness |
-| Relative strength | `load/bodyweight` | Compare only like movement/technique |
-| Volume load | `load×reps×sets` | Mechanical volume is not hypertrophy stimulus |
-| Weekly tonnage | `volume×sessions` | Same limitation as volume load |
-| Plate loader | `(target−bar)/2`, descending paired plates | Verify actual bar/plate labels |
-| Strength density | `volume/minutes` | More is not automatically better |
-| RIR potential reps | `completed reps + RIR` | Subjective heuristic; novice calibration may be poor |
+| BMI | `масса_кг / рост_м²` | Популяционный скрининг взрослых; не различает мышцы и жир |
+| Диапазон массы по BMI | `граница_BMI × рост_м²` | Сценарий из выбранных границ, не «идеальный вес» |
+| WHtR | `талия_см / рост_см` | Скрининговое отношение; важны протокол ленты и популяция |
+| WHR | `талия_см / бёдра_см` | Не измеряет висцеральный жир |
+| Navy | Муж.: `86,01 log10(талия−шея) − 70,041 log10(рост) + 36,76`; жен.: `163,205 log10(талия+бёдра−шея) − 97,684 log10(рост) − 78,387`; размеры в дюймах | Полевая оценка, не DXA; критичен протокол окружностей |
+| RFM | `64 − 20×рост/талия + 12` для женщин | Антропометрическое популяционное уравнение взрослых |
+| Deurenberg | `1,2×BMI + 0,23×возраст − 10,8×male − 5,4` | Ошибка зависит от этничности и тренировочного статуса |
+| Жировая/безжировая масса | `масса×жир%`; `масса−жир` | Наследует ошибку процента жира |
+| FFMI | `безжировая масса / рост_м²` | Наследует ошибку оценки состава тела |
+| Нормализованный FFMI | `FFMI + 6,1×(1,80−рост_м)` | Эвристика сравнения, не клиническая граница |
+| Площадь тела Mosteller | `sqrt(рост_см×масса_кг/3600)` | Оценка; не для самостоятельной клинической дозировки |
+| Изменение массы | `конец−начало`; `%=(конец−начало)/начало×100` | Короткие окна сильно зависят от воды |
+| Недельный темп | `(конец−начало)/дни×7` | Линейное среднее, не состав изменения |
+| Сценарий талии | `рост×выбранный WHtR` | Пользовательский сценарий, не назначение |
 
-Regression vector at 100 kg × 5 reps: Epley = 116.667 kg; Brzycki = 112.5 kg.
+Контрольные векторы: BMI(80 кг, 180 см) = 24,6914; Mosteller = 2,000 м²; при 80 кг и 20% жира: 16 кг жира и 64 кг безжировой массы.
 
-## Cardio
+## Энергия и питание
 
-| Tool | Formula | Scope / limitation | Source |
-|---|---|---|---|
-| Pace from speed | `60/speed_kmh` | Unit conversion | Arithmetic |
-| Speed from pace | `60/pace_min_km` | Unit conversion | Arithmetic |
-| Race time | `distance×pace` | Constant-average scenario | Arithmetic |
-| Riegel | `T2=T1×(D2/D1)^k`, default `k=1.06` | Prediction, not promise; transfer degrades over large distance changes | Published model convention |
-| Cooper VO₂ | `(distance_m−504.9)/44.73` | Field estimate; not CPET; validation scope limited | Validation literature |
-| Rockport VO₂ | `132.853 − .0769×weight_lb − .3877×age + 6.315×male − 3.2649×time_min − .1565×HR` | Standardized one-mile field test; not CPET | Kline et al., 1987 |
-| Age-predicted HRmax | `208−0.7×age` | Population estimate with large individual error | Tanaka et al., 2001 |
-| HRR zone | `HRrest+(HRmax−HRrest)×intensity` | Medication, heat, stress and HRmax error affect output | Karvonen convention |
-| MET calories | `MET×3.5×kg/200×minutes` | Population approximation | Standard MET arithmetic |
-| Steps distance | `steps×stride_cm/100000` | Stride changes with speed/terrain | Arithmetic |
-| Cadence speed | `steps/min×stride_m×60/1000` | Constant-average scenario | Arithmetic |
-| W/kg | `watts/bodyweight` | Protocol and power-meter accuracy matter | Arithmetic |
-| FTP range | `FTP×selected percentages` | Zone system/protocol heuristic | User-selected scenario |
-| Aerobic equivalent | `moderate minutes + 2×vigorous minutes` | Does not capture all load dimensions | WHO activity guidance |
-
-Regression vector: 12 km/h = 5:00 min/km and round-trips to 12 km/h.
-
-## Recovery, focus and time
-
-| Tool | Formula | Scope / limitation |
+| Инструмент | Формула | Область и главное ограничение |
 |---|---|---|
-| Sleep duration | clock difference; add 24 h when negative | Time in interval, not measured sleep |
-| Sleep gap | `actual−target` | Evaluate regular average, not one night |
-| Sleep midpoint | `bedtime + duration/2` | Schedule marker |
-| Social jetlag | smallest circular difference between midpoints | Reflection metric, not diagnosis |
-| Sleep efficiency | `sleep/time in bed×100` | Depends on sleep measurement quality |
-| Caffeine remaining | `dose×0.5^(hours/half-life)` | Half-life varies substantially |
-| Subjective readiness | bounded transparent linear combination of sleep, soreness, stress and motivation | Custom heuristic; not biomarker or validated clinical scale |
-| Focus ratio | `focused/available×100` | Time allocation, not output quality |
-| Habit adherence | `completed/planned×100` | Depends on meaningful plan |
-| Goal progress | `current/target×100` | Only for meaningful quantitative goals |
-| Time budget | `168−sleep−work−commitments` | Categories must not overlap |
-| Life balance | `100−10×population SD(ratings)` bounded at zero | Reflection heuristic, not quality-of-life measurement |
-| Decision/priority | `impact×confidence/(effort+risk)` | Subjective comparison heuristic |
+| Mifflin–St Jeor | `10W + 6,25H − 5A + 5` для мужчин; `−161` для женщин | Прогноз покоя, не непрямая калориметрия |
+| Cunningham | `370 + 21,6×FFM` | Наследует ошибку FFM |
+| TDEE по фактору | `энергия покоя × activity factor` | Грубый динамический сценарий |
+| Наблюдаемый TDEE | `среднее потребление − изменение_кг×7700/дни` | Вода и адаптация искажают короткие окна |
+| Калорийный сценарий | `поддержание×(1+изменение%)` | Не гарантирует траекторию массы |
+| Энергетический эквивалент | `ккал/7700` | Только грубый эквивалент, не линейный долгосрочный прогноз |
+| Диапазон белка | `масса×нижняя/верхняя г·кг⁻¹` | Зависят цель, возраст, рацион и клинический контекст |
+| Белок на приём | `суточный белок/приёмы` | Эвристика распределения, не биологический максимум |
+| Энергия макросов | `4P + 4C + 9F + 7Alcohol` | Стандартные коэффициенты; этикетка может отличаться |
+| Остаток углеводов | `(ккал−4P−9F)/4` | Отрицательное значение означает несовместимые цели |
+| Диапазон жира | `ккал×выбранная доля/9` | Пользовательский сценарий |
+| Клетчатка | `ккал/1000×выбранные граммы` | Ориентир; переносимость индивидуальна |
+| Вода | `масса×выбранные мл/кг` | Эвристика: влияют жара, пот, пища и здоровье |
+| Кофеин | `мг/масса_кг` | Важны также абсолютная доза и время |
+| TEF | `ккал×выбранный диапазон %` | Модель, не индивидуальное измерение |
+| Плотность калорий | `ккал/граммы×100` | Точно в пределах введённой этикетки |
+| Цена белка | `цена/белок_г×100` | Сравнивает стоимость, не качество продукта |
 
-Regression vector: 23:30 → 07:30 = 8.0 hours.
+Контрольный вектор Mifflin: мужчина, 80 кг, 180 см, 35 лет = 1755 ккал/сут.
 
-## Money and converters
+## Сила
 
-Money tools are arithmetic/scenarios, not financial advice. Compound interest uses monthly compounding and an annuity contribution; a 0% branch avoids division by zero. Loan payment uses the standard amortizing-payment formula with an explicit 0% branch. Debt payoff rejects payments that do not cover monthly interest. CAGR is `(end/start)^(1/years)−1`; real return is `(1+nominal)/(1+inflation)−1`; margin uses selling price as denominator while markup uses cost. FIRE target is `annual expenses/withdrawal rate` and is explicitly a user-assumption scenario.
+| Инструмент | Формула | Ограничение |
+|---|---|---|
+| Epley e1RM | `вес×(1+повторы/30)` | Ошибка растёт с повторами и зависит от контекста |
+| Brzycki e1RM | `вес×36/(37−повторы)` | Registry ограничивает 20 повторениями |
+| Ensemble | Среднее Epley и Brzycki | Оценка, не измеренный 1ПМ |
+| Вес по %1ПМ | `1ПМ×процент` | Зависит от качества 1ПМ и готовности |
+| Относительная сила | `вес/масса тела` | Сравнивать только одинаковое движение и технику |
+| Объём | `вес×повторы×подходы` | Не равен стимулу гипертрофии |
+| Недельный тоннаж | `объём×занятия` | Наследует ограничение объёма |
+| Диски | `(цель−гриф)/2` с парной раскладкой | Нужно сверять реальные номиналы |
+| Плотность | `объём/минуты` | Больше не автоматически лучше |
+| Повторы по RIR | `выполнено + RIR` | Субъективная эвристика |
 
-Converters use: 1 kg = 2.2046226218 lb; 1 in = 2.54 cm; 1 mi = 1.609344 km; 1 kcal = 4.184 kJ; 1 US fl oz = 29.5735295625 mL. Round-trip regression tests cover every pair.
+Контроль: 100 кг × 5 → Epley 116,667 кг; Brzycki 112,5 кг.
+
+## Кардио
+
+| Инструмент | Формула | Ограничение |
+|---|---|---|
+| Темп из скорости | `60/скорость_кмч` | Точное преобразование |
+| Скорость из темпа | `60/темп_минкм` | Точное преобразование |
+| Время дистанции | `дистанция×темп` | Сценарий постоянного среднего |
+| Riegel | `T2=T1×(D2/D1)^k`, обычно `k=1,06` | Прогноз; хуже переносится между далёкими дистанциями |
+| Cooper VO₂ | `(дистанция_м−504,9)/44,73` | Полевая оценка, не CPET |
+| Rockport VO₂ | `132,853 − 0,0769×вес_lb − 0,3877×возраст + 6,315×male − 3,2649×время − 0,1565×HR` | Требует стандартного теста на 1 милю |
+| HRmax | `208−0,7×возраст` | Большая индивидуальная ошибка |
+| Зона HRR | `HRrest+(HRmax−HRrest)×интенсивность` | Влияют лекарства, жара, стресс и ошибка HRmax |
+| MET‑калории | `MET×3,5×кг/200×минуты` | Популяционная аппроксимация |
+| Дистанция шагов | `шаги×длина_шага_см/100000` | Шаг меняется с темпом и рельефом |
+| Скорость по каденсу | `шаги/мин×шаг_м×60/1000` | Сценарий постоянного среднего |
+| Вт/кг | `мощность/масса` | Важны протокол и точность измерителя |
+| FTP‑диапазон | `FTP×выбранные проценты` | Зависит от зональной системы |
+| Эквивалент активности | `умеренные минуты + 2×интенсивные` | Не охватывает все стороны нагрузки |
+
+Контроль: 12 км/ч = 5:00 мин/км и обратно.
+
+## Восстановление, внимание и время
+
+| Инструмент | Формула | Ограничение |
+|---|---|---|
+| Длительность сна | Разница часов; при отрицательной +24 ч | Время интервала, не измеренный сон |
+| Дефицит сна | `факт−цель` | Оценивать регулярное среднее |
+| Середина сна | `отбой + длительность/2` | Маркер расписания |
+| Social jetlag | Минимальная круговая разница середин | Рефлексия, не диагноз |
+| Эффективность сна | `сон/время в постели×100` | Зависит от качества измерения |
+| Остаток кофеина | `доза×0,5^(часы/half-life)` | Half-life сильно варьирует |
+| Готовность | Ограниченная линейная комбинация сна, боли, стресса и мотивации | Авторская прозрачная эвристика, не биомаркер |
+| Доля фокуса | `фокус/доступное время×100` | Не измеряет качество результата |
+| Соблюдение привычки | `выполнено/запланировано×100` | Зависит от осмысленности плана |
+| Прогресс цели | `текущее/цель×100` | Только для количественной цели |
+| Бюджет времени | `168−сон−работа−обязательства` | Категории не должны пересекаться |
+| Баланс | `100−10×population SD(оценок)`, минимум 0 | Эвристика рефлексии |
+| Решение/приоритет | `влияние×уверенность/(усилие+риск)` | Субъективное сравнение |
+
+Контроль: 23:30 → 07:30 = 8 часов.
+
+## Финансы и конвертеры
+
+Финансовые инструменты — арифметика и сценарии, не финансовая рекомендация. Сложный процент использует ежемесячную капитализацию и аннуитетный взнос с отдельной веткой 0%. Кредит — стандартный аннуитетный платёж; погашение долга отвергает платёж, не покрывающий процент. `CAGR=(конец/начало)^(1/лет)−1`; реальная доходность `(1+номинальная)/(1+инфляция)−1`. Маржа использует цену продажи в знаменателе, наценка — себестоимость. FIRE‑цель: `годовые расходы/ставка изъятия`, это сценарий пользователя.
+
+Конвертеры: 1 кг = 2,2046226218 lb; 1 in = 2,54 см; 1 mi = 1,609344 км; 1 ккал = 4,184 кДж; 1 US fl oz = 29,5735295625 мл. Round‑trip tests покрывают каждую пару.
