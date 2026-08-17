@@ -35,8 +35,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p dist
-          cp -r . dist/
-          rm -rf dist/.git dist/.github dist/node_modules dist/dist
+          rsync -a --exclude='.git' --exclude='.github' --exclude='node_modules' --exclude='dist' ./ dist/
 
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
