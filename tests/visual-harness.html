@@ -11,7 +11,7 @@
   const p=new URLSearchParams(location.search),width=Number(p.get('width'))||390,height=Number(p.get('height'))||844,lang=p.get('lang')||'ru',theme=p.get('theme')||'light',route=p.get('route')||'#home';
   const frame=document.querySelector('#frame');
   frame.width=width;frame.height=height;
-  try{const key='markovlab-state-v2',state=JSON.parse(localStorage.getItem(key)||'{}');localStorage.setItem(key,JSON.stringify({...state,version:2,lang,theme,onboardingDismissed:true}))}catch{}
+  try{const key='markovlab-state-v3',state=JSON.parse(localStorage.getItem(key)||'{}');localStorage.setItem(key,JSON.stringify({...state,version:3,lang,theme,onboardingDismissed:true}))}catch{}
   frame.src=`../index.html${route}`;
 </script>
 </html>
