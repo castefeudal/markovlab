@@ -29,9 +29,9 @@ export function onboarding(state){
 export function home(state){
   const lang=state.lang;
   return legacy.home(state)
-    .replace(/<div class="hero-visual"[\s\S]*?<\/div><\/section>/,`<figure class="hero-visual hero-image"><img src="./assets/images/core/hero-laboratory.webp" width="1400" height="875" fetchpriority="high" alt=""><figcaption>${bi('Профиль превращается в прозрачный расчёт, основание и наблюдаемую динамику.','Profile data becomes a transparent calculation, evidence context and observable trend.',lang)}</figcaption></figure></section>`)
-    .replace(/<div class="privacy-orbit">[\s\S]*?<\/div><div>/,`<figure class="privacy-orbit"><img src="./assets/images/core/privacy-device.webp" width="720" height="540" loading="lazy" alt=""></figure><div>`)
-    .replace(/<div class="completion-ring" style="--value:[^"]+">/,`<div class="profile-sample"><img src="./assets/images/core/profile-once.webp" width="720" height="540" loading="lazy" alt=""><dl><div><dt>${bi('Рост','Height',lang)}</dt><dd>180 cm</dd></div><div><dt>${bi('Вес','Weight',lang)}</dt><dd>80 kg</dd></div><div><dt>${bi('Талия','Waist',lang)}</dt><dd>90 cm</dd></div><div><dt>${bi('Сон','Sleep',lang)}</dt><dd>7.4 h</dd></div></dl></div><div class="completion-ring" style="--value:38">`);
+    .replace(/<div class="hero-visual"[\s\S]*?<\/div><\/section>/,`<figure class="hero-visual hero-image"><img src="./assets/images/core/hero-laboratory-v4.webp" width="1586" height="992" fetchpriority="high" alt=""><figcaption>${bi('Профиль превращается в прозрачный расчёт, основание и наблюдаемую динамику.','Profile data becomes a transparent calculation, evidence context and observable trend.',lang)}</figcaption></figure></section>`)
+    .replace(/<div class="privacy-orbit">[\s\S]*?<\/div><div>/,`<figure class="privacy-orbit"><img src="./assets/images/core/privacy-local-v4.webp" width="1448" height="1086" loading="lazy" alt=""></figure><div>`)
+    .replace(/<div class="completion-ring" style="--value:[^"]+"><b>[^<]*<\/b><span>[^<]*<\/span><\/div>/,`<div class="profile-sample"><img src="./assets/images/core/profile-once.webp" width="720" height="540" loading="lazy" alt=""><dl><div><dt>${bi('Рост','Height',lang)}</dt><dd>180 cm</dd></div><div><dt>${bi('Вес','Weight',lang)}</dt><dd>80 kg</dd></div><div><dt>${bi('Талия','Waist',lang)}</dt><dd>90 cm</dd></div><div><dt>${bi('Сон','Sleep',lang)}</dt><dd>7.4 h</dd></div></dl></div>`);
 }
 
 export function categoryPage(state,id){
@@ -101,19 +101,21 @@ function semanticViz(calc,r,lang){
 
 export function profilePage(state){
   const lang=state.lang;
-  return legacy.profilePage(state).replace(/<div class="privacy-callout">/,`<figure class="profile-page-visual"><img src="./assets/images/core/profile-once.webp" width="720" height="540" loading="eager" alt=""><figcaption>${bi('Заполняйте только те поля, которые хотите повторно использовать. Полный профиль не требуется.','Fill only the fields you want to reuse. A complete profile is never required.',lang)}</figcaption></figure><div class="privacy-callout">`);
+  return legacy.profilePage(state)
+    .replace(/<div class="profile-progress">[\s\S]*?<\/div><\/div><\/header>/,`<aside class="profile-payoff"><strong>${bi('Введите один раз — используйте в связанных расчётах','Enter once — reuse across related calculations',lang)}</strong><span>${bi('Заполняйте только то, что действительно сократит повторный ввод.','Only add data that meaningfully reduces repeated entry.',lang)}</span></aside></header>`)
+    .replace(/<div class="privacy-callout">/,`<figure class="profile-page-visual"><img src="./assets/images/core/profile-once.webp" width="720" height="540" loading="eager" alt=""><figcaption>${bi('Заполняйте только те поля, которые хотите повторно использовать. Полный профиль не требуется.','Fill only the fields you want to reuse. A complete profile is never required.',lang)}</figcaption></figure><div class="privacy-callout">`);
 }
 
 export function insightsPage(state,historyQuery='',sort='newest'){
   const lang=state.lang;
   return legacy.insightsPage(state,historyQuery,sort)
     .replace(/ · P\d/g,'')
-    .replace(/<section><header class="section-head"><div><span class="eyebrow">ДИНАМИКА|<section><header class="section-head"><div><span class="eyebrow">TRENDS/,match=>`<figure class="progress-page-visual"><img src="./assets/images/core/progress-trends.webp" width="720" height="540" loading="lazy" alt=""></figure>${match}`);
+    .replace(/<section><header class="section-head"><div><span class="eyebrow">ДИНАМИКА|<section><header class="section-head"><div><span class="eyebrow">TRENDS/,match=>`<figure class="progress-page-visual"><img src="./assets/images/core/progress-honest-v4.webp" width="1448" height="1086" loading="lazy" alt=""></figure>${match}`);
 }
 
 export function aboutPage(state){
   const lang=state.lang;
   return legacy.aboutPage(state)
-    .replace(/MARKOVLAB \/ 2\.0\.0/g,'MARKOVLAB / 3.1.0')
-    .replace(/<p><strong>2\.0\.0<\/strong>/,`<p><strong>3.1.0</strong> — ${bi('полная русская release‑поверхность, индивидуальные пояснения результата, проверяемая матрица 85 инструментов и усиленный контроль качества.','complete Russian release surface, individualized result guidance, a verifiable 85-tool matrix and stronger quality controls.',lang)}</p><p><strong>3.0.0</strong> — ${bi('единая визуальная система, индивидуальный контекст 85 инструментов и семантически честные визуализации.','unified visual system, individualized context for 85 tools and semantically honest visualizations.',lang)}</p><p><strong>2.0.0</strong>`);
+    .replace(/MARKOVLAB \/ 2\.0\.0/g,'MARKOVLAB / 4.0.0')
+    .replace(/<p><strong>2\.0\.0<\/strong>/,`<p><strong>4.0.0</strong> — ${bi('новая бренд‑система, natural-language поиск, персональная главная, RU/EN, четыре темы, усиленный calculator UX и release‑контур.','new brand system, natural-language search, personalized home, RU/EN, four themes, stronger calculator UX and release quality gates.',lang)}</p><p><strong>3.1.0</strong> — ${bi('индивидуальные пояснения результата и проверяемая матрица 85 инструментов.','individual result guidance and a verifiable 85-tool matrix.',lang)}</p><p><strong>3.0.0</strong> — ${bi('единая визуальная система и семантически честные визуализации.','unified visual system and semantically honest visualizations.',lang)}</p><p><strong>2.0.0</strong>`);
 }

@@ -64,7 +64,7 @@
   .hero h1{font-size:clamp(3.15rem,4.2vw,4.7rem)}
   .hero-copy>p{font-size:clamp(15px,1.3vw,18px);line-height:1.55}
   .hero-actions{margin-top:24px}.hero-proof{margin-top:20px}
-  .hero::before{content:"MARKOVLAB / 03";position:absolute;right:28px;top:24px;color:var(--text-3);font-size:8px;letter-spacing:.18em;writing-mode:vertical-rl}
+  .hero::before{content:"MARKOVLAB / 04";position:absolute;right:28px;top:24px;color:var(--text-3);font-size:8px;letter-spacing:.18em;writing-mode:vertical-rl}
   .hero-copy{position:relative;z-index:2}
   .hero-image{position:relative;margin:0;min-width:0}
   .hero-image img{width:100%;aspect-ratio:16/10;object-fit:cover;border:1px solid var(--border);border-radius:26px;box-shadow:var(--shadow-float)}

@@ -1,4 +1,4 @@
 export const RELEASE_CONFIG={
-  version:'3.1.0',
-  productionBaseUrl:''
+  version:'4.0.0',
+  productionBaseUrl:'https://castefeudal.github.io/markovlab'
 };
