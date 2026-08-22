@@ -1,12 +1,12 @@
-import { CALCULATORS, calculatorMap } from './calculators.js';
-import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js';
-import { route } from './router.js';
-import { validateFields } from './validators.js';
-import { categories, methodLabels, l, t, formatUnit } from './i18n.js';
-import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml, toolCard } from './renderers-v3.js';
-import { RELEASE_CONFIG } from './config.js';
-import { applyResultGuidance } from './content.js';
-import { searchCalculators } from './search.js';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=4.0.0';
+import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js?v=4.0.0';
+import { route } from './router.js?v=4.0.0';
+import { validateFields } from './validators.js?v=4.0.0';
+import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=4.0.0';
+import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml, toolCard } from './renderers-v3.js?v=4.0.0';
+import { RELEASE_CONFIG } from './config.js?v=4.0.0';
+import { applyResultGuidance } from './content.js?v=4.0.0';
+import { searchCalculators } from './search.js?v=4.0.0';
 
 let state=loadState(),results=new Map(),errors=new Map(),libraryQuery='',favoritesOnly=false,paletteQuery='',paletteIndex=0,historyQuery='',historySort='newest',evidenceQuery='',onboardingStep=1,deferredInstall=null,pendingWorker=null;
 const app=document.querySelector('#app'),palette=document.querySelector('#palette'),importFile=document.querySelector('#import-file'),toast=document.querySelector('#toast'),onboardingDialog=document.querySelector('#onboarding'),confirmDialog=document.querySelector('#confirm-dialog');

@@ -32,6 +32,7 @@ Audit date: 22 August 2026. Baseline `main`: `be64df389605762b8ab58966c151ef9127
 2. Theme/data popovers used an unreliable async delegated branch. Menu toggling moved to a synchronous delegated path.
 3. Browser touch/click activation did not reliably reach native calculator submit in the QA runtime. The primary button now has an explicit click path while native submit remains for keyboard behaviour.
 4. The Russian hero heading was too wide at 320–390 px. Mobile type scale and overflow containment were corrected after screenshot review.
+5. A real Pages session with an existing service worker could retain old module responses. Runtime module/CSS requests are now versioned and the v4 cache revision was advanced.
 
 ## Removed or avoided
 

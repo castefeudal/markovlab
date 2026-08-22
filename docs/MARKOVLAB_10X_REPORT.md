@@ -70,7 +70,7 @@ Method type and evidence strength remain independent dimensions. The interface d
 
 ## Testing
 
-Final local gate: 88 passed, 0 failed. It covers formulas, registry, render states, search intents, localization parity, storage/import/migration, assets, PWA, version consistency, early bootstrap syntax and completeness matrices.
+Final local gate: 89 passed, 0 failed. It covers formulas, registry, render states, search intents, localization parity, storage/import/migration, assets, PWA, version consistency, early bootstrap syntax, stale-cache prevention and completeness matrices.
 
 ## Browser QA
 
