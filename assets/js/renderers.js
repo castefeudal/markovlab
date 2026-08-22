@@ -1,11 +1,11 @@
-import { CALCULATORS, calculatorMap } from './calculators.js';
-import { REFERENCES } from './references.js';
-import { categories, evidenceLabels, methodLabels, l, t, formatNumber } from './i18n.js';
-import { getRecommendations } from './recommendations.js';
-import { profileKeys } from './validators.js';
-import { icon, logo } from './icons.js';
-import { DOMAIN_CONTENT, WHEN_USEFUL, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js';
-import { searchCalculators } from './search.js';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=4.0.0';
+import { REFERENCES } from './references.js?v=4.0.0';
+import { categories, evidenceLabels, methodLabels, l, t, formatNumber } from './i18n.js?v=4.0.0';
+import { getRecommendations } from './recommendations.js?v=4.0.0';
+import { profileKeys } from './validators.js?v=4.0.0';
+import { icon, logo } from './icons.js?v=4.0.0';
+import { DOMAIN_CONTENT, WHEN_USEFUL, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js?v=4.0.0';
+import { searchCalculators } from './search.js?v=4.0.0';
 
 export const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const active=(r,p)=>r.page===p?'active':'';

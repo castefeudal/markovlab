@@ -2,7 +2,7 @@
 
 ## Автоматически — выполнено
 
-- [x] `npm test`: 88 passed, 0 failed.
+- [x] `npm test`: 89 passed, 0 failed.
 - [x] 85/85 калькуляторов и 9/9 лабораторий.
 - [x] Formula regression vectors и source ID integrity.
 - [x] Полнота индивидуального контента и матрица 85 инструментов.

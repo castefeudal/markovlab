@@ -1,9 +1,9 @@
-import * as legacy from './renderers.js';
-import { CALCULATORS, calculatorMap } from './calculators.js';
-import { REFERENCES } from './references.js';
-import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js';
-import { icon } from './icons.js';
-import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js';
+import * as legacy from './renderers.js?v=4.0.0';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=4.0.0';
+import { REFERENCES } from './references.js?v=4.0.0';
+import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js?v=4.0.0';
+import { icon } from './icons.js?v=4.0.0';
+import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js?v=4.0.0';
 
 const bi=(ru,en,lang)=>lang==='ru'?ru:en;
 const esc=legacy.esc;

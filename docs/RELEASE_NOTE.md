@@ -29,6 +29,7 @@ Release date: 22 August 2026.
 - Browser-language detection defaults non-Russian locales to English; manual language and theme persist locally.
 - State schema v3 migrates v1/v2 data and keeps safe versioned import/export.
 - Local-first, offline and zero-remote-runtime principles remain intact.
+- Versioned runtime asset URLs prevent an older active service worker from mixing previous modules with the 4.0 shell.
 
 ## Quality
 

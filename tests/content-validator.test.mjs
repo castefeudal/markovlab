@@ -87,7 +87,8 @@ describe('Content Validator', () => {
     assert.ok(match, 'Could not find CORE array');
     const files = match[1].match(/'([^']+)'/g)?.map(f => f.replace(/'/g, '')) || [];
     for (const file of files) {
-      assert.ok(existsSync(join(ROOT, file)), `CORE file not found: ${file}`);
+      const localFile = file.split('?')[0];
+      assert.ok(existsSync(join(ROOT, localFile)), `CORE file not found: ${file}`);
     }
   });
 

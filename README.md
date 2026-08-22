@@ -37,7 +37,7 @@ npm test
 npm run docs:matrix
 ```
 
-88 автоматических проверок покрывают formulas, registry 85/85, routes/render, RU/EN parity, natural-language search, storage/import/migration, PWA, manifests, themes bootstrap, assets, content completeness и отсутствие remote runtime dependencies. CI запускает тесты и проверяет, что обе completeness‑матрицы воспроизводимы.
+89 автоматических проверок покрывают formulas, registry 85/85, routes/render, RU/EN parity, natural-language search, storage/import/migration, PWA, manifests, themes bootstrap, cache-safe runtime assets, content completeness и отсутствие remote runtime dependencies. CI запускает тесты и проверяет, что обе completeness‑матрицы воспроизводимы.
 
 ## Архитектура
 
