@@ -1,8 +1,8 @@
 # Публикация MARKOVLAB
 
-## Единственный внешний ввод
+## Production URL
 
-Укажите настоящий production URL в `assets/js/config.js`, затем выполните `npm run release:metadata`. Скрипт из этой единственной точки формирует canonical, sitemap, robots, OG URL и JSON‑LD URL.
+Production canonical задан в `assets/js/config.js`: `https://castefeudal.github.io/markovlab`. Скрипт `npm run release:metadata` синхронизирует canonical, sitemap, robots, OG URL и JSON‑LD URL.
 
 ## Локальная проверка
 
@@ -17,9 +17,9 @@ npm run dev
 
 ## GitHub Pages
 
-1. Публикуйте содержимое папки `markovlab/`.
-2. Сохраняйте относительные пути и `404.html`.
-3. Не меняйте scope/start URL service worker без проверки подпути.
+1. Merge release PR в `main`.
+2. Workflow `deploy-pages.yml` выполняет тесты, собирает статический `dist/` и публикует Pages.
+3. Сохраняйте относительные пути, hash‑routes и `404.html`.
 4. После HTTPS‑публикации дождитесь activation service worker и выполните offline reload.
 
 ## Release gate на опубликованном origin

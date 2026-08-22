@@ -1,4 +1,4 @@
-# Дизайн и UX MARKOVLAB 3.1
+# Дизайн и UX MARKOVLAB 4.0
 
 ## Направление
 
@@ -17,7 +17,7 @@
 
 ## Визуальные ресурсы
 
-16 оптимизированных WebP образуют одну серию: hero, 9 laboratory visuals, profile, evidence, privacy, progress, onboarding и empty state. Они объясняют измерение, связь данных или границу устройства, не имитируют UI и не содержат мелкого текста.
+Локальные оптимизированные WebP образуют одну серию: новый flagship hero и визуалы privacy/progress, 9 laboratory visuals, profile, evidence, onboarding и empty state. Они объясняют измерение, связь данных или границу устройства, не имитируют UI и не содержат мелкого текста.
 
 ## Калькулятор
 

@@ -1,33 +1,49 @@
-# Внутренний аудит MARKOVLAB
+# Forensic Audit — MARKOVLAB baseline
 
-Исходная база: 3.0.0. Релиз: **3.1.0**.
+Audit date: 22 August 2026. Baseline `main`: `be64df389605762b8ab58966c151ef9127b311e7` (v3.1.0). Baseline automated gate: 71 passed, 0 failed.
 
-## Сохранённые сильные стороны
+## Preserved core
 
-- 85 калькуляторов, 9 лабораторий и стабильные ID.
-- Чистая статическая архитектура без framework/build requirement.
-- Local‑first состояние, явное сохранение и безопасная миграция.
-- Раздельные тип метода и сила основания.
-- Видимые формулы, источники, допущения и ограничения.
-- Четыре темы, responsive shell, PWA/offline и GitHub Pages subpath.
-- Единая локальная система бренда, SVG‑иконок и 16 WebP‑изображений.
+- 85 calculator IDs and their formula functions;
+- 9 laboratory categories and curated workflows;
+- profile, favourites, history, snapshots, recents and deterministic insights;
+- local-first storage, versioned import/export and migration;
+- evidence metadata, references, method/evidence separation and health disclaimers;
+- hash routing, GitHub Pages compatibility, PWA/offline shell and print report;
+- vanilla ES modules with no framework or remote runtime dependencies.
 
-## Найдено и исправлено в 3.1
+## Baseline findings and release changes
 
-| Проблема | Исправление |
-|---|---|
-| Английские metadata, JSON‑LD и PWA shortcuts в русском релизе | Полная русская release‑поверхность |
-| Несогласованные версии 2.0/3.0 | Единая runtime‑версия 3.1.0; исторические записи оставлены только в changelog |
-| Повторяющиеся limitation/action у ряда инструментов | Индивидуальный result guidance по смыслу метода |
-| Внутренние английские единицы в result/history/copy | Централизованная русская локализация единиц |
-| Печатный результат без контекста входов | Печатный бренд, дата, входы, результат, формула и источники |
-| Отсутствие проверяемой таблицы 85 инструментов | Генерируемая completeness matrix и тест |
-| Недостаточно строгий русский release gate | Дополнительные тесты metadata, версии, boilerplate и matrix |
+| Finding | 4.0 response |
+| --- | --- |
+| Useful but visually familiar v3 hero | Original precision-instrument hero and stronger brand composition |
+| 85-tool discovery still leaned toward a card catalogue | Recent/high-utility/domain hierarchy plus human-query examples |
+| Search depended heavily on registry words | Dedicated RU/EN intent aliases, stopwords, weighted fields and fuzzy matching |
+| Language was not an explicit premium shell control | Persistent RU/EN segmented control and localized manifests/metadata |
+| Profile value over-emphasized completion | ROI-first copy: enter once, reuse where relevant |
+| Home was primarily editorial | Local activity turns Home into a compact continuation dashboard |
+| Theme application could flash on load | Early validated bootstrap before stylesheets |
+| Screenshot evidence predated release candidate | New before/after desktop/mobile matrix captured in Chromium |
+| PR quality checks were coupled to Pages deployment | Separate pull-request quality workflow |
 
-## Не изменялось
+## Runtime defects found during browser QA
 
-Формулы, научные пороги и state schema v2. Новые параметры не добавлялись без необходимости: аудит не выявил поля, которые одновременно улучшали бы решение, имели источник и оправдывали migration/validation burden.
+1. The first v4 inline bootstrap missed the final IIFE invocation and raised `Unexpected end of input`. Fixed and covered by a VM syntax regression test.
+2. Theme/data popovers used an unreliable async delegated branch. Menu toggling moved to a synchronous delegated path.
+3. Browser touch/click activation did not reliably reach native calculator submit in the QA runtime. The primary button now has an explicit click path while native submit remains for keyboard behaviour.
+4. The Russian hero heading was too wide at 320–390 px. Mobile type scale and overflow containment were corrected after screenshot review.
 
-## Остаточный внешний контроль
+## Removed or avoided
 
-Текущая cloud‑среда не позволила подключить браузер к локальному origin. Поэтому cross‑browser screenshot matrix, native screen reader, реальный offline reload и Web Vitals остаются финальным контролем на production HTTPS origin и не обозначены как выполненные.
+- No formulas or stable IDs were changed for visual reasons.
+- No remote font, analytics, tracking, framework, backend or opaque API was introduced.
+- No fake score, gauge, smoothing, testimonial, medical endorsement or placeholder content was added.
+- Legacy files were retained only where the runtime imports them; the v4 layer is additive and bounded to reduce migration risk.
+
+## Evidence files
+
+- `assets/screenshots/before/`
+- `assets/screenshots/after/`
+- `CONTENT_COMPLETENESS_MATRIX.md`
+- `VISUAL_QA_MATRIX.md`
+- `QA_REPORT.md`

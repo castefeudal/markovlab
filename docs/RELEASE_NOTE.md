@@ -1,26 +1,38 @@
-# MARKOVLAB 3.1.0 — русский production‑релиз
+# MARKOVLAB 4.0.0 — Measurable Progress
 
-Дата кандидата: 17 августа 2026.
+Release date: 22 August 2026.
 
-## Главное
+## Product
 
-- Публичная русская поверхность полностью очищена от случайных англоязычных строк: metadata, JSON‑LD, manifest, PWA shortcuts, About, FAQ, единицы и result copy.
-- Для 85 калькуляторов создана проверяемая матрица полноты; индивидуальные ограничения и следующие шаги заменили массовый boilerplate.
-- Результаты локализуют внутренние единицы, выдерживают длинные числа и 200% reflow; печать содержит бренд, дату, входы, результат, формулу, ограничения и источники.
-- Версия согласована в package, конфигурации, интерфейсе, service worker и документации.
+- Home is now both a premium entry point and a lightweight personal dashboard for recent, saved and recommended work.
+- The 85-tool library has a hierarchy: recent, high-utility entry points, nine laboratories and specialized results instead of an undifferentiated card wall.
+- Search understands human tasks in RU and EN, intent aliases and useful misspellings.
+- Progress is the primary label for chronology, deltas, snapshots and honest observed trends.
 
-## Продукт и интерфейс
+## Calculator experience
 
-- Сохранены 85 стабильных ID, 9 лабораторий, local‑first, профиль, история, снимки, динамика, поиск, избранное, детерминированные выводы и четыре темы.
-- Сохранена система из 16 оптимизированных WebP‑изображений: flagship hero, 9 лабораторий, профиль, доказательность, приватность, динамика, onboarding и empty state.
-- Никаких произвольных gauges, псевдопроцентов или непрозрачных AI‑оценок.
-- Формулы и научные пороги в 3.1 не изменялись.
+- Stable calculator IDs and formula mathematics are preserved.
+- Result surfaces emphasize primary metric, unit, meaning, method/evidence, uncertainty, limitation and action.
+- Calculator activation now has an explicit click path plus native form submit, improving mouse/touch reliability without reducing keyboard support.
+- Inputs accept comma/dot decimals, retain drafts and provide range-specific localized errors.
 
-## Проверка
+## Brand and visual system
 
-- Автоматический release gate: **49 passed, 0 failed**.
-- Реестр и матрица: **85/85**.
-- JavaScript/service worker: синтаксические проверки без ошибок.
-- Архив проходит `unzip -t` и повторный smoke test после распаковки.
+- New premium hero, privacy and progress images join the original logo and coordinated laboratory series.
+- Light, Dark and Midnight receive deliberate surfaces; System follows `prefers-color-scheme`.
+- A no-FOUC bootstrap applies the saved locale/theme before CSS.
+- Responsive polish covers the 320–1920 px range, including persistent mobile RU/EN controls.
 
-Ограничения среды реальной браузерной проверки перечислены честно в `QA_REPORT.md`.
+## Language, privacy and PWA
+
+- Full Russian and English shells, calculator content, search aliases, manifests, 404 and print report.
+- Browser-language detection defaults non-Russian locales to English; manual language and theme persist locally.
+- State schema v3 migrates v1/v2 data and keeps safe versioned import/export.
+- Local-first, offline and zero-remote-runtime principles remain intact.
+
+## Quality
+
+- 88 automated tests pass.
+- Required content matrix: 85/85 complete in RU and EN.
+- Chromium before/after and responsive screenshot archive included with release artifacts.
+- CI validates tests and regenerated completeness matrices on every pull request.

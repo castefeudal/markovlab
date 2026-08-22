@@ -1,4 +1,4 @@
-# Спецификация MARKOVLAB 3.1
+# Спецификация MARKOVLAB 4.0
 
 ## Задача пользователя
 
@@ -12,7 +12,7 @@ Hash‑маршруты: `#home`, `#calculators`, `#category/<id>`, `#calc/<id>`
 
 ## Состояние
 
-Storage schema остаётся v2: `lang`, `theme`, `profile`, `favorites`, `history`, `snapshots`, `recents`, `onboardingDismissed`. Старый `markovlab-state-v1` мигрирует однократно. Drafts живут только в sessionStorage. History и snapshots ограничены 200 записями.
+Storage schema v3: `lang`, `theme`, `profile`, `favorites`, `history`, `snapshots`, `recents`, `onboardingDismissed`. Состояния `markovlab-state-v1` и v2 мигрируют без потери поддерживаемых данных. Drafts живут только в sessionStorage. History и snapshots ограничены 200 записями.
 
 ## Контракт калькулятора
 
