@@ -1,40 +1,54 @@
-# QA‑отчёт MARKOVLAB 3.1.0
+# QA Report — MARKOVLAB 4.0.0
 
-Дата: 17 августа 2026.
+Date: 22 August 2026.
 
-## Итог
+## Release verdict
 
-Автоматический release gate текущего исходного дерева: **49 тестов пройдено, 0 ошибок**. Проверены 85 калькуляторов, формулы, registry, источники, локализация, содержательная полнота, state/import boundaries, маршруты, PWA‑ресурсы и отсутствие удалённых runtime‑зависимостей.
+Automated gate: **88 passed, 0 failed**. Chromium product scenarios and responsive screenshots were executed against the final static tree. Browser QA found and drove fixes for the early-theme bootstrap, theme/data menu event path, explicit calculator activation, 320 px Russian heading fit and horizontal reflow.
 
-## Что проверено автоматически
+## Automated coverage
 
-- 85 уникальных calculator ID и 9 лабораторий.
-- Representative formula vectors: антропометрия, Mifflin–St Jeor, Cunningham, Mosteller, Epley/Brzycki, темп/скорость, сон через полночь, проценты, кредит, CAGR, реальная доходность и конвертеры.
-- Непустой индивидуальный контент, связанные инструменты, ограничения, действия, примеры и visualization policy.
-- 85 строк в `CALCULATOR_COMPLETENESS_MATRIX.md`.
-- Русские metadata, manifest и PWA shortcuts; согласованная версия 3.1.0.
-- Render основных страниц и состояний без `NaN`/`undefined`.
-- v1→v2 migration, структурированная история, bounded arrays, malformed/future/oversized/prototype‑pollution import rejection.
-- Существование brand/PWA/image assets, отсутствие remote runtime scripts/styles/fonts.
-- JavaScript и service worker проходят `node --check`.
+- Registry: 85 unique calculators, 9 valid domains, valid schemas and finite default results.
+- Formula vectors: BMI/ratios, Mifflin–St Jeor, Cunningham, Mosteller, body composition, Epley/Brzycki, pace/speed, overnight sleep, compound interest, loan, CAGR, real return, margins and conversions.
+- Content: individualized result guidance, field help, examples, evidence, limitations, actions, sources, related tools and both 85-row matrices.
+- RU/EN: dictionary parity, calculator/field coverage, no missing or placeholder strings, localized 404 and manifests.
+- Search: twelve requested natural-language intents plus fuzzy typo handling.
+- State: v1/v2→v3 migration, profile/history/snapshots/favourites roundtrip, bounded arrays, malformed/future/oversized/prototype-pollution rejection.
+- PWA: icons, cache core, same-origin interception, update lifecycle, localized manifests and offline shell.
+- Shell: valid early bootstrap JavaScript, no-FOUC ordering, current version, no remote runtime CSS/JS.
 
-## Реальная браузерная проверка
+## Browser scenarios
 
-Базовая версия 3.0 ранее была фактически просмотрена в Chromium на desktop и mobile: главная, библиотека, категории, калькулятор до/после расчёта, профиль, история/динамика, доказательность, поиск и onboarding.
+Chromium passed:
 
-Для кандидата 3.1 в текущей изолированной среде cloud browser запретил `localhost`, `host.docker.internal` и `file://`. Поэтому новая screenshot matrix, Firefox/WebKit, отключённая сеть с перезагрузкой origin, print preview и нативный NVDA/VoiceOver **не отмечены как pass**. Кодовые и автоматические проверки не подменяют эти пункты.
+1. Load Home in RU/Light and RU/Dark with zero application console errors.
+2. Open the hierarchical library and search «процент жира»; relevant circumference/body-fat methods rank first.
+3. Switch RU→EN and confirm English product copy and search examples.
+4. Open theme controls and apply Light, Dark and Midnight.
+5. Calculate BMI with 90 kg / 182 cm; receive localized 27.2/27,2 result, meaning, confidence, limitation and next step.
+6. Save the result and verify it appears in Progress/history.
+7. Review Profile ROI copy and Evidence hierarchy.
+8. Inspect 320×568 and 390×844 mobile Home plus 390×844 calculator.
 
-## Проверено визуально по ресурсам
+## Visual checks
 
-- 16 WebP‑изображений имеют корректный формат, размеры, локальные пути и единый forest/mint/mineral/graphite/brass язык.
-- Изображения не содержат пользовательских данных, мелкого интерфейсного текста или медицинских/банковских клише.
-- Новые декоративные изображения не добавлялись: существующая система покрывает необходимые роли, а дополнительные raster‑assets увеличили бы вес без улучшения задачи.
+Screens were inspected at 320, 390, 430, 768, 1024, 1366, 1440 and 1920 target widths through responsive harness and desktop browser sessions. The Theme × Language matrix covered RU/EN across Light, Dark and Midnight on Home, Calculator and Profile. Details: `VISUAL_QA_MATRIX.md`.
 
-## Перед публикацией
+## Accessibility and safety
 
-1. Указать реальный production URL в `assets/js/config.js`.
-2. Выполнить release‑матрицу Chromium + Firefox + WebKit на опубликованном HTTPS origin.
-3. Выполнить offline reload, print preview и NVDA/VoiceOver smoke test.
-4. При успешной проверке сохранить реальные screenshots в `assets/screenshots/`; текущий релиз не выдаёт концептуальные mockups за browser evidence.
+- Landmarks, heading order, skip link, native labels and error targets remain validated.
+- Keyboard palette supports Escape, arrows and Enter; focus is visible; results and toasts use live semantics.
+- Reduced motion disables nonessential transitions and smooth result scrolling.
+- Health copy remains non-diagnostic and separates method, evidence and clinical interpretation.
+- External source links use `noopener noreferrer`.
 
-Известных ошибок формул, storage‑потери, сломанных assets или failing automated tests нет.
+## Performance and assets
+
+- No framework migration, remote fonts, CDN scripts, analytics or trackers.
+- New hero/privacy/progress visuals are optimized WebP files of approximately 35 KB, 64 KB and 123 KB.
+- Hero is preloaded with explicit dimensions; supporting visuals lazy-load.
+- `git diff --check`, JavaScript syntax checks, resource checks and placeholder scan pass.
+
+## External-runtime limits
+
+Firefox, WebKit, native NVDA/VoiceOver, physical-device standalone PWA and DevTools throttled Core Web Vitals were not available in this runtime and are not falsely recorded as executed. The product retains code-level and Chromium evidence for those paths.
