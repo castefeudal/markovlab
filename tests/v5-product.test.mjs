@@ -52,3 +52,9 @@ test('shortcut label is platform-aware',async()=>{
   assert.match(renderer,/Mac\|iPhone\|iPad/);
   assert.match(renderer,/'Ctrl K'/);
 });
+
+test('language switching localizes the static skip link and clears stale live text',async()=>{
+  const app=await readFile(new URL('../assets/js/app.js',import.meta.url),'utf8');
+  assert.match(app,/querySelector\('\.skip-link'\).*t\('skip',state\.lang\)/);
+  assert.match(app,/function changeLanguage\(lang\)[\s\S]*toast\.textContent=''[\s\S]*toast\.classList\.remove\('show'\)/);
+});
