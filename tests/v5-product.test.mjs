@@ -38,6 +38,7 @@ test('v5 density overrides remove the old tall empty result and dark result towe
   assert.match(css,/result-panel\.empty-result\{[^}]*min-height:0/);
   assert.match(css,/background:var\(--v5-paper\)/);
   assert.match(css,/result-sections\{grid-template-columns:1fr 1fr/);
+  assert.match(css,/data-route="insights"[^}]*empty-state\{min-height:138px/);
 });
 
 test('first launch does not open blocking onboarding automatically',async()=>{
