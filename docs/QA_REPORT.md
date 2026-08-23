@@ -1,10 +1,10 @@
-# QA Report — MARKOVLAB 4.0.0
+# QA Report — MARKOVLAB 5.0.0
 
 Date: 22 August 2026.
 
 ## Release verdict
 
-Automated gate: **89 passed, 0 failed**. Chromium product scenarios and responsive screenshots were executed against the final static tree. Browser QA found and drove fixes for the early-theme bootstrap, theme/data menu event path, explicit calculator activation, 320 px Russian heading fit and horizontal reflow. Production Pages verification additionally exposed a stale-service-worker module edge case; versioned CSS/module URLs now force existing PWA clients onto the 4.0 asset graph.
+Automated gate before deployment: **95 passed, 0 failed**. The release adds explicit v5 gates for the compact shell, four-action mobile navigation, search-first first visit, real library entry points, compact result density, optional onboarding and platform-aware shortcuts. Production browser evidence is appended after the merged Pages deployment; no unexecuted browser matrix is represented as complete.
 
 ## Automated coverage
 
