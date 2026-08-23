@@ -1,12 +1,11 @@
-import { CALCULATORS, calculatorMap } from './calculators.js?v=4.0.0';
-import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js?v=4.0.0';
-import { route } from './router.js?v=4.0.0';
-import { validateFields } from './validators.js?v=4.0.0';
-import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=4.0.0';
-import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml, toolCard } from './renderers-v3.js?v=4.0.0';
-import { RELEASE_CONFIG } from './config.js?v=4.0.0';
-import { applyResultGuidance } from './content.js?v=4.0.0';
-import { searchCalculators } from './search.js?v=4.0.0';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=5.0.0';
+import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js?v=5.0.0';
+import { route } from './router.js?v=5.0.0';
+import { validateFields } from './validators.js?v=5.0.0';
+import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=5.0.0';
+import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.0.0';
+import { RELEASE_CONFIG } from './config.js?v=5.0.0';
+import { applyResultGuidance } from './content.js?v=5.0.0';
 
 let state=loadState(),results=new Map(),errors=new Map(),libraryQuery='',favoritesOnly=false,paletteQuery='',paletteIndex=0,historyQuery='',historySort='newest',evidenceQuery='',onboardingStep=1,deferredInstall=null,pendingWorker=null;
 const app=document.querySelector('#app'),palette=document.querySelector('#palette'),importFile=document.querySelector('#import-file'),toast=document.querySelector('#toast'),onboardingDialog=document.querySelector('#onboarding'),confirmDialog=document.querySelector('#confirm-dialog');
@@ -30,7 +29,7 @@ function selectPalette(){const el=paletteItems()[paletteIndex];if(!el)return;pal
 function download(name,text,type='application/json'){const url=URL.createObjectURL(new Blob([text],{type})),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function confirmAction(title,text,confirmLabel,danger=true){return new Promise(resolve=>{confirmDialog.innerHTML=`<form method="dialog" class="confirm-card"><span class="eyebrow">MARKOVLAB</span><h2>${title}</h2><p>${text}</p><div><button class="btn" value="cancel">${t('close',state.lang)}</button><button class="btn ${danger?'danger primary':''}" value="confirm">${confirmLabel}</button></div></form>`;confirmDialog.returnValue='';confirmDialog.showModal();confirmDialog.addEventListener('close',()=>resolve(confirmDialog.returnValue==='confirm'),{once:true})})}
 function showOnboarding(step=1){onboardingStep=step;onboardingDialog.innerHTML=onboarding(state,onboardingStep);if(!onboardingDialog.open)onboardingDialog.showModal()}
-function updateLibraryResults(){const host=document.querySelector('#library-results');if(!host)return;const list=searchCalculators(CALCULATORS,libraryQuery,{favorites:favoritesOnly?new Set(state.favorites):null});host.innerHTML=list.length?`<div class="results-summary"><strong>${list.length}</strong><span>${state.lang==='ru'?'подходящих инструментов':'matching tools'}</span></div><div class="tools-grid">${list.map(c=>toolCard(c,state)).join('')}</div>`:`<div class="empty-state"><h2>${favoritesOnly?t('noFavorites',state.lang):t('noResults',state.lang)}</h2></div>`}
+function updateLibraryResults(){renderAndRestore('library-search',libraryQuery)}
 function syncConnection(){const el=document.querySelector('#connection');if(!el)return;el.hidden=navigator.onLine;el.textContent=t('offline',state.lang)}
 function renderAndRestore(id,value){render();requestAnimationFrame(()=>{const el=document.querySelector(`#${id}`);if(el){el.focus();el.setSelectionRange?.(value.length,value.length)}})}
 
@@ -81,5 +80,5 @@ importFile.addEventListener('change',async()=>{const file=importFile.files?.[0];
 matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{if(state.theme==='system')applyTheme()});
 
 if(RELEASE_CONFIG.productionBaseUrl){const base=RELEASE_CONFIG.productionBaseUrl.replace(/\/$/,'');let canonical=document.querySelector('link[rel="canonical"]');if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.append(canonical)}canonical.href=base+'/';for(const selector of ['meta[property="og:url"]','meta[name="twitter:url"]']){let meta=document.querySelector(selector);if(!meta){meta=document.createElement('meta');const isOg=selector.includes('property');meta.setAttribute(isOg?'property':'name',isOg?'og:url':'twitter:url');document.head.append(meta)}meta.content=base+'/'}}
-applyTheme();render();if(!state.onboardingDismissed)setTimeout(showOnboarding,350);
+applyTheme();render();
 if('serviceWorker'in navigator)addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js');if(reg.waiting){pendingWorker=reg.waiting;notify(t('updateAvailable',state.lang))}reg.addEventListener('updatefound',()=>{const worker=reg.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller){pendingWorker=worker;toast.innerHTML=`${t('updateAvailable',state.lang)} <button data-action="apply-update">${t('applyUpdate',state.lang)}</button>`;toast.classList.add('show')}})});navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload())}catch{}});
