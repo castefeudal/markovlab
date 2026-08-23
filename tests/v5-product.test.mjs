@@ -58,3 +58,9 @@ test('language switching localizes the static skip link and clears stale live te
   assert.match(app,/querySelector\('\.skip-link'\).*t\('skip',state\.lang\)/);
   assert.match(app,/function changeLanguage\(lang\)[\s\S]*toast\.textContent=''[\s\S]*toast\.classList\.remove\('show'\)/);
 });
+
+test('home product preview uses locale-aware numeric formatting',async()=>{
+  const renderer=await readFile(new URL('../assets/js/renderers-v3.js',import.meta.url),'utf8');
+  assert.match(renderer,/formatNumber\(24\.7,lang,1\)/);
+  assert.doesNotMatch(renderer,/<strong>24,7<\/strong>/);
+});
