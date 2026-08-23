@@ -23,7 +23,7 @@ The 4.17 MB figure is the full optional asset library, not initial transfer. Hom
 - Home hero has no bitmap LCP dependency;
 - width/height is declared for production images;
 - result and library layout avoid artificial min-height;
-- service-worker cache is coherently versioned `markovlab-v5.0.0-r1`.
+- service-worker cache is coherently versioned `markovlab-v5.0.0-r2`; changed shell CSS and app entry points use the matching `5.0.0-r2` request revision so prior PWA clients cannot retain the pre-fix assets.
 
 ## Measurement limitation
 
