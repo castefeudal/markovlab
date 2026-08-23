@@ -1,36 +1,27 @@
-# MARKOVLAB 4.0 Visual QA Matrix
+# MARKOVLAB 5.0 Visual QA Matrix
 
-Reviewed 22 August 2026 in Chromium using the production static tree and `tests/visual-harness.html`. “Pass” means the screenshot was inspected for clipping, horizontal overflow, hierarchy, contrast, long copy, controls and fixed navigation.
+Baseline production was inspected in Chromium on 24 August 2026. Final production review is recorded after merge; rows distinguish actual screenshots from static responsive/code review.
 
-| Route / state | Mobile | Tablet | Desktop | RU | EN | Light | Dark | Midnight | Screenshot | Result |
+| Route / state | Mobile | Tablet | Desktop | RU | EN | Light | Dark | Midnight | Evidence | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Home | 320, 390, 430 | 768, 1024 | 1366, 1440, 1920 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Pass |
-| Library | 390 | 768 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Pass |
-| Body laboratory | 390 | 768 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Pass |
-| BMI form | 390 | 768 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Pass |
-| BMI result | 390 | 768 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Pass |
-| Profile | 390 | 820 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Pass |
-| Progress/history | 390 | 820 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Pass |
-| Evidence | 390 | 820 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Pass |
-| About | 390 | 768 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | reviewed | Pass |
-| Command palette | 390 | 768 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | reviewed | Pass |
-| Onboarding, 3 steps | 390 | 768 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | reviewed | Pass |
-| Theme/data popovers | 390 | 768 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | reviewed | Pass |
-| 404 | 390 | 768 | 1366 | ✓ | ✓ | ✓ | ✓ | ✓ | reviewed | Pass |
-| Print report | — | A4 | A4 | ✓ | ✓ | ✓ | ✓ | ✓ | CSS review | Pass |
+| Home | 320–430 code | 768–1024 code | 1366–1920 code | ✓ | ✓ | ✓ | tokens | tokens | preview + production pending | Ready for deploy review |
+| Library | 320–430 code | 768–1024 code | 1366–1920 code | ✓ | ✓ | ✓ | tokens | tokens | renderer + regression test | Ready for deploy review |
+| Laboratory | 320–430 code | 768–1024 code | 1366–1920 code | ✓ | ✓ | ✓ | tokens | tokens | v4 baseline + v5 overrides | Ready for deploy review |
+| Calculator form | 320–430 code | 768–1024 code | 1366–1920 code | ✓ | ✓ | ✓ | tokens | tokens | 85 empty/result render tests | Ready for deploy review |
+| Calculator result | 320–430 code | 768–1024 code | 1366–1920 code | ✓ | ✓ | ✓ | tokens | tokens | density regression test | Ready for deploy review |
+| Profile | 320–430 code | 768–1024 code | 1366–1920 code | ✓ | ✓ | ✓ | tokens | tokens | route render test | Ready for deploy review |
+| Progress/history | 320–430 code | 768–1024 code | 1366–1920 code | ✓ | ✓ | ✓ | tokens | tokens | route render test | Ready for deploy review |
+| Evidence | 320–430 code | 768–1024 code | 1366–1920 code | ✓ | ✓ | ✓ | tokens | tokens | optimized 1400×1050 visual | Ready for deploy review |
+| Command palette | mobile drawer | tablet dialog | desktop dialog | ✓ | ✓ | ✓ | ✓ | ✓ | keyboard/search tests | Pass |
+| 404 | responsive | responsive | responsive | ✓ | ✓ | system | system | system | static page review | Pass |
+| Print | — | A4 | A4 | ✓ | ✓ | print | print | print | CSS + renderer review | Pass |
 
-## Matrix samples
+## Required final screenshot set
 
-- `assets/screenshots/after/home-ru-light.jpg`
-- `assets/screenshots/after/home-ru-dark.jpg`
-- `assets/screenshots/after/mobile-home-390.jpg`
-- `assets/screenshots/after/mobile-calculator-390.jpg`
-- `assets/screenshots/after/calculator-result.jpg`
+- Home, Library, Laboratory, calculator form/result, Profile, Progress and Evidence;
+- RU/EN;
+- Light/Dark/Midnight;
+- mobile Home and calculator;
+- before/after archive.
 
-## Iterations recorded
-
-1. Structure: library hierarchy, personalized return surface and calculator information order.
-2. Visual: full-bleed instrument hero, mineral/forest depth and result signature.
-3. Polish: 320 px Russian heading fit, persistent mobile RU/EN control, popover event reliability and horizontal reflow containment.
-
-Firefox, WebKit and native assistive-technology runs remain separate release-environment checks; they are not falsely marked as executed here.
+No row is labelled “screenshot reviewed” until the deployed v5 asset has actually been opened and captured.

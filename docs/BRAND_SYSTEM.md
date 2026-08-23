@@ -1,8 +1,8 @@
-# MARKOVLAB Brand System 4.0
+# MARKOVLAB Brand System 5.0
 
 ## Concept
 
-MARKOVLAB is a precision instrument for personal decisions. The identity combines an **M**, a calibrated axis and a rising measurement trace. It deliberately avoids flasks, atoms, brains, medical symbols and generic AI gradients.
+MARKOVLAB is a precision instrument for personal decisions. The 5.0 mark combines a deliberately blunt **M**, a calibration baseline with three ticks and one brass reference point. The point is the personal observation; the baseline is the method used to interpret it.
 
 Brand attributes: precise, scientific, editorial, tactile, controlled, candid and personal.
 
@@ -16,7 +16,7 @@ The master mark is SVG. `assets/brand/` contains:
 - `logo-mono.svg` — one‑colour reproduction;
 - `favicon.svg`, social avatars, OpenGraph assets and PWA icons.
 
-Clear space is one half of the mark diameter on every side. Do not rotate, distort, add glow, recolour individual strokes or place the mark on visually noisy imagery. At 16–24 px use the compact mark; below 16 px use the raster favicon.
+Clear space is one calibration-tick interval on every side. Do not rotate, distort, add glow, recolour individual strokes or place the mark on visually noisy imagery. At 16–24 px use the compact mark. The former orbit/axis construction was removed because it lost silhouette at favicon size.
 
 ## Colour
 
@@ -42,7 +42,7 @@ The product uses a local system stack with high-quality Cyrillic coverage and no
 
 Art direction: precision instruments, measured geometry and premium studio materials. Mineral backgrounds, forest metal, mint traces and small brass details form one series. Images contain no accidental text, fake charts, patients, fitness models or decorative “AI” objects.
 
-Hero, privacy and progress imagery is original generated artwork; laboratory and supporting imagery remains a coordinated local WebP series. Meaningful images receive localized captions; decorative images use `alt=""`.
+The hero is now a code-native product demonstration, not a decorative bitmap. Evidence uses `evidence-interval-v5.webp`: a calibrated physical interval between reference markers. Laboratory imagery remains a coordinated local WebP series and is always paired with a practical question. Meaningful images receive localized captions; decorative images use `alt=""`.
 
 ## Iconography
 
