@@ -27,6 +27,12 @@ test('library renders real entry points and all nine laboratory links',()=>{
   for(const id of ['bmi','tdee','navy-body-fat','e1rm','pace','real-return'])assert.match(html,new RegExp(`#calc/${id}`));
 });
 
+test('natural-language library results stay focused',()=>{
+  const html=calculatorsPage(state,'сколько калорий мне есть');
+  assert.match(html,/#calc\/(?:calorie-target|tdee)/);
+  assert.ok((html.match(/class="tool-row"/g)||[]).length<=12);
+});
+
 test('v5 density overrides remove the old tall empty result and dark result tower',async()=>{
   const css=await readFile(new URL('../assets/css/styles-v5.css',import.meta.url),'utf8');
   assert.match(css,/result-panel\.empty-result\{[^}]*min-height:0/);
