@@ -38,7 +38,7 @@ export function shell(content,state,r){
 }
 
 export function calculatorsPage(state,query='',favoritesOnly=false){
-  const lang=state.lang,q=query.trim(),favoriteSet=favoritesOnly?new Set(state.favorites):null,list=legacySearch(query,favoriteSet);
+  const lang=state.lang,q=query.trim(),favoriteSet=favoritesOnly?new Set(state.favorites):null,list=legacySearch(query,favoriteSet).slice(0,q?12:85);
   const recent=state.recents.map(id=>calculatorMap.get(id)).filter(Boolean).slice(0,4);
   const essentials=['bmi','tdee','navy-body-fat','e1rm','pace','real-return'].map(id=>calculatorMap.get(id)).filter(Boolean);
   const results=q||favoritesOnly?list:essentials;
