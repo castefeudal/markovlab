@@ -1,9 +1,9 @@
-import * as legacy from './renderers.js?v=4.0.0';
-import { CALCULATORS, calculatorMap } from './calculators.js?v=4.0.0';
-import { REFERENCES } from './references.js?v=4.0.0';
-import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js?v=4.0.0';
-import { icon } from './icons.js?v=4.0.0';
-import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js?v=4.0.0';
+import * as legacy from './renderers.js?v=4.1.0';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=4.1.0';
+import { REFERENCES } from './references.js?v=4.1.0';
+import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js?v=4.1.0';
+import { icon } from './icons.js?v=4.1.0';
+import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js?v=4.1.0';
 
 const bi=(ru,en,lang)=>lang==='ru'?ru:en;
 const esc=legacy.esc;
@@ -116,6 +116,6 @@ export function insightsPage(state,historyQuery='',sort='newest'){
 export function aboutPage(state){
   const lang=state.lang;
   return legacy.aboutPage(state)
-    .replace(/MARKOVLAB \/ 2\.0\.0/g,'MARKOVLAB / 4.0.0')
-    .replace(/<p><strong>2\.0\.0<\/strong>/,`<p><strong>4.0.0</strong> — ${bi('новая бренд‑система, natural-language поиск, персональная главная, RU/EN, четыре темы, усиленный calculator UX и release‑контур.','new brand system, natural-language search, personalized home, RU/EN, four themes, stronger calculator UX and release quality gates.',lang)}</p><p><strong>3.1.0</strong> — ${bi('индивидуальные пояснения результата и проверяемая матрица 85 инструментов.','individual result guidance and a verifiable 85-tool matrix.',lang)}</p><p><strong>3.0.0</strong> — ${bi('единая визуальная система и семантически честные визуализации.','unified visual system and semantically honest visualizations.',lang)}</p><p><strong>2.0.0</strong>`);
+    .replace(/MARKOVLAB \/ 2\.0\.0/g,'MARKOVLAB / 4.1.0')
+    .replace(/<p><strong>2\.0\.0<\/strong>/,`<p><strong>4.1.0</strong> — ${bi('editorial‑композиция, техническая навигация, более плотная библиотека и компактный результат без визуального шума.','editorial composition, technical navigation, a denser library and a compact result surface without visual noise.',lang)}</p><p><strong>4.0.0</strong> — ${bi('новая бренд‑система, natural-language поиск, персональная главная, RU/EN, четыре темы и release‑контур.','new brand system, natural-language search, personalized home, RU/EN, four themes and release quality gates.',lang)}</p><p><strong>3.1.0</strong> — ${bi('индивидуальные пояснения результата и проверяемая матрица 85 инструментов.','individual result guidance and a verifiable 85-tool matrix.',lang)}</p><p><strong>3.0.0</strong> — ${bi('единая визуальная система и семантически честные визуализации.','unified visual system and semantically honest visualizations.',lang)}</p><p><strong>2.0.0</strong>`);
 }

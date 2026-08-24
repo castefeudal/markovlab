@@ -1,12 +1,12 @@
-import { CALCULATORS, calculatorMap } from './calculators.js?v=4.0.0';
-import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js?v=4.0.0';
-import { route } from './router.js?v=4.0.0';
-import { validateFields } from './validators.js?v=4.0.0';
-import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=4.0.0';
-import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml, toolCard } from './renderers-v3.js?v=4.0.0';
-import { RELEASE_CONFIG } from './config.js?v=4.0.0';
-import { applyResultGuidance } from './content.js?v=4.0.0';
-import { searchCalculators } from './search.js?v=4.0.0';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=4.1.0';
+import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js?v=4.1.0';
+import { route } from './router.js?v=4.1.0';
+import { validateFields } from './validators.js?v=4.1.0';
+import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=4.1.0';
+import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml, toolCard } from './renderers-v3.js?v=4.1.0';
+import { RELEASE_CONFIG } from './config.js?v=4.1.0';
+import { applyResultGuidance } from './content.js?v=4.1.0';
+import { searchCalculators } from './search.js?v=4.1.0';
 
 let state=loadState(),results=new Map(),errors=new Map(),libraryQuery='',favoritesOnly=false,paletteQuery='',paletteIndex=0,historyQuery='',historySort='newest',evidenceQuery='',onboardingStep=1,deferredInstall=null,pendingWorker=null;
 const app=document.querySelector('#app'),palette=document.querySelector('#palette'),importFile=document.querySelector('#import-file'),toast=document.querySelector('#toast'),onboardingDialog=document.querySelector('#onboarding'),confirmDialog=document.querySelector('#confirm-dialog');
@@ -15,7 +15,25 @@ const loadDraft=id=>{try{return JSON.parse(sessionStorage.getItem(draftKey(id))|
 const saveDraft=(id,v)=>{try{sessionStorage.setItem(draftKey(id),JSON.stringify(v))}catch{}}
 const clearDraft=id=>sessionStorage.removeItem(draftKey(id));
 
-function syncDocumentLocale(){const ru=state.lang==='ru',title=ru?'MARKOVLAB — Личная лаборатория измеримого прогресса':'MARKOVLAB — A personal laboratory for measurable progress',description=ru?'85 инструментов, 9 направлений, открытые формулы, видимые ограничения и локальные данные.':'85 tools, 9 domains, open formulas, visible limitations and local data.';document.title=title;document.querySelector('meta[name="description"]')?.setAttribute('content',description);document.querySelector('meta[property="og:title"]')?.setAttribute('content',title);document.querySelector('meta[property="og:description"]')?.setAttribute('content',description);document.querySelector('meta[property="og:locale"]')?.setAttribute('content',ru?'ru_RU':'en_US');document.querySelector('meta[property="og:image"]')?.setAttribute('content',ru?'./assets/brand/og-markovlab-ru-1200x630.png':'./assets/brand/og-markovlab-en-1200x630.png');document.querySelector('meta[name="twitter:title"]')?.setAttribute('content',title);document.querySelector('meta[name="twitter:description"]')?.setAttribute('content',description);document.querySelector('meta[name="twitter:image"]')?.setAttribute('content',ru?'./assets/brand/og-markovlab-ru-1200x630.png':'./assets/brand/og-markovlab-en-1200x630.png');document.querySelector('link[rel="manifest"]')?.setAttribute('href',ru?'./manifest.webmanifest':'./manifest-en.webmanifest')}
+function syncDocumentLocale(){
+ const ru=state.lang==='ru',title=ru?'MARKOVLAB — Личная лаборатория измеримого прогресса':'MARKOVLAB — A personal laboratory for measurable progress',description=ru?'85 инструментов, 9 направлений, открытые формулы, видимые ограничения и локальные данные.':'85 tools, 9 domains, open formulas, visible limitations and local data.';
+ document.title=title;
+ document.querySelector('meta[name="description"]')?.setAttribute('content',description);
+ document.querySelector('meta[property="og:title"]')?.setAttribute('content',title);
+ document.querySelector('meta[property="og:description"]')?.setAttribute('content',description);
+ document.querySelector('meta[property="og:locale"]')?.setAttribute('content',ru?'ru_RU':'en_US');
+ document.querySelector('meta[property="og:image"]')?.setAttribute('content',ru?'./assets/brand/og-markovlab-ru-1200x630.png':'./assets/brand/og-markovlab-en-1200x630.png');
+ document.querySelector('meta[name="twitter:title"]')?.setAttribute('content',title);
+ document.querySelector('meta[name="twitter:description"]')?.setAttribute('content',description);
+ document.querySelector('meta[name="twitter:image"]')?.setAttribute('content',ru?'./assets/brand/og-markovlab-ru-1200x630.png':'./assets/brand/og-markovlab-en-1200x630.png');
+ document.querySelector('link[rel="manifest"]')?.setAttribute('href',ru?'./manifest.webmanifest':'./manifest-en.webmanifest');
+ document.querySelector('.skip-link').textContent=t('skip',state.lang);
+ palette.setAttribute('aria-label',ru?'Поиск инструментов':'Tool search');
+ onboardingDialog.setAttribute('aria-label',ru?'Вводный экран':'Introduction');
+ confirmDialog.setAttribute('aria-label',ru?'Подтверждение':'Confirmation');
+ const schema=document.querySelector('script[type="application/ld+json"]');
+ if(schema)schema.textContent=JSON.stringify({'@context':'https://schema.org','@type':'SoftwareApplication',name:'MARKOVLAB',applicationCategory:'LifestyleApplication',operatingSystem:ru?'Современный браузер':'Modern browser',inLanguage:state.lang,isAccessibleForFree:true,offers:{'@type':'Offer',price:'0',priceCurrency:ru?'RUB':'USD'},description,url:RELEASE_CONFIG.productionBaseUrl});
+}
 function applyTheme(){const chosen=state.theme==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):state.theme;document.documentElement.dataset.theme=chosen;document.documentElement.lang=state.lang;document.querySelector('meta[name="theme-color"]').content=chosen==='light'?'#f3f4ef':chosen==='midnight'?'#090f19':'#111a17';syncDocumentLocale()}
 function persist(){saveState(state);applyTheme()}
 function render(focus=false){const r=route();let content;if(r.page==='home')content=home(state);else if(r.page==='calculators')content=calculatorsPage(state,libraryQuery,favoritesOnly);else if(r.page==='category')content=categoryPage(state,r.category);else if(r.page==='calc')content=calculatorPage(calculatorMap.get(r.id),state,loadDraft(r.id),results.get(r.id),errors.get(r.id)||{});else if(r.page==='profile')content=profilePage(state);else if(r.page==='insights')content=insightsPage(state,historyQuery,historySort);else if(r.page==='evidence')content=evidencePage(state,evidenceQuery);else if(r.page==='about')content=aboutPage(state);else content=notFoundPage(state);app.innerHTML=shell(content,state,r);applyTheme();syncConnection();if(deferredInstall)document.querySelector('[data-action="install"]')?.removeAttribute('hidden');if(focus)requestAnimationFrame(()=>{scrollTo({top:0,left:0,behavior:'auto'});document.querySelector('#main')?.focus({preventScroll:true})})}

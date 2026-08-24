@@ -1,14 +1,14 @@
-# MARKOVLAB 4.0
+# MARKOVLAB 4.1
 
 MARKOVLAB — двуязычная персональная лаборатория измеримого прогресса: 85 прозрачных калькуляторов в 9 направлениях, reusable‑профиль, история, снимки, динамика, доказательный контекст и практические следующие шаги.
 
 > Вопрос → ввод → расчёт → значение → основание → неопределённость → ограничение → действие → история → динамика.
 
-![MARKOVLAB 4.0 — главная страница](assets/screenshots/after/home-ru-light.jpg)
+![MARKOVLAB 4.1 — главная страница](assets/screenshots/after/home-ru-light-v4.1.jpg)
 
 Продукт работает без аккаунта и backend: профиль, избранное, история и настройки остаются в браузере. Удалённые шрифты, analytics, trackers и обязательные runtime API отсутствуют.
 
-## Что входит в 4.0
+## Что входит в 4.1
 
 - 85 стабильных calculator ID и 9 лабораторий: тело, энергия, питание, сила, кардио, восстановление, фокус, финансы и конвертеры.
 - Natural-language поиск с RU/EN aliases, опечатками и intent‑запросами вроде «сколько калорий мне есть» или “inflation adjusted return”.
@@ -19,6 +19,7 @@ MARKOVLAB — двуязычная персональная лаборатори
 - Versioned export/import, v1/v2→v3 migration, bounded import и защита от prototype pollution.
 - Installable PWA, offline app shell, update lifecycle, print‑report и branded 404.
 - Оригинальная logo system и локальная серия оптимизированных WebP‑визуалов.
+- Более плотная editorial‑композиция: техническая навигация вместо SaaS‑пилюль, интегрированный hero‑visual, компактная библиотека и двухколоночный результат без длинной «башни» текста.
 
 ## Запуск
 
@@ -37,7 +38,7 @@ npm test
 npm run docs:matrix
 ```
 
-89 автоматических проверок покрывают formulas, registry 85/85, routes/render, RU/EN parity, natural-language search, storage/import/migration, PWA, manifests, themes bootstrap, cache-safe runtime assets, content completeness и отсутствие remote runtime dependencies. CI запускает тесты и проверяет, что обе completeness‑матрицы воспроизводимы.
+90 автоматических проверок покрывают formulas, registry 85/85, routes/render, RU/EN parity, document chrome, natural-language search, storage/import/migration, PWA, manifests, themes bootstrap, cache-safe runtime assets, content completeness и отсутствие remote runtime dependencies. CI запускает тесты и проверяет, что обе completeness‑матрицы воспроизводимы.
 
 ## Архитектура
 
@@ -66,4 +67,4 @@ GitHub Pages публикуется workflow `deploy-pages.yml` из `main`. В�
 - [MARKOVLAB 10X report](docs/MARKOVLAB_10X_REPORT.md)
 - [Release notes](docs/RELEASE_NOTE.md)
 
-Версия: **4.0.0**.
+Версия: **4.1.0**.

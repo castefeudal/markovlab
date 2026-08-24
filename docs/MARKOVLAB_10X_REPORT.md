@@ -10,7 +10,7 @@
 
 ## Problems
 
-The v3.1 core was already useful and mathematically mature, but discovery still exposed too much of the 85-tool registry at once; the hero did not own a distinctive product image; language selection was not a complete first-class shell control; profile value was represented mainly as completion; and the release evidence did not include current browser screenshots. Browser QA of the new build also exposed two concrete interaction defects: an invalid early-theme IIFE and unreliable icon-menu/calculator click handling. Both were fixed and regression-covered.
+The v3.1 core was already useful and mathematically mature, but discovery still exposed too much of the 85-tool registry at once; the hero did not own a distinctive product image; language selection was not a complete first-class shell control; profile value was represented mainly as completion; and the release evidence did not include current browser screenshots. The first 4.0 visual pass then remained too close to a generic SaaS dashboard: inflated navigation pills, oversized headings, decorative image treatment, excessive card chrome and a vertically stretched result surface. The 4.1 pass directly removes those weaknesses. Browser QA also exposed an over-broad `section + section` rule that created artificial whitespace inside the result, plus untranslated document chrome in English; both are fixed and regression-covered.
 
 ## Product Architecture
 
@@ -26,7 +26,7 @@ The existing original M/axis/progress mark was expanded and documented as a comp
 
 ## Visual Design
 
-The release adds full-bleed imagery, stronger typographic scale, quieter surface depth, formal spacing, hierarchy in the library, a sharper calculator result signature and explicit responsive rules through 320 px.
+The release uses a restrained editorial type scale, technical index navigation, deliberate text/instrument compositions, quieter surface depth, formal spacing, hierarchy in the library, a compact two-column calculator result signature and explicit responsive rules through 320 px. Global section spacing is now scoped only to page-level blocks, so nested evidence and result sections retain useful density.
 
 ## Images
 
@@ -70,7 +70,7 @@ Method type and evidence strength remain independent dimensions. The interface d
 
 ## Testing
 
-Final local gate: 89 passed, 0 failed. It covers formulas, registry, render states, search intents, localization parity, storage/import/migration, assets, PWA, version consistency, early bootstrap syntax, stale-cache prevention and completeness matrices.
+Final local gate: 90 passed, 0 failed. It covers formulas, registry, render states, search intents, localization parity including document chrome, storage/import/migration, assets, PWA, version consistency, early bootstrap syntax, stale-cache prevention and completeness matrices.
 
 ## Browser QA
 

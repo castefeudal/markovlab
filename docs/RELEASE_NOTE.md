@@ -1,6 +1,14 @@
-# MARKOVLAB 4.0.0 — Measurable Progress
+# MARKOVLAB 4.1.0 — Measurable Progress
 
-Release date: 22 August 2026.
+Release date: 24 August 2026.
+
+## 4.1 editorial instrument pass
+
+- Reduced the generic dashboard chrome: navigation is now a restrained technical index with a calibrated active marker.
+- Rebuilt the hero as a deliberate text/instrument composition instead of a decorative full-bleed image.
+- Tightened type scale, section rhythm and library density across desktop, tablet and mobile.
+- Rebalanced the calculator workspace toward the result and converted the result explanation into a compact two-column reading surface on wide screens.
+- Removed unnecessary card nesting, inflated radii and shadow weight while preserving all 85 calculators and existing product data.
 
 ## Product
 
@@ -29,11 +37,11 @@ Release date: 22 August 2026.
 - Browser-language detection defaults non-Russian locales to English; manual language and theme persist locally.
 - State schema v3 migrates v1/v2 data and keeps safe versioned import/export.
 - Local-first, offline and zero-remote-runtime principles remain intact.
-- Versioned runtime asset URLs prevent an older active service worker from mixing previous modules with the 4.0 shell.
+- Versioned runtime asset URLs prevent an older active service worker from mixing previous modules with the 4.1 shell.
 
 ## Quality
 
-- 88 automated tests pass.
+- 90 automated tests pass.
 - Required content matrix: 85/85 complete in RU and EN.
 - Chromium before/after and responsive screenshot archive included with release artifacts.
 - CI validates tests and regenerated completeness matrices on every pull request.

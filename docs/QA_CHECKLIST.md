@@ -1,4 +1,4 @@
-# Release checklist MARKOVLAB 4.0.0
+# Release checklist MARKOVLAB 4.1.0
 
 ## Автоматически — выполнено
 
@@ -7,7 +7,7 @@
 - [x] Formula regression vectors и source ID integrity.
 - [x] Полнота индивидуального контента и матрица 85 инструментов.
 - [x] Русские metadata, manifest, PWA shortcuts и result units.
-- [x] Согласованная версия 4.0.0.
+- [x] Согласованная версия 4.1.0.
 - [x] Migration, import security, structured history и trends.
 - [x] Нет произвольной шкалы результата или fake gauge.
 - [x] Локальные assets существуют; remote runtime JS/CSS/font отсутствуют.
