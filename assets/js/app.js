@@ -1,9 +1,9 @@
 import { CALCULATORS, calculatorMap } from './calculators.js?v=5.0.0';
 import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js?v=5.1.0';
 import { route } from './router.js?v=5.0.0';
-import { validateFields } from './validators.js?v=5.0.0';
+import { validateFields } from './validators.js?v=5.1.0-r2';
 import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=5.1.0';
-import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.1.0';
+import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.1.0-r2';
 import { RELEASE_CONFIG } from './config.js?v=5.1.0';
 import { applyResultGuidance } from './content.js?v=5.0.0';
 

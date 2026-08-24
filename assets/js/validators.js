@@ -1,7 +1,7 @@
 export function validateFields(fields,values,lang='ru'){const errors={};for(const f of fields){const raw=values[f.id];if((raw===''||raw==null)&&f.required!==false){errors[f.id]=lang==='ru'?'Заполните поле':'Required field';continue}if(raw===''||raw==null)continue;if(f.type==='number'||f.type==='range'){const n=Number(raw);if(!Number.isFinite(n))errors[f.id]=lang==='ru'?'Введите число':'Enter a number';else if(f.min!=null&&n<f.min)errors[f.id]=`${lang==='ru'?'Минимум':'Minimum'}: ${f.min}`;else if(f.max!=null&&n>f.max)errors[f.id]=`${lang==='ru'?'Максимум':'Maximum'}: ${f.max}`}}return errors}
 
 const allowedProfile=new Set(['age','sex','height','weight','waist','hip','neck','bodyFat','restingHR','steps','moderateMinutes','vigorousMinutes','strengthDays','sleepHours','caffeineDaily','subjectiveStress','primaryGoal','income','savings','expenses','emergencyCash']);
-const allowedThemes=new Set(['system','light','dark','midnight']);
+const allowedThemes=new Set(['system','light','paper','dark','midnight']);
 const uid=()=>globalThis.crypto?.randomUUID?.()||`ml-${Date.now().toString(36)}`;
 const safeDate=v=>Number.isFinite(Date.parse(v))?new Date(v).toISOString():new Date().toISOString();
 

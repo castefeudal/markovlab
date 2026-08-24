@@ -1,4 +1,4 @@
-import * as legacy from './renderers.js?v=5.0.0';
+import * as legacy from './renderers.js?v=5.1.0-r2';
 import { CALCULATORS, calculatorMap } from './calculators.js?v=5.0.0';
 import { REFERENCES } from './references.js?v=5.0.0';
 import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js?v=5.1.0';
@@ -150,7 +150,7 @@ export function calculatorPage(calc,state,session,resultData,errors={}){
   }
   const related=relatedFor(calc,CALCULATORS).map(id=>calculatorMap.get(id)).filter(Boolean);
   html=html.replace(/<div class="tools-grid compact">[\s\S]*?<\/div><\/section>$/,`<div class="tools-grid compact">${related.map(c=>toolCard(c,state,WHEN_USEFUL[c.id]?.[lang])).join('')}</div></section>`);
-  return html;
+  return html.replaceAll('type="number"','type="text"');
 }
 
 function proWorkbench(calc,lang){
@@ -182,7 +182,8 @@ export function profilePage(state){
   const lang=state.lang;
   return legacy.profilePage(state)
     .replace(/<div class="profile-progress">[\s\S]*?<\/div><\/div><\/header>/,`<aside class="profile-payoff"><strong>${bi('Введите один раз — используйте в связанных расчётах','Enter once — reuse across related calculations',lang)}</strong><span>${bi('Заполняйте только то, что действительно сократит повторный ввод.','Only add data that meaningfully reduces repeated entry.',lang)}</span></aside></header>`)
-    .replace(/<div class="privacy-callout">/,`<figure class="profile-page-visual"><img src="./assets/images/core/profile-once.webp" width="720" height="540" loading="eager" alt=""><figcaption>${bi('Заполняйте только те поля, которые хотите повторно использовать. Полный профиль не требуется.','Fill only the fields you want to reuse. A complete profile is never required.',lang)}</figcaption></figure><div class="privacy-callout">`);
+    .replace(/<div class="privacy-callout">/,`<figure class="profile-page-visual"><img src="./assets/images/core/profile-once.webp" width="720" height="540" loading="eager" alt=""><figcaption>${bi('Заполняйте только те поля, которые хотите повторно использовать. Полный профиль не требуется.','Fill only the fields you want to reuse. A complete profile is never required.',lang)}</figcaption></figure><div class="privacy-callout">`)
+    .replaceAll('type="number"','type="text"');
 }
 
 export function insightsPage(state,historyQuery='',sort='newest'){

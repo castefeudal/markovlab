@@ -102,6 +102,12 @@ test('every calculator exposes an honest Pro analysis surface',()=>{
   }
 });
 
+test('numeric fields accept decimal comma before application normalization',()=>{
+  const html=calculatorPage(CALCULATORS.find(calc=>calc.id==='tdee'),state,null,null,{});
+  assert.match(html,/type="text"[^>]*inputmode="decimal"/);
+  assert.doesNotMatch(html,/type="number"/);
+});
+
 test('theme menu has four distinct palettes plus explicit system behavior',()=>{
   const html=shell('<p>content</p>',state,{page:'home'});
   for(const theme of ['light','paper','dark','midnight','system'])assert.match(html,new RegExp(`data-theme="${theme}"`));
