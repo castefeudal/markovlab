@@ -108,6 +108,13 @@ test('numeric fields accept decimal comma before application normalization',()=>
   assert.doesNotMatch(html,/type="number"/);
 });
 
+test('calculator Pro mode survives result rerenders',async()=>{
+  const app=await readFile(new URL('../assets/js/app.js',import.meta.url),'utf8');
+  assert.match(app,/calcModes=new Map\(\)/);
+  assert.match(app,/new MutationObserver\([\s\S]*syncCalcMode/);
+  assert.match(app,/calcModes\.set\(form\.dataset\.calc,mode\)/);
+});
+
 test('theme menu has four distinct palettes plus explicit system behavior',()=>{
   const html=shell('<p>content</p>',state,{page:'home'});
   for(const theme of ['light','paper','dark','midnight','system'])assert.match(html,new RegExp(`data-theme="${theme}"`));

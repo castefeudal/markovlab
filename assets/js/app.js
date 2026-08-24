@@ -7,7 +7,7 @@ import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage
 import { RELEASE_CONFIG } from './config.js?v=5.1.0';
 import { applyResultGuidance } from './content.js?v=5.0.0';
 
-let state=loadState(),results=new Map(),errors=new Map(),libraryQuery='',favoritesOnly=false,paletteQuery='',paletteIndex=0,historyQuery='',historySort='newest',evidenceQuery='',onboardingStep=1,deferredInstall=null,pendingWorker=null;
+let state=loadState(),results=new Map(),errors=new Map(),calcModes=new Map(),libraryQuery='',favoritesOnly=false,paletteQuery='',paletteIndex=0,historyQuery='',historySort='newest',evidenceQuery='',onboardingStep=1,deferredInstall=null,pendingWorker=null;
 const app=document.querySelector('#app'),palette=document.querySelector('#palette'),importFile=document.querySelector('#import-file'),toast=document.querySelector('#toast'),onboardingDialog=document.querySelector('#onboarding'),confirmDialog=document.querySelector('#confirm-dialog');
 const draftKey=id=>`markovlab-draft-${id}`;
 const loadDraft=id=>{try{return JSON.parse(sessionStorage.getItem(draftKey(id))||'null')}catch{return null}};
@@ -21,6 +21,8 @@ function render(focus=false){const r=route();let content;if(r.page==='home')cont
 function notify(message,type='info'){toast.textContent=message;toast.dataset.type=type;toast.classList.add('show');clearTimeout(notify.timer);notify.timer=setTimeout(()=>toast.classList.remove('show'),2800)}
 function changeLanguage(lang){if(!['ru','en'].includes(lang)||lang===state.lang)return;state.lang=lang;toast.textContent='';toast.classList.remove('show');persist();render()}
 function valuesFrom(form){return Object.fromEntries([...new FormData(form).entries()].map(([key,value])=>[key,typeof value==='string'&&/^-?\d+,\d+$/.test(value.trim())?value.replace(',','.'):value]))}
+function syncCalcMode(form,mode){if(!form)return;form.dataset.mode=mode;form.querySelectorAll('[data-action="calc-mode"]').forEach(item=>item.setAttribute('aria-selected',String(item.dataset.mode===mode)))}
+new MutationObserver(()=>{const form=document.querySelector('#calc-form');if(form)syncCalcMode(form,calcModes.get(form.dataset.calc)||'basic')}).observe(app,{childList:true});
 function toggleFavorite(id){if(!calculatorMap.has(id))return;state.favorites=state.favorites.includes(id)?state.favorites.filter(x=>x!==id):[...state.favorites,id];persist();render()}
 function calculate(form){const id=form.dataset.calc,calc=calculatorMap.get(id),values=valuesFrom(form),errs=validateFields(calc.fields,values,state.lang);saveDraft(id,values);if(Object.keys(errs).length){errors.set(id,errs);results.delete(id);render();requestAnimationFrame(()=>document.querySelector('.error-summary')?.focus());return}try{const out=applyResultGuidance(calc,calc.calculate(values,{profile:state.profile})),primary=out?.primary;if(primary==null||(typeof primary==='number'&&!Number.isFinite(primary))||(typeof primary==='string'&&/NaN|undefined/.test(primary)))throw new Error('invalid');errors.delete(id);results.set(id,out);touchRecent(state,id);render();const panel=document.querySelector('.result-panel');panel?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});panel?.focus({preventScroll:true})}catch(error){console.error('MARKOVLAB calculation failed',{calculator:id,error});errors.set(id,{[calc.fields[0].id]:t('invalid',state.lang)});results.delete(id);render()}}
 const escUi=value=>String(value??'').replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
@@ -52,7 +54,7 @@ app.addEventListener('click',async e=>{
  const reopen=e.target.closest('[data-reopen-history]');if(reopen){const item=state.history.find(x=>x.id===reopen.dataset.reopenHistory);if(item){saveDraft(item.calcId,item.inputs);location.hash=`#calc/${item.calcId}`}return}
  const filter=e.target.closest('[data-filter]');if(filter){favoritesOnly=filter.dataset.filter==='favorites';libraryQuery='';render();return}
  const action=e.target.closest('[data-action]')?.dataset.action;if(!action)return;
- if(action==='calc-mode'){const button=e.target.closest('[data-mode]'),form=button?.closest('#calc-form'),mode=button?.dataset.mode;if(form&&['basic','pro'].includes(mode)){form.dataset.mode=mode;form.querySelectorAll('[data-action="calc-mode"]').forEach(item=>item.setAttribute('aria-selected',String(item.dataset.mode===mode)));if(mode==='pro')form.querySelector('.pro-workbench')?.focus?.()}return}
+ if(action==='calc-mode'){const button=e.target.closest('[data-mode]'),form=button?.closest('#calc-form'),mode=button?.dataset.mode;if(form&&['basic','pro'].includes(mode)){calcModes.set(form.dataset.calc,mode);syncCalcMode(form,mode)}return}
  if(action==='pro-scenario'){runProScenario(e.target.closest('[data-action="pro-scenario"]'));return}
  if(action==='calculate'){e.preventDefault();calculate(e.target.closest('#calc-form'));return}
  if(action==='palette')openPalette();
