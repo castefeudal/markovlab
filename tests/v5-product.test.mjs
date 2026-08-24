@@ -113,7 +113,8 @@ test('calculator Pro mode survives result rerenders',async()=>{
   assert.match(app,/calcModes=new Map\(\)/);
   assert.match(app,/new MutationObserver\([\s\S]*syncCalcMode/);
   assert.match(app,/calcModes\.set\(form\.dataset\.calc,mode\)/);
-  assert.match(app,/button\.addEventListener\('click',\(\)=>runProScenario\(button\)\)/);
+  assert.match(app,/button\.addEventListener\('click',\(\)=>runProScenarioReliable\(button\)\)/);
+  assert.match(app,/form\.elements\.namedItem\(field\.id\)/);
 });
 
 test('theme menu has four distinct palettes plus explicit system behavior',()=>{
