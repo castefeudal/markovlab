@@ -66,6 +66,7 @@ app.addEventListener('click',async e=>{
  const filter=e.target.closest('[data-filter]');if(filter){favoritesOnly=filter.dataset.filter==='favorites';libraryQuery='';render();return}
  const action=e.target.closest('[data-action]')?.dataset.action;if(!action)return;
  if(action==='calc-mode'){const button=e.target.closest('[data-mode]'),form=button?.closest('#calc-form'),mode=button?.dataset.mode;if(form&&['basic','pro'].includes(mode)){calcModes.set(form.dataset.calc,mode);syncCalcMode(form,mode)}return}
+ if(action==='pro-scenario'){runProScenarioReliable(e.target.closest('[data-action="pro-scenario"]'));return}
  if(action==='calculate'){e.preventDefault();calculate(e.target.closest('#calc-form'));return}
  if(action==='palette')openPalette();
  if(action==='lang')changeLanguage(state.lang==='ru'?'en':'ru')
