@@ -31,6 +31,9 @@
   .badge{min-height:22px;padding:3px 7px;border-radius:5px;background:transparent!important;border:1px solid var(--v5-rule);font-size:8.5px}.badge:before{display:none}
   .chip{border-radius:7px}.profile-chip{border-radius:5px}
   .section-head{padding-bottom:16px;border-bottom:1px solid var(--v5-rule)}.section-head h2{font-size:clamp(1.7rem,2.7vw,2.7rem)}
+  /* Page rhythm belongs to page sections, never to nested evidence/result blocks. */
+  .main-v5 :where(section+section){margin-top:0}
+  .main-v5>section+section{margin-top:clamp(64px,8vw,120px)}
   .empty-state{min-height:230px;border-radius:var(--v5-radius);background:var(--v5-paper)}
 }
 

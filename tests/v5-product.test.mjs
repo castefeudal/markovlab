@@ -64,3 +64,10 @@ test('home product preview uses locale-aware numeric formatting',async()=>{
   assert.match(renderer,/formatNumber\(24\.7,lang,1\)/);
   assert.doesNotMatch(renderer,/<strong>24,7<\/strong>/);
 });
+
+
+test('page rhythm never inflates nested result or evidence sections',async()=>{
+  const css=await readFile(new URL('../assets/css/styles-v5.css',import.meta.url),'utf8');
+  assert.match(css,/\.main-v5 :where\(section\+section\)\{margin-top:0\}/);
+  assert.match(css,/\.main-v5>section\+section\{margin-top:clamp\(/);
+});
