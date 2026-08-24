@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { shell, home, calculatorsPage } from '../assets/js/renderers-v3.js';
+import { shell, home, calculatorsPage, calculatorPage, categoryPage } from '../assets/js/renderers-v3.js';
+import { CALCULATORS } from '../assets/js/calculators.js';
 
 const state={lang:'ru',theme:'light',profile:{},favorites:[],recents:[],history:[],snapshots:[]};
 
@@ -70,4 +71,39 @@ test('page rhythm never inflates nested result or evidence sections',async()=>{
   const css=await readFile(new URL('../assets/css/styles-v5.css',import.meta.url),'utf8');
   assert.match(css,/\.main-v5 :where\(section\+section\)\{margin-top:0\}/);
   assert.match(css,/\.main-v5>section\+section\{margin-top:clamp\(/);
+});
+
+test('home and laboratories connect photography to practical use',()=>{
+  const html=home(state);
+  for(const asset of ['body-measurement.webp','nutrition-planning.webp','training-review.webp','decision-scenarios.webp'])assert.match(html,new RegExp(asset));
+  assert.match(html,/Павел Марков/);
+  const category=categoryPage(state,'body');
+  assert.match(category,/category-practice/);
+  assert.match(category,/одинаковый протокол измерения/i);
+});
+
+test('all nine laboratories have distinct purpose-built editorial photography',()=>{
+  const assets=new Set();
+  for(const id of ['body','energy','nutrition','strength','cardio','recovery','mind','money','utility']){
+    const html=categoryPage(state,id);
+    const asset=html.match(/assets\/images\/editorial\/([^"']+\.webp)/)?.[1];
+    assert.ok(asset,`${id}: missing editorial asset`);
+    assets.add(asset);
+  }
+  assert.equal(assets.size,9);
+});
+
+test('every calculator exposes an honest Pro analysis surface',()=>{
+  for(const calc of CALCULATORS){
+    const html=calculatorPage(calc,state,null,null,{});
+    assert.match(html,/MARKOVLAB PRO/,`${calc.id}: missing Pro mode`);
+    assert.match(html,/data-action="calc-mode" data-mode="pro"/,`${calc.id}: missing Pro tab`);
+    assert.match(html,/полный протокол|Точный протокол/i,`${calc.id}: missing protocol`);
+  }
+});
+
+test('theme menu has four distinct palettes plus explicit system behavior',()=>{
+  const html=shell('<p>content</p>',state,{page:'home'});
+  for(const theme of ['light','paper','dark','midnight','system'])assert.match(html,new RegExp(`data-theme="${theme}"`));
+  assert.match(html,/Системная[\s\S]*Автоматически/);
 });

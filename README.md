@@ -1,4 +1,4 @@
-# MARKOVLAB 5.0
+# MARKOVLAB 5.1
 
 MARKOVLAB — двуязычная персональная лаборатория измеримого прогресса: 85 прозрачных калькуляторов в 9 направлениях, reusable‑профиль, история, снимки, динамика, доказательный контекст и практические следующие шаги.
 
@@ -8,7 +8,7 @@ MARKOVLAB — двуязычная персональная лаборатори
 
 Продукт работает без аккаунта и backend: профиль, избранное, история и настройки остаются в браузере. Удалённые шрифты, analytics, trackers и обязательные runtime API отсутствуют.
 
-## Что входит в 5.0
+## Что входит в 5.1
 
 - 85 стабильных calculator ID и 9 лабораторий: тело, энергия, питание, сила, кардио, восстановление, фокус, финансы и конвертеры.
 - Natural-language поиск с RU/EN aliases, опечатками и intent‑запросами вроде «сколько калорий мне есть» или “inflation adjusted return”.
@@ -16,7 +16,9 @@ MARKOVLAB — двуязычная персональная лаборатори
 - Compact calculator decision surface: число, смысл, limitation, action и save доступны в одном рабочем контексте; Evidence и Formula раскрываются отдельно.
 - Плотная библиотека: практические starting points, 9 лабораторий и компактные строки инструментов вместо стены одинаковых карточек.
 - Русская и английская версии без смешанного интерфейса; locale‑форматирование чисел и дат.
-- Light, Dark, Midnight и System с ранней инициализацией без flash неправильной темы.
+- Light, Paper, Dark и Midnight как четыре разные палитры; System следует ОС и инициализируется без flash неправильной темы.
+- Basic / Pro на всех 85 страницах: полный input protocol и sensitivity stress test со сравнением Scenario A/B.
+- Практические сценарии для каждой лаборатории, авторский голос Павла Маркова и оригинальная editorial-фотосерия.
 - Профиль с объяснённым ROI, персональная главная, избранное, history, snapshots и честные SVG‑графики без выдуманного сглаживания.
 - Versioned export/import, v1/v2→v3 migration, bounded import и защита от prototype pollution.
 - Installable PWA, offline app shell, update lifecycle, print‑report и branded 404.
@@ -39,7 +41,7 @@ npm test
 npm run docs:matrix
 ```
 
-95 автоматических проверок покрывают formulas, registry 85/85, routes/render, RU/EN parity, natural-language search, storage/import/migration, PWA, manifests, themes bootstrap, v5 navigation/density gates, cache-safe runtime assets, content completeness и отсутствие remote runtime dependencies.
+Автоматические проверки покрывают formulas, registry 85/85, Basic/Pro surfaces, routes/render, RU/EN parity, natural-language search, storage/import/migration, PWA, manifests, themes bootstrap, cache-safe runtime assets, content completeness и отсутствие remote runtime dependencies.
 
 ## Архитектура
 
@@ -67,5 +69,7 @@ GitHub Pages публикуется workflow `deploy-pages.yml` из `main`. В�
 - [QA report](docs/QA_REPORT.md)
 - [MARKOVLAB 5X report](docs/MARKOVLAB_5X_REPORT.md)
 - [Release notes 5.0.0](docs/RELEASE_NOTES_5.0.0.md)
+- [Release notes 5.1.0](docs/RELEASE_NOTES_5.1.0.md)
+- [Шлифовочный production-промт 9.5+](docs/MARKOVLAB_95_POLISH_PROMPT.md)
 
-Версия: **5.0.0**.
+Версия: **5.1.0**.

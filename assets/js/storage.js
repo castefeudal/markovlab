@@ -2,6 +2,7 @@ import { normalizeImport } from './validators.js?v=5.0.0';
 
 const KEY = 'markovlab-state-v3';
 const LEGACY_KEYS = ['markovlab-state-v2','markovlab-state-v1'];
+const THEMES = new Set(['system','light','paper','dark','midnight']);
 const uid = () => globalThis.crypto?.randomUUID?.() || `ml-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,10)}`;
 
 export const DEFAULT_STATE = Object.freeze({version:3,lang:'en',theme:'system',profile:{},favorites:[],history:[],snapshots:[],recents:[],onboardingDismissed:false});
@@ -10,7 +11,7 @@ const fresh = () => ({...structuredClone(DEFAULT_STATE),lang:preferredLanguage()
 
 export function migrateState(raw) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Number(raw.version || 1) > 3) return fresh();
-  return {...fresh(),...raw,version:3,lang:raw.lang==='ru'?'ru':'en',profile:raw.profile&&typeof raw.profile==='object'?raw.profile:{},favorites:Array.isArray(raw.favorites)?raw.favorites:[],history:Array.isArray(raw.history)?raw.history:[],snapshots:Array.isArray(raw.snapshots)?raw.snapshots:[],recents:Array.isArray(raw.recents)?raw.recents:[],onboardingDismissed:Boolean(raw.onboardingDismissed)};
+  return {...fresh(),...raw,version:3,lang:raw.lang==='ru'?'ru':'en',theme:THEMES.has(raw.theme)?raw.theme:'system',profile:raw.profile&&typeof raw.profile==='object'?raw.profile:{},favorites:Array.isArray(raw.favorites)?raw.favorites:[],history:Array.isArray(raw.history)?raw.history:[],snapshots:Array.isArray(raw.snapshots)?raw.snapshots:[],recents:Array.isArray(raw.recents)?raw.recents:[],onboardingDismissed:Boolean(raw.onboardingDismissed)};
 }
 export function loadState(){try{const current=localStorage.getItem(KEY),legacy=LEGACY_KEYS.map(key=>localStorage.getItem(key)).find(Boolean),state=migrateState(JSON.parse(current||legacy||'null'));if(!current&&legacy)saveState(state);return state}catch{return fresh()}}
 export function saveState(state){localStorage.setItem(KEY,JSON.stringify({...state,version:3}))}
