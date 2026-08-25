@@ -110,12 +110,14 @@ test('numeric fields accept decimal comma before application normalization',()=>
 
 test('calculator Pro mode survives result rerenders',async()=>{
   const app=await readFile(new URL('../assets/js/app.js',import.meta.url),'utf8');
+  const renderer=await readFile(new URL('../assets/js/renderers-v3.js',import.meta.url),'utf8');
   assert.match(app,/calcModes=new Map\(\)/);
   assert.match(app,/new MutationObserver\([\s\S]*syncCalcMode/);
   assert.match(app,/calcModes\.set\(form\.dataset\.calc,mode\)/);
-  assert.match(app,/button\.addEventListener\('click',\(\)=>runProScenarioReliable\(button\)\)/);
   assert.match(app,/form\.elements\.namedItem\(field\.id\)/);
-  assert.match(app,/if\(action==='pro-scenario'\)\{runProScenarioReliable/);
+  assert.match(app,/matches\('\[data-pro-delta\]'\)\)runProScenarioReliable/);
+  assert.match(renderer,/role="radiogroup"/);
+  assert.match(renderer,/data-pro-delta/);
 });
 
 test('theme menu has four distinct palettes plus explicit system behavior',()=>{
