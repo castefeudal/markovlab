@@ -1,4 +1,4 @@
-import * as F from './formulas.js?v=5.2.0-r3';
+import * as F from './formulas.js?v=5.2.0-r4';
 const bi=(ru,en)=>({ru,en});
 const n=x=>Number(x);
 const num=(id,ru,en,unit,min,max,def,profileKey,step='any')=>({id,type:'number',label:bi(ru,en),unit,min,max,default:def,profileKey,step,required:true});
