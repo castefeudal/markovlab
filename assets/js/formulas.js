@@ -39,6 +39,33 @@ export const observedTdee = (dailyIntake, weightChangeKg, days, kcalPerKg = 7700
 export const calorieTarget = (maintenance, changePct) => finite(maintenance, changePct) ? maintenance * (1 + changePct / 100) : NaN;
 export const energyEquivalent = (kcal) => finite(kcal) ? kcal / 7700 : NaN;
 
+// Source model: user-provided workbook "Калькулятор". The web version keeps
+// the workbook's arithmetic intact, while naming every input explicitly in
+// grams/day, kcal/day or a boolean flag. It is an estimate of fat-equivalent
+// energy surplus, not a measurement of body-composition change.
+export const fatGainFromSurplusModel = ({age, weightKg, heightCm, bodyFatPct, sex = 'male', trainingLevel = 'beginner', activity = 'sedentary', proteinG, fatG, carbsG, glycogenDepleted = false, strengthLast24h = false, deficitKcal = 500}) => {
+  const activityFactor = {minimal:1.1, sedentary:1.2, active:1.4}[activity];
+  const trainingFactor = {beginner:.30, intermediate:.35, athlete:.45}[trainingLevel];
+  const glycogenFactor = glycogenDepleted ? .25 : (strengthLast24h ? .8 : 1);
+  if(!finite(age,weightKg,heightCm,bodyFatPct,proteinG,fatG,carbsG,deficitKcal,activityFactor,trainingFactor) || weightKg<=0 || heightCm<=0 || age<0 || bodyFatPct<0 || bodyFatPct>100 || proteinG<0 || fatG<0 || carbsG<0) return {fatKg:NaN};
+  const resting = 10*weightKg + 6.25*heightCm - 5*age + (sex==='female' ? -161 : 5);
+  const tdeeEstimate = resting * activityFactor;
+  const fatFreeMass = weightKg * (1-bodyFatPct/100);
+  const muscleKg = fatFreeMass * trainingFactor * (sex==='female' ? .8 : 1);
+  const glycogenCapacityG = muscleKg * ({beginner:12.5, intermediate:20, athlete:30}[trainingLevel]) + 100;
+  const glycogenAvailableG = glycogenCapacityG * glycogenFactor;
+  const pRatio = 10.4 / (10.4 + (weightKg * bodyFatPct / 100));
+  const proteinKcal = proteinG * 4, fatKcal = fatG * 9, carbsKcal = carbsG * 4;
+  const proteinTef = proteinKcal * .25, fatTef = fatKcal * .02, carbsTef = carbsKcal * .1;
+  const requiredProteinG = weightKg * 2, requiredProteinKcal = requiredProteinG * 4;
+  const proteinRemainder = ((proteinKcal-proteinTef)-requiredProteinKcal)*.2;
+  const fatRemainder = fatKcal-fatTef;
+  const carbsRemainder = Math.max(0, carbsKcal-carbsTef-((glycogenCapacityG-glycogenAvailableG)*4));
+  const surplusKcal = Math.max(0, proteinRemainder+fatRemainder+carbsRemainder-(tdeeEstimate-requiredProteinKcal));
+  const fatKg = surplusKcal/7700;
+  return {tdeeEstimate,muscleKg,glycogenCapacityG,glycogenAvailableG,pRatio,requiredProteinG,proteinKcal,fatKcal,carbsKcal,proteinTef,fatTef,carbsTef,proteinRemainder,fatRemainder,carbsRemainder,surplusKcal,fatKg,days:deficitKcal>0?fatKg*7700/deficitKcal:NaN};
+};
+
 export const proteinRange = (weightKg, low, high) => finite(weightKg, low, high) ? [weightKg * low, weightKg * high] : [NaN, NaN];
 export const proteinPerMeal = (dailyGrams, meals) => finite(dailyGrams, meals) && meals > 0 ? dailyGrams / meals : NaN;
 export const macroCalories = (proteinG, carbG, fatG, alcoholG = 0) => finite(proteinG, carbG, fatG, alcoholG) ? proteinG * 4 + carbG * 4 + fatG * 9 + alcoholG * 7 : NaN;
