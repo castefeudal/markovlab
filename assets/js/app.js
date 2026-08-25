@@ -3,7 +3,7 @@ import { loadState, saveState, exportState, importState, clearState, addHistory,
 import { route } from './router.js?v=5.0.0';
 import { validateFields } from './validators.js?v=5.1.0-r2';
 import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=5.1.0';
-import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.1.0-r2';
+import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.1.0-r3';
 import { RELEASE_CONFIG } from './config.js?v=5.1.0';
 import { applyResultGuidance } from './content.js?v=5.0.0';
 
@@ -57,7 +57,7 @@ document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLower
 
 app.addEventListener('submit',e=>{if(e.target.id==='calc-form'){e.preventDefault();calculate(e.target)}if(e.target.id==='profile-form'){e.preventDefault();const values=valuesFrom(e.target),profile={};for(const[k,v]of Object.entries(values))if(v!=='')profile[k]=['sex','primaryGoal'].includes(k)?v:Number(v);state.profile=profile;persist();render();notify(t('profileSaved',state.lang),'success')}});
 app.addEventListener('reset',e=>{if(e.target.id==='calc-form'){const id=e.target.dataset.calc;clearDraft(id);results.delete(id);errors.delete(id);setTimeout(()=>render(),0)}});
-app.addEventListener('input',e=>{if(e.target.closest('#calc-form'))saveDraft(e.target.form.dataset.calc,valuesFrom(e.target.form));if(e.target.id==='library-search'){libraryQuery=e.target.value;updateLibraryResults()}if(e.target.id==='history-search'){historyQuery=e.target.value;renderAndRestore('history-search',historyQuery)}if(e.target.id==='evidence-search'){evidenceQuery=e.target.value;renderAndRestore('evidence-search',evidenceQuery)}});
+app.addEventListener('input',e=>{if(e.target.closest('#calc-form'))saveDraft(e.target.form.dataset.calc,valuesFrom(e.target.form));if(e.target.matches('[data-pro-delta]'))runProScenarioReliable(e.target);if(e.target.id==='library-search'){libraryQuery=e.target.value;updateLibraryResults()}if(e.target.id==='history-search'){historyQuery=e.target.value;renderAndRestore('history-search',historyQuery)}if(e.target.id==='evidence-search'){evidenceQuery=e.target.value;renderAndRestore('evidence-search',evidenceQuery)}});
 app.addEventListener('change',e=>{if(e.target.id==='history-sort'){historySort=e.target.value;render()}});
 app.addEventListener('click',async e=>{
  const fav=e.target.closest('[data-favorite]');if(fav){e.preventDefault();e.stopPropagation();toggleFavorite(fav.dataset.favorite);return}
