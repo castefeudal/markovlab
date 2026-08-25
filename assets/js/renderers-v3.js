@@ -1,10 +1,10 @@
-import * as legacy from './renderers.js?v=5.2.0-r2';
-import { CALCULATORS, calculatorMap } from './calculators.js?v=5.2.0-r2';
-import { REFERENCES } from './references.js?v=5.2.0-r2';
-import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js?v=5.2.0-r2';
-import { icon, logo } from './icons.js?v=5.2.0-r2';
-import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js?v=5.2.0-r2';
-import { searchCalculators as legacySearchFn } from './search.js?v=5.2.0-r2';
+import * as legacy from './renderers.js?v=5.2.0-r3';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=5.2.0-r3';
+import { REFERENCES } from './references.js?v=5.2.0-r3';
+import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js?v=5.2.0-r3';
+import { icon, logo } from './icons.js?v=5.2.0-r3';
+import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js?v=5.2.0-r3';
+import { searchCalculators as legacySearchFn } from './search.js?v=5.2.0-r3';
 
 const bi=(ru,en,lang)=>lang==='ru'?ru:en;
 const esc=legacy.esc;
