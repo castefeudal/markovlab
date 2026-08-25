@@ -2,6 +2,24 @@
   "schemaVersion": 1,
   "accessed": "2026-08-15",
   "sources": {
+    "fatGainWorkbook": {
+      "title": {
+        "ru": "Рабочая модель MARKOVLAB: избыток энергии и жировой эквивалент",
+        "en": "MARKOVLAB working model: energy surplus and fat-equivalent"
+      },
+      "type": {
+        "ru": "Пользовательская модель с provenance",
+        "en": "User-provided model with provenance"
+      },
+      "url": "./docs/FAT_GAIN_MODEL_PROVENANCE.md",
+      "year": 2026,
+      "accessed": "2026-08-25",
+      "primary": false,
+      "note": {
+        "ru": "Перенос формул из предоставленного workbook; это модельный ориентир, а не измерение состава тела.",
+        "en": "Formula transcription from the supplied workbook; a model estimate, not a body-composition measurement."
+      }
+    },
     "whoBmi": {
       "title": {
         "ru": "ВОЗ: использование и интерпретация антропометрии",
