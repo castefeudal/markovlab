@@ -1,25 +1,25 @@
-# QA Report — MARKOVLAB 5.0.0
+# QA Report — MARKOVLAB 5.2.0 targeted polish
 
 Date: 22 August 2026.
 
 ## Release verdict
 
-Automated gate before deployment: **95 passed, 0 failed**. The release adds explicit v5 gates for the compact shell, four-action mobile navigation, search-first first visit, real library entry points, compact result density, optional onboarding and platform-aware shortcuts. Production browser evidence is appended after the merged Pages deployment; no unexecuted browser matrix is represented as complete.
+Automated gate before deployment: **110 passed, 0 failed**. This pass adds explicit gates for overlay tokens, semantic Pro controls, workbook vectors and the 86-tool registry. A Chromium executable was unavailable in this environment, so no unexecuted browser matrix is represented as complete.
 
 ## Automated coverage
 
-- Registry: 85 unique calculators, 9 valid domains, valid schemas and finite default results.
+- Registry: 86 unique calculators, 9 valid domains, valid schemas and finite default results.
 - Formula vectors: BMI/ratios, Mifflin–St Jeor, Cunningham, Mosteller, body composition, Epley/Brzycki, pace/speed, overnight sleep, compound interest, loan, CAGR, real return, margins and conversions.
-- Content: individualized result guidance, field help, examples, evidence, limitations, actions, sources, related tools and both 85-row matrices.
+- Content: individualized result guidance, field help, examples, evidence, limitations, actions, sources, related tools and both 86-row matrices.
 - RU/EN: dictionary parity, calculator/field coverage, no missing or placeholder strings, localized 404 and manifests.
 - Search: twelve requested natural-language intents plus fuzzy typo handling.
 - State: v1/v2→v3 migration, profile/history/snapshots/favourites roundtrip, bounded arrays, malformed/future/oversized/prototype-pollution rejection.
 - PWA: icons, cache core, same-origin interception, update lifecycle, localized manifests and offline shell.
 - Shell: valid early bootstrap JavaScript, no-FOUC ordering, current version, no remote runtime CSS/JS.
 
-## Browser scenarios
+## Browser scenarios (environment-limited)
 
-Chromium passed:
+The local server was started, but the installed Playwright package could not launch Chromium because `chrome-headless-shell` was absent. The following scenarios are covered by renderer/event-path tests and remain required after deployment:
 
 1. Load Home in RU/Light and RU/Dark with zero application console errors.
 2. Open the hierarchical library and search «процент жира»; relevant circumference/body-fat methods rank first.
