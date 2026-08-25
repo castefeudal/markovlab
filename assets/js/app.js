@@ -1,11 +1,11 @@
-import { CALCULATORS, calculatorMap } from './calculators.js?v=5.0.0';
-import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js?v=5.1.0';
-import { route } from './router.js?v=5.0.0';
-import { validateFields } from './validators.js?v=5.1.0-r2';
-import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=5.1.0';
-import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.1.0-r3';
-import { RELEASE_CONFIG } from './config.js?v=5.1.0';
-import { applyResultGuidance } from './content.js?v=5.0.0';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=5.2.0-r1';
+import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js?v=5.2.0-r1';
+import { route } from './router.js?v=5.2.0-r1';
+import { validateFields } from './validators.js?v=5.2.0-r1';
+import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=5.2.0-r1';
+import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.2.0-r1';
+import { RELEASE_CONFIG } from './config.js?v=5.2.0-r1';
+import { applyResultGuidance } from './content.js?v=5.2.0-r1';
 
 let state=loadState(),results=new Map(),errors=new Map(),calcModes=new Map(),libraryQuery='',favoritesOnly=false,paletteQuery='',paletteIndex=0,historyQuery='',historySort='newest',evidenceQuery='',onboardingStep=1,deferredInstall=null,pendingWorker=null;
 const app=document.querySelector('#app'),palette=document.querySelector('#palette'),importFile=document.querySelector('#import-file'),toast=document.querySelector('#toast'),onboardingDialog=document.querySelector('#onboarding'),confirmDialog=document.querySelector('#confirm-dialog');
