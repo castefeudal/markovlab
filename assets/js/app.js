@@ -61,6 +61,8 @@ addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;
 function closePopovers(){document.querySelectorAll('.data-popover.open').forEach(pop=>{pop.classList.remove('open');document.querySelector(`[aria-controls="${pop.id}"]`)?.setAttribute('aria-expanded','false')})}
 document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();palette.open?palette.close():openPalette()}if(e.key==='Escape'){closePopovers();if(palette.open)palette.close()}});
 document.addEventListener('click',e=>{if(!e.target.closest('.settings-menu,.data-menu'))closePopovers()});
+document.addEventListener('click',e=>{const button=e.target.closest?.('button[data-pro-delta]');if(!button)return;e.preventDefault();runProScenarioReliable(button)},true);
+document.addEventListener('keydown',e=>{const button=e.target.closest?.('button[data-pro-delta]');if(!button||!['Enter',' '].includes(e.key))return;e.preventDefault();runProScenarioReliable(button)});
 
 app.addEventListener('submit',e=>{if(e.target.id==='calc-form'){e.preventDefault();calculate(e.target)}if(e.target.id==='profile-form'){e.preventDefault();const values=valuesFrom(e.target),profile={};for(const[k,v]of Object.entries(values))if(v!=='')profile[k]=['sex','primaryGoal'].includes(k)?v:Number(v);state.profile=profile;persist();render();notify(t('profileSaved',state.lang),'success')}});
 app.addEventListener('reset',e=>{if(e.target.id==='calc-form'){const id=e.target.dataset.calc;clearDraft(id);results.delete(id);errors.delete(id);setTimeout(()=>render(),0)}});
