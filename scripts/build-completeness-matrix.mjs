@@ -14,7 +14,7 @@ const related=calc=>relatedFor(calc,CALCULATORS).map(id=>ru(calculatorMap.get(id
 const visualRu={exact:'только число',range:'корректный диапазон',composition:'состав',comparison:'сравнение',delta:'изменение',conversion:'конвертация',scenario:'сценарий',none:'без графика'};
 
 const lines=[
-  '# Матрица полноты 85 калькуляторов',
+  `# Матрица полноты ${CALCULATORS.length} калькуляторов`,
   '',
   '> Файл создаётся командой `npm run docs:matrix` из текущего registry. Он контролирует полноту продукта, но не заменяет пользовательский интерфейс и научную проверку источников.',
   '',
@@ -38,7 +38,7 @@ writeFileSync(new URL('../docs/CALCULATOR_COMPLETENESS_MATRIX.md',import.meta.ur
 
 const mark=value=>value?'✓':'—';
 const contentLines=[
-  '# CONTENT COMPLETENESS MATRIX — 85/85',
+  `# CONTENT COMPLETENESS MATRIX — ${CALCULATORS.length}/${CALCULATORS.length}`,
   '',
   '> Автоматически создано командой `npm run docs:matrix` из production registry. ✓ означает, что поле существует и проходит структурную проверку; это не заменяет научную редактуру источника.',
   '',
