@@ -1,22 +1,11 @@
-# Editorial copy review — targeted pass
+# Editorial copy review — 5.2.1
 
-The corrective pass removes generator-like language from active product surfaces while preserving evidence and safety statements.
+The release retains the product's existing editorial direction: one direct author statement on Home and no invented biography, testimonials, diagnoses or certainty claims.
 
-## Rules
+Corrective rules applied in this pass:
 
-- lead with an action, input or decision;
-- name the thing that changes, not an abstract “layer” or “axis”;
-- keep a limitation when it changes how a result should be used;
-- avoid generic promises and invented personalisation;
-- Russian copy is written as Russian product copy; English copy is written as English product copy;
-- do not mention AI as a feature or as a vague reassurance.
-
-## Applied changes
-
-- `Две оси доверия` → `Метод и основание` / `Method and evidence basis`;
-- `Никакого скрытого ИИ...` → `Понятные правила расчёта` with a source-data explanation;
-- boundary copy now says the product does not combine unrelated measures into a single health score;
-- the new fat-equivalent calculator uses “модельный ориентир” / “model estimate” and names the practical 7–14 day check;
-- the author voice remains a single accountable quote rather than a fictional testimonial.
-
-Evidence limitations are intentionally retained when they prevent a user from treating an estimate as a measurement.
+- present calculation output as a result, estimate, screening or scenario according to method type;
+- label the energy-surplus model as a fat-equivalent estimate, never a body-composition measurement;
+- show select values in the active language rather than implementation IDs;
+- place a practical action and repeat interval beside the result guidance where the calculation supports it;
+- keep System described as OS behaviour and Light, Paper, Dark and Midnight as the four visual palettes.

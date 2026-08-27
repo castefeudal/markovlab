@@ -1,54 +1,24 @@
-# QA Report — MARKOVLAB 5.2.0 targeted polish
+# QA report — MARKOVLAB 5.2.1
 
-Date: 22 August 2026.
+Date: 27 August 2026.
 
-## Release verdict
+## Executed
 
-Automated gate before deployment: **110 passed, 0 failed**. This pass adds explicit gates for overlay tokens, semantic Pro controls, workbook vectors and the 86-tool registry. A Chromium executable was unavailable in this environment, so no unexecuted browser matrix is represented as complete.
+- Automated regression: 114 passed, 0 failed.
+- Registry/data/docs build gates, JavaScript syntax and whitespace check: passed.
+- Production Chromium preflight: `#calc/bmi` pointer activation reproduced as failed; keyboard activation succeeded. The target element was verified by hit testing.
 
-## Automated coverage
+## Code-reviewed
 
-- Registry: 86 unique calculators, 9 valid domains, valid schemas and finite default results.
-- Formula vectors: BMI/ratios, Mifflin–St Jeor, Cunningham, Mosteller, body composition, Epley/Brzycki, pace/speed, overnight sleep, compound interest, loan, CAGR, real return, margins and conversions.
-- Content: individualized result guidance, field help, examples, evidence, limitations, actions, sources, related tools and both 86-row matrices.
-- RU/EN: dictionary parity, calculator/field coverage, no missing or placeholder strings, localized 404 and manifests.
-- Search: twelve requested natural-language intents plus fuzzy typo handling.
-- State: v1/v2→v3 migration, profile/history/snapshots/favourites roundtrip, bounded arrays, malformed/future/oversized/prototype-pollution rejection.
-- PWA: icons, cache core, same-origin interception, update lifecycle, localized manifests and offline shell.
-- Shell: valid early bootstrap JavaScript, no-FOUC ordering, current version, no remote runtime CSS/JS.
+- One delegated Pro activation path records `pointerdown`, `pointerup` and `click` before calculating Scenario B.
+- The localized worked-example and print paths map select IDs to active-language labels.
+- PWA runtime cache identity is `5.2.1-r1`.
 
-## Browser scenarios (environment-limited)
+## Blocked / pending
 
-The local server was started, but the installed Playwright package could not launch Chromium because `chrome-headless-shell` was absent. The following scenarios are covered by renderer/event-path tests and remain required after deployment:
+- Local Playwright Chromium binary was unavailable; an attempted browser download did not complete in this environment.
+- Post-deployment Chromium, touch-device, offline reload and rendered contrast measurements are pending the deployed SHA.
 
-1. Load Home in RU/Light and RU/Dark with zero application console errors.
-2. Open the hierarchical library and search «процент жира»; relevant circumference/body-fat methods rank first.
-3. Switch RU→EN and confirm English product copy and search examples.
-4. Open theme controls and apply Light, Dark and Midnight.
-5. Calculate BMI with 90 kg / 182 cm; receive localized 27.2/27,2 result, meaning, confidence, limitation and next step.
-6. Save the result and verify it appears in Progress/history.
-7. Review Profile ROI copy and Evidence hierarchy.
-8. Inspect 320×568 and 390×844 mobile Home plus 390×844 calculator.
+## Release rule
 
-## Visual checks
-
-Screens were inspected at 320, 390, 430, 768, 1024, 1366, 1440 and 1920 target widths through responsive harness and desktop browser sessions. The Theme × Language matrix covered RU/EN across Light, Dark and Midnight on Home, Calculator and Profile. Details: `VISUAL_QA_MATRIX.md`.
-
-## Accessibility and safety
-
-- Landmarks, heading order, skip link, native labels and error targets remain validated.
-- Keyboard palette supports Escape, arrows and Enter; focus is visible; results and toasts use live semantics.
-- Reduced motion disables nonessential transitions and smooth result scrolling.
-- Health copy remains non-diagnostic and separates method, evidence and clinical interpretation.
-- External source links use `noopener noreferrer`.
-
-## Performance and assets
-
-- No framework migration, remote fonts, CDN scripts, analytics or trackers.
-- New hero/privacy/progress visuals are optimized WebP files of approximately 35 KB, 64 KB and 123 KB.
-- Hero is preloaded with explicit dimensions; supporting visuals lazy-load.
-- `git diff --check`, JavaScript syntax checks, resource checks and placeholder scan pass.
-
-## External-runtime limits
-
-Firefox, WebKit, native NVDA/VoiceOver, physical-device standalone PWA and DevTools throttled Core Web Vitals were not available in this runtime and are not falsely recorded as executed. The product retains code-level and Chromium evidence for those paths.
+The release is not browser-confirmed until a deployed manual pointer click records `pointerdown → pointerup → click`, changes `aria-pressed` to `true`, and renders Scenario B. Do not replace this with a DOM, regex or keyboard-only claim.

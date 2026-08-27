@@ -3,9 +3,9 @@
 ## Автоматически — выполнено
 
 - [x] `npm test`: 89 passed, 0 failed.
-- [x] 85/85 калькуляторов и 9/9 лабораторий.
+- [x] 86/86 калькуляторов и 9/9 лабораторий.
 - [x] Formula regression vectors и source ID integrity.
-- [x] Полнота индивидуального контента и матрица 85 инструментов.
+- [x] Полнота индивидуального контента и матрица 86 инструментов.
 - [x] Русские metadata, manifest, PWA shortcuts и result units.
 - [x] Согласованная версия 4.0.0.
 - [x] Migration, import security, structured history и trends.

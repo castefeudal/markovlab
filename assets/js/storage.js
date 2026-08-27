@@ -1,4 +1,4 @@
-import { normalizeImport } from './validators.js?v=5.2.0-r4';
+import { normalizeImport } from './validators.js?v=5.2.1-r1';
 
 const KEY = 'markovlab-state-v3';
 const LEGACY_KEYS = ['markovlab-state-v2','markovlab-state-v1'];

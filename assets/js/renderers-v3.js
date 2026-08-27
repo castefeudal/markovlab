@@ -1,16 +1,20 @@
-import * as legacy from './renderers.js?v=5.2.0-r4';
-import { CALCULATORS, calculatorMap } from './calculators.js?v=5.2.0-r4';
-import { REFERENCES } from './references.js?v=5.2.0-r4';
-import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js?v=5.2.0-r4';
-import { icon, logo } from './icons.js?v=5.2.0-r4';
-import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js?v=5.2.0-r4';
-import { searchCalculators as legacySearchFn } from './search.js?v=5.2.0-r4';
+import * as legacy from './renderers.js?v=5.2.1-r1';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=5.2.1-r1';
+import { REFERENCES } from './references.js?v=5.2.1-r1';
+import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js?v=5.2.1-r1';
+import { icon, logo } from './icons.js?v=5.2.1-r1';
+import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js?v=5.2.1-r1';
+import { searchCalculators as legacySearchFn } from './search.js?v=5.2.1-r1';
 
 const bi=(ru,en,lang)=>lang==='ru'?ru:en;
 const esc=legacy.esc;
 const platformShortcut=()=>typeof navigator!=='undefined'&&/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent)?'⌘K':'Ctrl K';
 const badge=(calc,lang)=>`<span class="badge method">${esc(l(methodLabels[calc.methodType],lang))}</span><span class="badge evidence-${calc.evidenceStrength}">${esc(l(evidenceLabels[calc.evidenceStrength],lang))}</span>`;
 const sectionHead=(eyebrow,title,text='')=>`<header class="section-head"><div><span class="eyebrow">${eyebrow}</span><h2>${title}</h2></div>${text?`<p>${text}</p>`:''}</header>`;
+const formatFieldValue=(field,value,lang)=>{
+  if(field?.type!=='select')return value;
+  return l(field.options?.find(option=>String(option.value)===String(value))?.label,lang)||value;
+};
 
 const count=id=>CALCULATORS.filter(calc=>calc.category===id).length;
 
@@ -127,7 +131,7 @@ export function calculatorPage(calc,state,session,resultData,errors={}){
     .replace('<div class="form-intro">',`${proWorkbench(displayCalc,lang)}<div class="form-intro">`)
     .replace('<div class="calc-grid">',`<aside class="calc-practical-note">${icon('check')}<div><span class="eyebrow">${bi('ГДЕ ПРИМЕНИТЬ','WHERE TO USE IT',lang)}</span><strong>${esc(l(practice.title,lang))}</strong><p>${esc(l(WHEN_USEFUL[calc.id]||practice.text,lang))}</p></div></aside><div class="calc-grid">`);
   const printDate=new Intl.DateTimeFormat(lang==='ru'?'ru-RU':'en-US',{dateStyle:'long',timeStyle:'short'}).format(new Date());
-  const printInputs=displayCalc.fields.map(field=>{const value=session?.[field.id]??(field.profileKey?state.profile[field.profileKey]:undefined)??field.default;return `<div><dt>${esc(l(field.label,lang))}</dt><dd>${esc(value)}${field.unit?`&nbsp;${esc(field.unit)}`:''}</dd></div>`}).join('');
+  const printInputs=displayCalc.fields.map(field=>{const value=session?.[field.id]??(field.profileKey?state.profile[field.profileKey]:undefined)??field.default;return `<div><dt>${esc(l(field.label,lang))}</dt><dd>${esc(formatFieldValue(field,value,lang))}${field.unit?`&nbsp;${esc(field.unit)}`:''}</dd></div>`}).join('');
   html=`<header class="print-brand"><img src="./assets/brand/logo-horizontal-dark.svg" width="220" height="48" alt="MARKOVLAB"><span>${esc(printDate)}</span></header>${html.replace('<div class="calc-grid">',`<section class="print-inputs"><h2>${bi('Исходные данные','Inputs',lang)}</h2><dl>${printInputs}</dl></section><div class="calc-grid">`)}`;
   html=html.replace('<aside class="panel result-panel" aria-live="polite">','<aside class="panel result-panel" tabindex="-1" aria-live="polite">');
   const generic=bi('Когда число способно уточнить решение или задать точку отсчёта для динамики.','When a number can clarify a decision or create a baseline for a trend.',lang);
@@ -156,7 +160,7 @@ export function calculatorPage(calc,state,session,resultData,errors={}){
 function proWorkbench(calc,lang){
   const numeric=calc.fields.filter(field=>field.type==='number');
   const fieldProtocol=calc.fields.map(field=>`<li><strong>${esc(l(field.label,lang))}</strong><span>${esc(fieldHelp(calc,field,lang))}</span></li>`).join('');
-  const scenario=numeric.length?`<div class="pro-sensitivity"><label>${bi('Параметр чувствительности','Sensitivity driver',lang)}<select data-pro-driver aria-label="${bi('Параметр чувствительности','Sensitivity driver',lang)}">${numeric.map(field=>`<option value="${esc(field.id)}">${esc(l(field.label,lang))}</option>`).join('')}</select></label><div class="scenario-buttons" role="radiogroup" aria-label="${bi('Изменение параметра','Driver adjustment',lang)}">${[-10,-5,5,10].map((value,index)=>`<button type="button" class="scenario-option" role="radio" aria-checked="false" aria-pressed="false" data-action="pro-scenario" data-pro-delta data-delta="${value}">${value>0?'+':''}${value}%</button>`).join('')}</div><div class="pro-scenario-output" aria-live="polite"><p>${bi('Выберите параметр и изменение — MARKOVLAB сравнит базовый и альтернативный сценарии, не меняя форму.','Choose a driver and adjustment. MARKOVLAB will compare baseline and alternative scenarios without changing the form.',lang)}</p></div></div>`:`<p class="pro-no-scenario">${bi('У этой формулы нет числового параметра для честного сценарного анализа. Pro-режим раскрывает протокол и допущения, не выдумывая ложную точность.','This formula has no numeric driver for an honest sensitivity scenario. Pro mode exposes protocol and assumptions without inventing precision.',lang)}</p>`;
+  const scenario=numeric.length?`<div class="pro-sensitivity"><label>${bi('Параметр чувствительности','Sensitivity driver',lang)}<select data-pro-driver aria-label="${bi('Параметр чувствительности','Sensitivity driver',lang)}">${numeric.map(field=>`<option value="${esc(field.id)}">${esc(l(field.label,lang))}</option>`).join('')}</select></label><div class="scenario-buttons" role="radiogroup" aria-label="${bi('Изменение параметра','Driver adjustment',lang)}">${[-10,-5,5,10].map(value=>`<button type="button" class="scenario-option" role="radio" aria-checked="false" aria-pressed="false" data-action="pro-scenario" data-pro-delta="${value}" data-delta="${value}">${value>0?'+':''}${value}%</button>`).join('')}</div><div class="pro-scenario-output" role="status" tabindex="-1" aria-live="polite"><p>${bi('Выберите параметр и изменение — MARKOVLAB сравнит базовый и альтернативный сценарии, не меняя форму.','Choose a driver and adjustment. MARKOVLAB will compare baseline and alternative scenarios without changing the form.',lang)}</p></div></div>`:`<p class="pro-no-scenario">${bi('У этой формулы нет числового параметра для честного сценарного анализа. Pro-режим раскрывает протокол и допущения, не выдумывая ложную точность.','This formula has no numeric driver for an honest sensitivity scenario. Pro mode exposes protocol and assumptions without inventing precision.',lang)}</p>`;
   return `<div class="calc-mode-switch" role="tablist" aria-label="${bi('Режим калькулятора','Calculator mode',lang)}"><button type="button" role="tab" aria-selected="true" data-action="calc-mode" data-mode="basic">${bi('Основной','Basic',lang)}<small>${bi('быстрый расчёт','quick calculation',lang)}</small></button><button type="button" role="tab" aria-selected="false" data-action="calc-mode" data-mode="pro"><b>PRO</b><small>${bi('сценарии и протокол','scenarios & protocol',lang)}</small></button></div><section class="pro-workbench" role="tabpanel"><header><div><span class="eyebrow">MARKOVLAB PRO</span><h2>${bi('Проверьте устойчивость результата','Test result sensitivity',lang)}</h2></div><span class="badge method">${esc(l(methodLabels[calc.methodType],lang))}</span></header><p>${bi('Формула остаётся той же. Pro добавляет сценарный стресс-тест, полный протокол ввода и технические ограничения. Если дополнительный параметр научно не обоснован, интерфейс его не придумывает.','The formula stays unchanged. Pro adds scenario stress testing, the full input protocol, and technical boundaries. If an extra parameter is not scientifically justified, the interface does not invent one.',lang)}</p>${scenario}<details><summary>${bi('Точный протокол всех входов','Full input protocol',lang)}</summary><ul>${fieldProtocol}</ul></details></section>`;
 }
 
