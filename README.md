@@ -41,7 +41,7 @@ npm test
 npm run docs:matrix
 ```
 
-Автоматические проверки покрывают formulas, registry 85/85, Basic/Pro surfaces, routes/render, RU/EN parity, natural-language search, storage/import/migration, PWA, manifests, themes bootstrap, cache-safe runtime assets, content completeness и отсутствие remote runtime dependencies.
+Автоматические проверки покрывают formulas, registry 86/86, Basic/Pro surfaces, routes/render, RU/EN parity, natural-language search, storage/import/migration, PWA, manifests, themes bootstrap, cache-safe runtime assets, content completeness и отсутствие remote runtime dependencies.
 
 ## Архитектура
 
@@ -76,4 +76,4 @@ GitHub Pages публикуется workflow `deploy-pages.yml` из `main`. В�
 - [Overlay theme contract](docs/OVERLAY_THEME_CONTRACT.md)
 - [Editorial copy review](docs/EDITORIAL_COPY_REVIEW.md)
 
-Версия: **5.2.0**.
+Версия: **5.2.1**.
