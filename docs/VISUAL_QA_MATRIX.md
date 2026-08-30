@@ -1,4 +1,4 @@
-# Visual QA matrix — MARKOVLAB 5.2.1-r2 candidate
+# Visual QA matrix — MARKOVLAB 5.2.1-r3 candidate
 
 | Surface | Automated | Browser before release | Production after release |
 | --- | --- | --- | --- |

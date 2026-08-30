@@ -41,8 +41,8 @@ test('structured history result is formatted for the active locale at render tim
 
 test('fresh PWA revision invalidates the previous production entry module',async()=>{
   const [index,sw,app]=await Promise.all(['../index.html','../sw.js','../assets/js/app.js'].map(path=>readFile(new URL(path,import.meta.url),'utf8')));
-  assert.match(index,/app\.js\?v=5\.2\.1-r2/);
-  assert.match(sw,/markovlab-v5\.2\.1-r2/);
-  assert.match(sw,/app\.js\?v=5\.2\.1-r2/);
+  assert.match(index,/app\.js\?v=5\.2\.1-r3/);
+  assert.match(sw,/markovlab-v5\.2\.1-r3/);
+  assert.match(sw,/app\.js\?v=5\.2\.1-r3/);
   assert.match(app,/window\.__MARKOVLAB_PRO_EVENT_TRACE__/);
 });

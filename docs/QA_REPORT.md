@@ -1,4 +1,4 @@
-# QA report — MARKOVLAB 5.2.1-r2 candidate
+# QA report — MARKOVLAB 5.2.1-r3 candidate
 
 Date: 30 August 2026.
 
@@ -16,7 +16,7 @@ Date: 30 August 2026.
 
 - The Pro control now uses a target-level pointer transaction. Capture and bubble listeners at window, document, app, form, group and button record event metadata; the button's `pointerup` applies one scenario transaction and its following click is deduplicated.
 - History v4 stores canonical structured results and localizes only at render time. v1–v3 records migrate without loss; legacy summaries remain as a fallback when old records contain no structured result.
-- PWA runtime cache identity is `5.2.1-r2`.
+- PWA runtime cache identity is `5.2.1-r3`.
 
 ## Blocked / pending
 

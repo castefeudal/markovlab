@@ -1,11 +1,11 @@
-import { CALCULATORS, calculatorMap } from './calculators.js?v=5.2.1-r2';
-import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js?v=5.2.1-r2';
-import { route } from './router.js?v=5.2.1-r2';
-import { validateFields } from './validators.js?v=5.2.1-r2';
-import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=5.2.1-r2';
-import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.2.1-r2';
-import { RELEASE_CONFIG } from './config.js?v=5.2.1-r2';
-import { applyResultGuidance } from './content.js?v=5.2.1-r2';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=5.2.1-r3';
+import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent } from './storage.js?v=5.2.1-r3';
+import { route } from './router.js?v=5.2.1-r3';
+import { validateFields } from './validators.js?v=5.2.1-r3';
+import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=5.2.1-r3';
+import { shell, home, calculatorsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.2.1-r3';
+import { RELEASE_CONFIG } from './config.js?v=5.2.1-r3';
+import { applyResultGuidance } from './content.js?v=5.2.1-r3';
 
 let state=loadState(),results=new Map(),errors=new Map(),calcModes=new Map(),proScenarios=new Map(),libraryQuery='',libraryView='recommended',paletteQuery='',paletteIndex=0,historyQuery='',historySort='newest',evidenceQuery='',onboardingStep=1,deferredInstall=null,pendingWorker=null;
 const app=document.querySelector('#app'),palette=document.querySelector('#palette'),importFile=document.querySelector('#import-file'),toast=document.querySelector('#toast'),onboardingDialog=document.querySelector('#onboarding'),confirmDialog=document.querySelector('#confirm-dialog');
@@ -49,7 +49,7 @@ function runProScenarioReliable(button,source='unknown'){
  const form=button?.closest('#calc-form'),output=form?.querySelector('.pro-scenario-output');if(!form||!output)return;
  try{
   setScenarioSelection(button);
-  const calc=calculatorMap.get(form.dataset.calc),driver=form.querySelector('[data-pro-driver]')?.value,delta=Number(button.dataset.delta);if(!calc||!driver||!Number.isFinite(delta))throw new Error('scenario');proScenarios.set(form.dataset.calc,{driver,delta});
+  const calc=calculatorMap.get(form.dataset.calc),driver=form.querySelector('[data-pro-driver]')?.value,delta=Number(button.dataset.delta);if(!calc||!driver||!Number.isFinite(delta))throw new Error('scenario');proScenarios.set(form.dataset.calc,{driver,delta,source});
   const base=Object.fromEntries(calc.fields.map(field=>{const control=form.elements.namedItem(field.id),raw=control?.value??'';return[field.id,typeof raw==='string'?raw.trim().replace(',','.'):raw]}));
   const current=Number(base[driver]),field=calc.fields.find(item=>item.id===driver);if(!Number.isFinite(current))throw new Error('driver');
   const scenario={...base,[driver]:String(current*(1+delta/100))},errs=validateFields(calc.fields,scenario,state.lang);if(Object.keys(errs).length)throw new Error('validation');
@@ -66,7 +66,7 @@ function runProScenarioReliable(button,source='unknown'){
 function restoreProScenario(){
  const form=document.querySelector('#calc-form'),selected=proScenarios.get(form?.dataset.calc);if(!form||!selected)return;
  const driver=form.querySelector('[data-pro-driver]');if(driver)driver.value=selected.driver;
- const button=form.querySelector(`[data-pro-delta="${selected.delta}"]`);if(button)runProScenarioReliable(button,'restore');
+ const button=form.querySelector(`[data-pro-delta="${selected.delta}"]`);if(button){runProScenarioReliable(button,selected.source||'restore');const trace=proEventTrace.map(item=>item.type).filter((type,index,types)=>index===0||types[index-1]!==type).join(' → ');if(trace)form.dataset.proEventTrace=trace}
 }
 function wireProScenarioControls(root=document){
  instrumentProPath(window,'window');instrumentProPath(document,'document');instrumentProPath(app,'app');
