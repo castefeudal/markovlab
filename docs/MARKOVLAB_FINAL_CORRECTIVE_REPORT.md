@@ -5,6 +5,7 @@ Date: 30 August 2026.
 ## Scope and source of truth
 
 - Baseline: `origin/main` at `1d557be52011595411ed53d3353558370c293b4c`.
+- Deployed corrective main: `08c694e4ed178eff9e6e9713c4f6a6e51e801b6d`.
 - Working branch: `work/markovlab-production-completion`.
 - Registry preserved: 86 calculator IDs, 9 laboratories, local-first storage and vanilla ES modules.
 
@@ -39,7 +40,9 @@ On production `#calc/bmi`, Chromium showed the `+5%` control as the hit-tested e
 | --- | --- | --- |
 | Production pre-fix pointer failure | executed | Chromium pointer path: no selected state or Scenario B; keyboard succeeds. |
 | Local post-fix browser e2e | not available | The browser sandbox cannot reach the local preview. |
-| Published post-fix pointer trace | pending deployment | Must show `pointerdown → pointerup → click`, `aria-pressed=true`, and Scenario B after the deployed SHA is live. |
+| Published post-fix pointer trace | executed | Deployed r3 records `pointerdown → pointerup → click`, `aria-pressed=true`, source `pointer` and Scenario B. |
+| Numeric Pro production matrix | executed | 84/84 pass; three browser-runner timing failures passed after stabilized retry. |
+| Catalogue and plate-loader | executed | All 86 renders 86 rows; 101 kg target reports 100 lower, −1 delta and 102.5 upper. |
 | Contrast measurements on rendered surfaces | code-reviewed | Semantic foreground/surface contract is in place; final computed-style ratios remain a deployment gate. |
 
 No browser scenario above is represented as executed unless stated in this table.
