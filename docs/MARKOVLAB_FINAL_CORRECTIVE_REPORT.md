@@ -1,4 +1,4 @@
-# MARKOVLAB 5.2.1-r2 — final corrective report
+# MARKOVLAB 5.2.1-r3 — final corrective report
 
 Date: 30 August 2026.
 
@@ -24,7 +24,7 @@ On production `#calc/bmi`, Chromium showed the `+5%` control as the hit-tested e
 - Added explicit Recommended / All 86 / Favorites catalogue states. All 86 literally renders all 86 tool rows.
 - Reworked plate loading from greedy silent rounding to an inventory-aware exact/nearest-lower/nearest-upper plan with achieved total and delta.
 - Migrated state to v4 so new history records preserve canonical structured results and localize on render.
-- Advanced the runtime cache identity to `5.2.1-r2` and service-worker cache to `markovlab-v5.2.1-r2`.
+- Advanced the runtime cache identity to `5.2.1-r3` and service-worker cache to `markovlab-v5.2.1-r3`.
 
 ## Executed checks
 
