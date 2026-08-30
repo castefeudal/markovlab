@@ -30,7 +30,7 @@ Home uses an exact code-native product preview. Evidence uses a selected physica
 
 ## RU/EN and themes
 
-Both locales share the same semantic structure and 85-tool content registry. Light, Dark, Midnight and System retain early application and persistence; v5 components use semantic tokens rather than inversion.
+Both locales share the same semantic structure and 86-tool content registry. Light, Paper, Dark, Midnight and the System resolver retain early application and persistence; v5 components use semantic tokens rather than inversion.
 
 ## Accessibility
 

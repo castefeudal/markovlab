@@ -8,7 +8,7 @@
 
 Hash‑маршруты: `#home`, `#calculators`, `#category/<id>`, `#calc/<id>`, `#profile`, `#insights`, `#evidence`, `#about`. Desktop использует sidebar, компактные layouts — safe‑area bottom navigation.
 
-Девять лабораторий имеют собственные вводные тексты, ограничения, visuals и вручную составленные workflows. Все 85 калькуляторов используют единый качественный шаблон, но индивидуальный content/result context.
+Девять лабораторий имеют собственные вводные тексты, ограничения, visuals и вручную составленные workflows. Все 86 калькуляторов используют единый качественный шаблон, но индивидуальный content/result context.
 
 ## Состояние
 

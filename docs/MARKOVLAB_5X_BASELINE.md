@@ -20,13 +20,13 @@ The production application, DOM and active CSS were reviewed in Chromium at desk
 6. **Cards and pills are overused.** Independent cards, nested bordered blocks, badges and rounded filters reduce hierarchy and make the product feel assembled from a wellness UI kit.
 7. **The palette is competent but not ownable.** Beige/forest/mint is calm, yet the particular surfaces and gradients are common and not recognizable without the wordmark.
 8. **The small brand mark is too intricate.** Orbit, axes and the M compete at favicon size; the silhouette is not sufficiently immediate.
-9. **The 85-tool library can appear sparse.** Large cards and section gaps produce the visual impression of partial loading despite a complete registry.
+9. **The 86-tool library can appear sparse.** Large cards and section gaps produce the visual impression of partial loading despite a complete registry.
 10. **Mobile prioritization is weak.** Five destinations with small captions compete in the bottom bar. The meaningful hero visual largely disappears while the display heading still consumes substantial height.
 11. **Trust is reduced by small inconsistencies.** Production shows `⌘K` regardless of platform, the first visit is blocked by onboarding, and examples can be mistaken for live personal values.
 
 ## What is retained
 
-- all 85 calculator IDs and validated calculation functions;
+- all 86 calculator IDs and validated calculation functions;
 - nine laboratory categories and curated workflows;
 - local-first profile, favorites, recents, drafts, history and snapshots;
 - versioned import/export and migrations;

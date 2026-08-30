@@ -4,7 +4,7 @@
 
 - Baseline `main` HEAD: `f974ba773f50ad5ecc181610a769d165a10f9870`
 - Baseline tests: 107 passing.
-- Architecture: vanilla ES modules, local-first state, 85 calculator registry.
+- Architecture: vanilla ES modules, local-first state, all 86 calculator registry.
 
 ## Defects reproduced
 

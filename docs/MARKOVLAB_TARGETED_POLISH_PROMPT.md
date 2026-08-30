@@ -34,7 +34,7 @@ Excel — источник формул и допущений. Не подклю
 Без объективной причины не ломай и не меняй:
 
 - calculator IDs и registry;
-- существующие формулы 85 калькуляторов;
+- существующие формулы 86 калькуляторов;
 - 9 лабораторий;
 - профиль, favorites, history, snapshots;
 - import/export и миграции local-first storage;
@@ -373,7 +373,7 @@ Result order:
 
 ## Functional
 
-- registry и все 85 calculator IDs;
+- registry и все 86 calculator IDs;
 - новый Body calculator и его formula vectors;
 - Basic/Pro state;
 - Scenario A/B changes result;

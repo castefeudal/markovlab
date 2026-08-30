@@ -112,10 +112,12 @@ test('calculator Pro mode survives result rerenders',async()=>{
   const app=await readFile(new URL('../assets/js/app.js',import.meta.url),'utf8');
   const renderer=await readFile(new URL('../assets/js/renderers-v3.js',import.meta.url),'utf8');
   assert.match(app,/calcModes=new Map\(\)/);
+  assert.match(app,/proScenarios=new Map\(\)/);
   assert.match(app,/new MutationObserver\([\s\S]*syncCalcMode/);
   assert.match(app,/calcModes\.set\(form\.dataset\.calc,mode\)/);
+  assert.match(app,/restoreProScenario\(\)/);
   assert.match(app,/form\.elements\.namedItem\(field\.id\)/);
-  assert.match(app,/matches\('\[data-pro-delta\]'\)\)runProScenarioReliable/);
+  assert.match(app,/wireProScenarioControls\(form\)/);
   assert.match(renderer,/role="radiogroup"/);
   assert.match(renderer,/data-pro-delta/);
 });
