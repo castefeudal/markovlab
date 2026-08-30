@@ -17,10 +17,11 @@ MARKOVLAB — двуязычная персональная лаборатори
 - Плотная библиотека: практические starting points, 9 лабораторий и компактные строки инструментов вместо стены одинаковых карточек.
 - Русская и английская версии без смешанного интерфейса; locale‑форматирование чисел и дат.
 - Light, Paper, Dark и Midnight как четыре разные палитры; System следует ОС и инициализируется без flash неправильной темы.
-- Basic / Pro на всех 86 страницах: полный input protocol и sensitivity stress test со сравнением Scenario A/B; Pro controls are native, keyboard-usable buttons.
-- Практические сценарии для каждой лаборатории, авторский голос Павла Маркова и оригинальная editorial-фотосерия.
+- Basic / Pro на всех 86 страницах: полный input protocol и sensitivity stress test со сравнением Scenario A/B; Pro controls are native buttons with pointer-event tracing and keyboard support.
+- Лаборатория различает Recommended, All 86 и Favorites; внутренние editorial routes проверяются по registry.
+- Inventory-aware plate loader показывает exact/nearest lower/nearest upper, achieved total и разницу с целью.
 - Профиль с объяснённым ROI, персональная главная, избранное, history, snapshots и честные SVG‑графики без выдуманного сглаживания.
-- Versioned export/import, v1/v2→v3 migration, bounded import и защита от prototype pollution.
+- Versioned export/import, v1/v2/v3→v4 migration, canonical structured history with locale-at-render, bounded import и защита от prototype pollution.
 - Installable PWA, offline app shell, update lifecycle, print‑report и branded 404.
 - Новая logo system `M + calibration + reference point`, смысловая evidence-визуализация и локальная серия оптимизированных WebP/SVG assets.
 
@@ -75,5 +76,7 @@ GitHub Pages публикуется workflow `deploy-pages.yml` из `main`. В�
 - [Fat-gain model provenance](docs/FAT_GAIN_MODEL_PROVENANCE.md)
 - [Overlay theme contract](docs/OVERLAY_THEME_CONTRACT.md)
 - [Editorial copy review](docs/EDITORIAL_COPY_REVIEW.md)
+- [Production completion report](docs/MARKOVLAB_FINAL_CORRECTIVE_REPORT.md)
+- [Calculator coverage roadmap](docs/CALCULATOR_COVERAGE_ROADMAP.md)
 
 Версия: **5.2.1**.

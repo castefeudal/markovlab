@@ -10,7 +10,7 @@
 
 ## Problems
 
-The v3.1 core was already useful and mathematically mature, but discovery still exposed too much of the 85-tool registry at once; the hero did not own a distinctive product image; language selection was not a complete first-class shell control; profile value was represented mainly as completion; and the release evidence did not include current browser screenshots. Browser QA of the new build also exposed two concrete interaction defects: an invalid early-theme IIFE and unreliable icon-menu/calculator click handling. Both were fixed and regression-covered.
+The v3.1 core was already useful and mathematically mature, but discovery still exposed too much of the 86-tool registry at once; the hero did not own a distinctive product image; language selection was not a complete first-class shell control; profile value was represented mainly as completion; and the release evidence did not include current browser screenshots. Browser QA of the new build also exposed two concrete interaction defects: an invalid early-theme IIFE and unreliable icon-menu/calculator click handling. Both were fixed and regression-covered.
 
 ## Product Architecture
 
@@ -38,11 +38,11 @@ Natural-language discovery, persistent RU/EN and theme controls, command palette
 
 ## Calculator Experience
 
-All 85 calculators retain their IDs and formulas. Pages provide purpose, when useful, required inputs, localized field help and validation, result meaning, method/evidence, uncertainty, limitation, action, formula/sources and related next steps. Explicit click and submit paths now share one calculation flow.
+All all 86 calculators retain their IDs and formulas. Pages provide purpose, when useful, required inputs, localized field help and validation, result meaning, method/evidence, uncertainty, limitation, action, formula/sources and related next steps. Explicit click and submit paths now share one calculation flow.
 
 ## Content
 
-`CONTENT_COMPLETENESS_MATRIX.md` contains 85/85 rows and verifies purpose, description, input help, example, meaning, evidence, uncertainty, limitation, action, references, related tools and RU/EN coverage.
+`CONTENT_COMPLETENESS_MATRIX.md` contains 86/86 rows and verifies purpose, description, input help, example, meaning, evidence, uncertainty, limitation, action, references, related tools and RU/EN coverage.
 
 ## RU/EN
 

@@ -4,7 +4,7 @@ Audit date: 22 August 2026. Baseline `main`: `be64df389605762b8ab58966c151ef9127
 
 ## Preserved core
 
-- 85 calculator IDs and their formula functions;
+- 86 calculator IDs and their formula functions;
 - 9 laboratory categories and curated workflows;
 - profile, favourites, history, snapshots, recents and deterministic insights;
 - local-first storage, versioned import/export and migration;
@@ -17,7 +17,7 @@ Audit date: 22 August 2026. Baseline `main`: `be64df389605762b8ab58966c151ef9127
 | Finding | 4.0 response |
 | --- | --- |
 | Useful but visually familiar v3 hero | Original precision-instrument hero and stronger brand composition |
-| 85-tool discovery still leaned toward a card catalogue | Recent/high-utility/domain hierarchy plus human-query examples |
+| 86-tool discovery still leaned toward a card catalogue | Recent/high-utility/domain hierarchy plus human-query examples |
 | Search depended heavily on registry words | Dedicated RU/EN intent aliases, stopwords, weighted fields and fuzzy matching |
 | Language was not an explicit premium shell control | Persistent RU/EN segmented control and localized manifests/metadata |
 | Profile value over-emphasized completion | ROI-first copy: enter once, reuse where relevant |

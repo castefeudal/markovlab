@@ -86,12 +86,36 @@ export const volumeLoad = (load, reps, sets) => finite(load, reps, sets) ? load 
 export const weeklyTonnage = (load, reps, sets, sessions) => finite(load, reps, sets, sessions) ? load * reps * sets * sessions : NaN;
 export const strengthDensity = (volume, minutes) => finite(volume, minutes) && minutes > 0 ? volume / minutes : NaN;
 export const rirAdjustedReps = (reps, rir) => finite(reps, rir) ? reps + rir : NaN;
+export const parsePlateInventory = value => {
+  if(typeof value!=='string')return [];
+  return value.split(';').map(part=>part.trim()).filter(Boolean).map(part=>{
+    const match=part.match(/^(\d+(?:[.,]\d+)?)\s*(?:x|×)\s*(\d+)$/i);
+    if(!match)return null;
+    return {mass:Number(match[1].replace(',','.')),pairs:Number(match[2])};
+  }).filter(item=>Number.isFinite(item?.mass)&&item.mass>0&&Number.isInteger(item.pairs)&&item.pairs>0&&item.pairs<=50);
+};
+
+export const platePlan = (target, bar, inventory) => {
+  if (!finite(target, bar) || target < bar || !Array.isArray(inventory)) return null;
+  const pairs=inventory.map(item=>typeof item==='number'?{mass:item,pairs:1}:item).filter(item=>finite(item?.mass,item?.pairs)&&item.mass>0&&Number.isInteger(item.pairs)&&item.pairs>0);
+  if(!pairs.length)return null;
+  const scale=100, targetSide=Math.round((target-bar)*scale/2), plans=new Map([[0,[]]]);
+  for(const pair of pairs.sort((a,b)=>b.mass-a.mass)){
+    const mass=Math.round(pair.mass*scale),existing=[...plans.entries()];
+    for(const [sum,stack] of existing)for(let count=1;count<=pair.pairs;count++){
+      const next=sum+mass*count,current=plans.get(next),nextStack=[...stack,...Array(count).fill(pair.mass)];
+      if(!current||nextStack.length<current.length)plans.set(next,nextStack);
+    }
+  }
+  const sums=[...plans.keys()].sort((a,b)=>a-b),lower=[...sums].reverse().find(sum=>sum<=targetSide),upper=sums.find(sum=>sum>=targetSide);
+  const toPlan=sum=>sum===undefined?null:{plates:[...plans.get(sum)].sort((a,b)=>b-a),side:sum/scale,total:bar+sum/scale*2,delta:bar+sum/scale*2-target};
+  return {target,targetSide:targetSide/scale,exact:plans.has(targetSide),lower:toPlan(lower),upper:toPlan(upper)};
+};
+
 export const plateLoad = (target, bar, plates) => {
-  if (!finite(target, bar) || target < bar || !Array.isArray(plates)) return [];
-  let side = (target - bar) / 2;
-  const out = [];
-  [...plates].sort((a,b)=>b-a).forEach(p => { while (side + 1e-9 >= p) { out.push(p); side -= p; } });
-  return { plates: out, remainder: side };
+  const plan=platePlan(target,bar,Array.isArray(plates)?plates:[]);
+  const selected=plan?.lower;
+  return selected?{plates:selected.plates,remainder:Math.max(0,(target-selected.total)/2),achieved:selected.total,delta:selected.delta,exact:plan.exact,lower:plan.lower,upper:plan.upper}:{plates:[],remainder:NaN,achieved:NaN,delta:NaN,exact:false,lower:null,upper:null};
 };
 
 export const paceFromSpeed = speedKmh => finite(speedKmh) && speedKmh > 0 ? 60 / speedKmh : NaN;

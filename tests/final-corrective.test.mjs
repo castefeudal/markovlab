@@ -6,14 +6,15 @@ import { calculatorPage } from '../assets/js/renderers-v3.js';
 
 const state={lang:'ru',theme:'light',profile:{},favorites:[],recents:[],history:[],snapshots:[]};
 
-test('Pro controls use one delegated pointer path with an inspectable event trace',async()=>{
+test('Pro controls use one direct pointer transaction with an inspectable event trace',async()=>{
   const app=await readFile(new URL('../assets/js/app.js',import.meta.url),'utf8');
   assert.match(app,/window\.__MARKOVLAB_PRO_EVENT_TRACE__=proEventTrace/);
-  assert.match(app,/app\.addEventListener\('pointerdown',event=>traceProEvent/);
-  assert.match(app,/app\.addEventListener\('pointerup',event=>traceProEvent/);
-  assert.match(app,/const scenario=e\.target\.closest\('button\[data-pro-delta\]'\)/);
-  assert.match(app,/runProScenarioReliable\(scenario,'pointer-click'\)/);
-  assert.doesNotMatch(app,/bindProControls|document\.addEventListener\('click',e=>\{const button=e\.target\.closest/);
+  assert.match(app,/function wireProScenarioControls/);
+  assert.match(app,/button\.addEventListener\('pointerdown'/);
+  assert.match(app,/button\.addEventListener\('pointerup'/);
+  assert.match(app,/button\.addEventListener\('click'/);
+  assert.match(app,/runProScenarioReliable\(button,'pointer'\)/);
+  assert.match(app,/instrumentProPath\(window,'window'\)/);
   assert.match(app,/console\.error\('MARKOVLAB Pro scenario failed'/);
 });
 

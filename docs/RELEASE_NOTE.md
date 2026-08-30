@@ -5,7 +5,7 @@ Release date: 22 August 2026.
 ## Product
 
 - Home is now both a premium entry point and a lightweight personal dashboard for recent, saved and recommended work.
-- The 85-tool library has a hierarchy: recent, high-utility entry points, nine laboratories and specialized results instead of an undifferentiated card wall.
+- The 86-tool library has a hierarchy: recent, high-utility entry points, nine laboratories and specialized results instead of an undifferentiated card wall.
 - Search understands human tasks in RU and EN, intent aliases and useful misspellings.
 - Progress is the primary label for chronology, deltas, snapshots and honest observed trends.
 
@@ -34,6 +34,6 @@ Release date: 22 August 2026.
 ## Quality
 
 - 88 automated tests pass.
-- Required content matrix: 85/85 complete in RU and EN.
+- Required content matrix: 86/86 complete in RU and EN.
 - Chromium before/after and responsive screenshot archive included with release artifacts.
 - CI validates tests and regenerated completeness matrices on every pull request.

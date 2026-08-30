@@ -15,7 +15,7 @@
 
 ## Preserved
 
-All 85 stable calculator IDs and formulas, nine laboratories, search aliases, profile, favorites, recents, drafts, history, snapshots, migration, import/export, RU/EN, four themes and offline architecture.
+All 86 stable calculator IDs and formulas, nine laboratories, search aliases, profile, favorites, recents, drafts, history, snapshots, migration, import/export, RU/EN, four palettes plus the System resolver and offline architecture.
 
 ## Safety
 

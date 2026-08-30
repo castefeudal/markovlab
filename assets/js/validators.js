@@ -7,8 +7,8 @@ const safeDate=v=>Number.isFinite(Date.parse(v))?new Date(v).toISOString():new D
 
 export function normalizeImport(raw,validIds){
  if(!raw||typeof raw!=='object'||Array.isArray(raw))throw new Error('Invalid payload');
- if(Number(raw.version||1)>3)throw new Error('Unsupported version');
- const out={version:3,lang:raw.lang==='ru'?'ru':'en',theme:allowedThemes.has(raw.theme)?raw.theme:'system',profile:{},favorites:[],history:[],snapshots:[],recents:[],onboardingDismissed:Boolean(raw.onboardingDismissed)};
+ if(Number(raw.version||1)>4)throw new Error('Unsupported version');
+ const out={version:4,lang:raw.lang==='ru'?'ru':'en',theme:allowedThemes.has(raw.theme)?raw.theme:'system',profile:{},favorites:[],history:[],snapshots:[],recents:[],onboardingDismissed:Boolean(raw.onboardingDismissed)};
  if(raw.profile&&typeof raw.profile==='object'&&!Array.isArray(raw.profile))for(const[k,v]of Object.entries(raw.profile)){if(!allowedProfile.has(k))continue;if(k==='sex'){if(['male','female'].includes(v))out.profile[k]=v}else if(k==='primaryGoal'){if(['health','fat-loss','muscle','performance','finance'].includes(v))out.profile[k]=v}else if(Number.isFinite(Number(v)))out.profile[k]=Number(v)}
  if(Array.isArray(raw.favorites))out.favorites=[...new Set(raw.favorites.filter(x=>typeof x==='string'&&validIds.has(x)))].slice(0,200);
  if(Array.isArray(raw.recents))out.recents=[...new Set(raw.recents.filter(x=>typeof x==='string'&&validIds.has(x)))].slice(0,8);

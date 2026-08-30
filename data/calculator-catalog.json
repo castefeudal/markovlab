@@ -1251,8 +1251,8 @@
         "en": "Plate loader"
       },
       "description": {
-        "ru": "Подбор дисков на каждую сторону грифа.",
-        "en": "Selects plates for each side of a barbell."
+        "ru": "Подбирает диски и честно показывает достижимый вес.",
+        "en": "Selects plates and honestly reports the achievable load."
       },
       "whenUseful": {
         "ru": "Чтобы быстро собрать целевой вес из стандартных пар дисков и проверить остаток.",
