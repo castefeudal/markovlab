@@ -1,4 +1,4 @@
-# MARKOVLAB 5.1
+# MARKOVLAB 5.3
 
 MARKOVLAB — двуязычная персональная лаборатория измеримого прогресса: 86 прозрачных калькуляторов в 9 направлениях, reusable‑профиль, история, снимки, динамика, доказательный контекст и практические следующие шаги.
 
@@ -8,7 +8,7 @@ MARKOVLAB — двуязычная персональная лаборатори
 
 Продукт работает без аккаунта и backend: профиль, избранное, история и настройки остаются в браузере. Удалённые шрифты, analytics, trackers и обязательные runtime API отсутствуют.
 
-## Что входит в 5.2
+## Что входит в 5.3
 
 - 86 стабильных calculator ID и 9 лабораторий: тело, энергия, питание, сила, кардио, восстановление, фокус, финансы и конвертеры; Body включает provenance-backed fat-equivalent model.
 - Natural-language поиск с RU/EN aliases, опечатками и intent‑запросами вроде «сколько калорий мне есть» или “inflation adjusted return”.
@@ -24,6 +24,8 @@ MARKOVLAB — двуязычная персональная лаборатори
 - Versioned export/import, v1/v2/v3→v4 migration, canonical structured history with locale-at-render, bounded import и защита от prototype pollution.
 - Installable PWA, offline app shell, update lifecycle, print‑report и branded 404.
 - Новая logo system `M + calibration + reference point`, смысловая evidence-визуализация и локальная серия оптимизированных WebP/SVG assets.
+- Шесть локальных **путей решения**: энергия и белок, состав тела, рабочий вес, беговой ориентир, восстановление и финансовый runway. Путь показывает прогресс, сохраняет контекст в сессии и переносит только те результаты, чьи единицы и смысл совпадают.
+- Ранний bootstrap теперь читает актуальное state v4: выбранные язык и тема применяются до первого рендера, а PWA получает новый cache revision.
 
 ## Запуск
 
@@ -79,4 +81,4 @@ GitHub Pages публикуется workflow `deploy-pages.yml` из `main`. В�
 - [Production completion report](docs/MARKOVLAB_FINAL_CORRECTIVE_REPORT.md)
 - [Calculator coverage roadmap](docs/CALCULATOR_COVERAGE_ROADMAP.md)
 
-Версия: **5.2.1**.
+Версия: **5.3.0**.
