@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { shell, home, calculatorsPage, calculatorPage, categoryPage } from '../assets/js/renderers-v3.js';
 import { CALCULATORS } from '../assets/js/calculators.js';
+import { getProConfig } from '../assets/js/pro.js';
 
 const state={lang:'ru',theme:'light',profile:{},favorites:[],recents:[],history:[],snapshots:[]};
 
@@ -93,12 +94,16 @@ test('all nine laboratories have distinct purpose-built editorial photography',(
   assert.equal(assets.size,9);
 });
 
-test('every calculator exposes an honest Pro analysis surface',()=>{
+test('only calculators with a decision-useful Pro mode expose it',()=>{
   for(const calc of CALCULATORS){
     const html=calculatorPage(calc,state,null,null,{});
-    assert.match(html,/MARKOVLAB PRO/,`${calc.id}: missing Pro mode`);
-    assert.match(html,/data-action="calc-mode" data-mode="pro"/,`${calc.id}: missing Pro tab`);
-    assert.match(html,/полный протокол|Точный протокол/i,`${calc.id}: missing protocol`);
+    if(getProConfig(calc).mode==='none'){
+      assert.doesNotMatch(html,/data-action="calc-mode" data-mode="pro"/,`${calc.id}: decorative Pro is absent`);
+    }else{
+      assert.match(html,/MARKOVLAB PRO/,`${calc.id}: missing configured Pro`);
+      assert.match(html,/data-action="calc-mode" data-mode="pro"/,`${calc.id}: missing Pro tab`);
+      assert.match(html,/полный протокол|Точный протокол/i,`${calc.id}: missing protocol`);
+    }
   }
 });
 
@@ -113,15 +118,16 @@ test('calculator Pro mode survives result rerenders',async()=>{
   const renderer=await readFile(new URL('../assets/js/renderers-v3.js',import.meta.url),'utf8');
   assert.match(app,/calcModes=new Map\(\)/);
   assert.match(app,/proScenarios=new Map\(\)/);
-  assert.match(app,/proScenarios\.set\(form\.dataset\.calc,\{driver,delta,source\}\)/);
+  assert.match(app,/baselineInputs=new Map\(\)/);
+  assert.match(app,/proScenarios\.set\(form\.dataset\.calc,\{values:/);
   assert.match(app,/new MutationObserver\([\s\S]*syncCalcMode/);
   assert.match(app,/calcModes\.set\(form\.dataset\.calc,mode\)/);
   assert.match(app,/restoreProScenario\(\)/);
-  assert.match(app,/runProScenarioReliable\(button,selected\.source\|\|'restore'\)/);
-  assert.match(app,/form\.elements\.namedItem\(field\.id\)/);
+  assert.match(app,/function currentBaseline/);
+  assert.match(app,/function runProScenario/);
   assert.match(app,/wireProScenarioControls\(form\)/);
-  assert.match(renderer,/role="radiogroup"/);
-  assert.match(renderer,/data-pro-delta/);
+  assert.match(renderer,/data-pro-input/);
+  assert.match(renderer,/data-pro-baseline/);
 });
 
 test('theme menu has four distinct palettes plus explicit system behavior',()=>{

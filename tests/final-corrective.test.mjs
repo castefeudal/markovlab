@@ -3,26 +3,29 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { CALCULATORS, calculatorMap } from '../assets/js/calculators.js';
 import { calculatorPage } from '../assets/js/renderers-v3.js';
+import { getProConfig } from '../assets/js/pro.js';
 
 const state={lang:'ru',theme:'light',profile:{},favorites:[],recents:[],history:[],snapshots:[]};
 
-test('Pro controls use one direct pointer transaction with an inspectable event trace',async()=>{
+test('Pro compares only a calculated baseline with real Scenario B inputs',async()=>{
   const app=await readFile(new URL('../assets/js/app.js',import.meta.url),'utf8');
-  assert.match(app,/window\.__MARKOVLAB_PRO_EVENT_TRACE__=proEventTrace/);
+  assert.match(app,/baselineInputs=new Map\(\)/);
+  assert.match(app,/function currentBaseline/);
+  assert.match(app,/function runProScenario/);
+  assert.match(app,/data-pro-input/);
+  assert.match(app,/data-action="pro-compare"/);
+  assert.match(app,/validateFields\(calc\.fields,scenario,state\.lang\)/);
   assert.match(app,/function wireProScenarioControls/);
-  assert.match(app,/button\.addEventListener\('pointerdown'/);
-  assert.match(app,/button\.addEventListener\('pointerup'/);
-  assert.match(app,/button\.addEventListener\('click'/);
-  assert.match(app,/runProScenarioReliable\(button,'pointer'\)/);
-  assert.match(app,/instrumentProPath\(window,'window'\)/);
-  assert.match(app,/console\.error\('MARKOVLAB Pro scenario failed'/);
 });
 
-test('every numeric calculator renders a pointer-addressable Pro Scenario B',()=>{
+test('Pro is intentionally absent where a second mode adds no decision value',()=>{
   for(const calc of CALCULATORS){
     const html=calculatorPage(calc,state,null,null,{});
-    if(calc.fields.some(field=>field.type==='number')){
-      assert.match(html,/data-pro-delta="5"/,`${calc.id}: +5% control`);
+    if(getProConfig(calc).mode==='none'){
+      assert.doesNotMatch(html,/MARKOVLAB PRO/,`${calc.id}: no decorative Pro`);
+    }else{
+      assert.match(html,/MARKOVLAB PRO/,`${calc.id}: configured Pro`);
+      assert.match(html,/data-pro-input/,`${calc.id}: real Scenario B inputs`);
       assert.match(html,/role="status" tabindex="-1" aria-live="polite"/,`${calc.id}: live scenario output`);
     }
   }

@@ -7,14 +7,15 @@ ru.transparentRules='Понятные правила расчёта';
 en.noInsights='Add a few profile fields to see rules tied to their source data.';
 en.evidenceTitle='Method and evidence basis';
 en.transparentRules='Rules you can inspect';
-ru.version='Версия 5.3.0';
-en.version='Version 5.3.0';
+ru.version='Версия 5.4.0';
+en.version='Version 5.4.0';
 export const copy={ru,en};
 export const l=(value,lang='ru')=>typeof value==='string'?value:value?.[lang]??value?.ru??'';
 export const t=(key,lang='ru')=>copy[lang]?.[key]??copy.ru[key]??key;
 export const formatNumber=(value,lang='ru',digits=1)=>new Intl.NumberFormat(lang==='ru'?'ru-RU':'en-US',{maximumFractionDigits:digits}).format(value);
 const ruUnits={
-  'years':'лет','days':'дн.','months':'мес.','minutes after midnight':'мин после полуночи',
+  'years':'лет','year':'год','days':'дн.','months':'мес.','minutes after midnight':'мин после полуночи',
+  'kg':'кг','g':'г','mg':'мг','cm':'см','m':'м','km':'км','km/h':'км/ч','bpm':'уд/мин','min':'мин','h':'ч','L':'л','mL':'мл','kcal':'ккал',
   'steps/min':'шагов/мин','moderate-equivalent min':'мин умеренной нагрузки','potential reps':'возможных повторов',
   'currency':'ден. ед.','currency/month':'ден. ед./мес.','currency/hour':'ден. ед./ч','currency/100g':'ден. ед./100 г',
   'priority':'индекс приоритета','score':'балла','US fl oz':'жидк. унц. США','% margin':'% маржи','%/year':'%/год',

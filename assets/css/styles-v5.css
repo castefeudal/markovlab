@@ -204,3 +204,79 @@
   :where(button,a,input,select,summary):focus-visible{outline-color:var(--focus-ring)}
   @media(max-width:470px){.scenario-option{min-height:48px;font-size:13px}}
 }
+
+@layer v5-hardening {
+  /* Readability is a product contract: secondary information may be compact,
+     but no actionable label or explanation is rendered as microcopy. */
+  .brand-v5 .brand-word small{font-size:10px;line-height:1.25}
+  .nav-v5 a,.breadcrumbs a,.breadcrumbs span{font-size:14px;line-height:1.35}
+  .nav-v5 a{display:inline-flex;align-items:center;min-height:44px}
+  .eyebrow,.tool-row-copy small,.workflow-card>header small,.workflow-page-measure>span{font-size:11px;line-height:1.35}
+  .badge{min-height:26px;padding:5px 8px;font-size:12px;line-height:1.2}
+  .calc-title p,.calc-practical-note p,.calc-explainer p,.field-hint,.formula-line,.source-list a,.medical-note{font-size:14px;line-height:1.55}
+  .field-label label,.field-label>span,.formula-details summary{font-size:14px;line-height:1.4}
+  .result-sections h3{font-size:12px;line-height:1.4}
+  .result-sections p{font-size:14px;line-height:1.55}
+  .result-kicker,.scenario-result small{font-size:12px;line-height:1.35}
+  .result-value span{font-size:16px;line-height:1.35}
+  .workflow-principles span,.workflow-page-measure small,.workflow-continue p,.workflow-card p,.workflow-card li,.workflow-card footer>span,.workflow-rail-meta a,.workflow-rail-meta>span,.workflow-rail>div:nth-child(2) p,.workflow-rail li,.workflow-rail-actions>span,.workflow-rail-actions .text-action{font-size:12px;line-height:1.45}
+  .workflow-card-index,.workflow-card li b,.workflow-rail li b{font-size:11px}
+  .tool-row-meta,.recent-note,.lab-index small,.lab-index b{font-size:12px;line-height:1.4}
+  .mobile-nav-v5 a,.mobile-nav-v5 button{font-size:14px;line-height:1.2}
+  .mobile-nav-v5 a{min-height:56px}
+  .data-popover a,.theme-choice>span,.home-search strong,.hero-quick a,.question-list small{font-size:14px;line-height:1.45}
+  .home-search small,.hero-trust,.measure-preview:before,.preview-rail,.preview-question small,.preview-decision small,.measure-preview figcaption,.continue-result small,.continue-result span,.continue-links a,.question-list>b,.workflow-launch-item>b,.workflow-launch-item small,.library-count span,.lab-index-head>strong,.lab-index-head .text-action{font-size:12px;line-height:1.45}
+  .preview-decision p{font-size:14px;line-height:1.55}
+  .calc-mode-basic-only{grid-template-columns:1fr}
+  .pro-workbench{padding:clamp(18px,3vw,26px)}
+  .pro-workbench>p,.pro-workbench li span{font-size:14px;line-height:1.55}
+  .pro-workbench li strong{font-size:14px;line-height:1.45}
+  .pro-scenario{display:grid;gap:16px;margin-top:20px;padding-top:20px;border-top:1px solid var(--v5-rule)}
+  .pro-scenario>header{display:flex;align-items:start;justify-content:space-between;gap:16px}
+  .pro-scenario h3{margin:4px 0 0;font-size:18px;line-height:1.2}
+  .pro-scenario-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .pro-scenario-field{display:grid;gap:7px;color:var(--text-primary);font-size:14px;font-weight:750;line-height:1.4}
+  .pro-input-wrap{position:relative;display:block}
+  .pro-input-wrap input{width:100%;min-height:48px;padding:0 48px 0 13px;border:1px solid var(--border-strong-v5);border-radius:8px;background:var(--surface-elevated);color:var(--text-primary);font:16px var(--font-ui)}
+  .pro-input-wrap input:disabled{cursor:not-allowed;opacity:.62}
+  .pro-input-wrap em{position:absolute;top:50%;right:13px;transform:translateY(-50%);color:var(--text-secondary);font-size:13px;font-style:normal;font-weight:650}
+  .pro-scenario-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .pro-scenario-actions .btn,.pro-scenario>header .text-action{min-height:44px}
+  .pro-scenario-actions>span{max-width:58ch;color:var(--text-secondary);font-size:13px;line-height:1.5}
+  .pro-scenario-output{min-height:0;padding:16px;border:1px solid var(--border-strong-v5);border-left:4px solid var(--v5-accent);border-radius:8px}
+  .pro-scenario-output p{font-size:14px;line-height:1.55}
+  .scenario-result strong{font-size:clamp(1.45rem,3vw,2rem)}
+  .pro-boundary{margin-top:18px;padding:14px 16px;border-left:3px solid var(--v5-brass);background:color-mix(in srgb,var(--v5-brass) 8%,var(--surface-elevated))}
+  .pro-boundary strong{font-size:14px;line-height:1.4}.pro-boundary p{margin:5px 0 0;font-size:14px;line-height:1.55}
+  .profile-section{padding:0;overflow:hidden}
+  .profile-section>summary{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;min-height:82px;padding:18px 20px;cursor:pointer;list-style:none}
+  .profile-section>summary::-webkit-details-marker{display:none}
+  .profile-section>summary:focus-visible{outline:3px solid var(--focus-ring);outline-offset:-3px}
+  .profile-section>summary header{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px}
+  .profile-section-toggle{color:var(--v5-accent);font-size:13px;font-weight:750}
+  .profile-section[open] .profile-section-toggle{font-size:0}.profile-section[open] .profile-section-toggle:after{content:'−';font-size:22px;line-height:1}
+  .profile-section .profile-grid{padding:0 20px 22px;border-top:1px solid var(--v5-rule)}
+  /* Home remains a command center after the first viewport: practical entry
+     points, workflows and a compact laboratory index — not an endless essay. */
+  .home-section-v5.practice-section,.author-note,.trust-system{display:none}
+  .home-section-v5.lab-atlas{margin-top:64px!important}
+  .lab-atlas-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border:1px solid var(--v5-rule);background:var(--v5-rule)}
+  .lab-atlas-grid>a{display:grid;grid-template-columns:34px minmax(0,1fr) auto;grid-template-rows:auto;align-items:center;gap:10px;min-height:92px;padding:14px;border:0;background:var(--v5-paper)}
+  .lab-atlas-grid>a>img{display:none}.lab-atlas-grid>a>span{grid-column:auto;grid-row:auto;width:34px;height:34px}.lab-atlas-grid>a>div{display:grid;gap:3px}.lab-atlas-grid strong{font-size:15px;line-height:1.25}.lab-atlas-grid small{font-size:12px;line-height:1.4}.lab-atlas-grid b{font-size:12px}
+  @media(max-width:720px){
+    .calc-explainer article:nth-child(3){display:grid}
+    .pro-scenario-fields{grid-template-columns:1fr}
+    .pro-scenario>header{display:grid}.pro-scenario>header .text-action{justify-self:start}
+    .workflow-rail li,.workflow-rail-actions>span{font-size:12px}
+    .lab-atlas-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:470px){
+    .main-v5{padding-inline:14px}
+    .calc-title p,.calc-explainer p,.field-hint,.result-sections p,.pro-workbench>p,.pro-workbench li span,.pro-boundary p{font-size:14px}
+    .calc-mode-switch button{min-height:54px;font-size:14px}
+    .calc-mode-switch button small{font-size:12px}
+    .scenario-result{grid-template-columns:1fr}.scenario-result strong{font-size:24px}
+    .profile-section>summary{padding:16px}.profile-section .profile-grid{padding:0 16px 18px}
+    .lab-atlas-grid{grid-template-columns:1fr}
+  }
+}

@@ -19,20 +19,20 @@ test('fat-gain workbook vectors remain reproducible',()=>{
   assert.ok(Number.isFinite(c.calculate(defaults,{}).primary));
 });
 
-test('Pro controls are real semantic buttons and driver changes are wired',async()=>{
+test('Pro controls use editable Scenario B values rather than percentage presets',async()=>{
   const renderer=await readFile(new URL('../assets/js/renderers-v3.js',import.meta.url),'utf8');
   const app=await readFile(new URL('../assets/js/app.js',import.meta.url),'utf8');
-  assert.match(renderer,/button type="button" class="scenario-option"/);
-  assert.match(renderer,/data-action="pro-scenario"/);
-  assert.match(renderer,/data-pro-driver/);
-  assert.match(app,/function setScenarioSelection/);
-  assert.match(app,/matches\('\[data-pro-driver\]'\)/);
-  assert.match(app,/ArrowRight.*ArrowDown.*ArrowLeft.*ArrowUp/);
+  assert.match(renderer,/data-pro-input/);
+  assert.match(renderer,/data-action="pro-compare"/);
+  assert.match(renderer,/data-pro-baseline/);
+  assert.match(app,/function copyBaselineToScenario/);
+  assert.match(app,/function runProScenario/);
+  assert.match(app,/changed=calc\.fields/);
 });
 
 test('overlay theme contract defines readable surface tokens and focus states',async()=>{
   const css=await readFile(new URL('../assets/css/styles-v5.css',import.meta.url),'utf8');
   for(const token of ['--surface-elevated','--surface-recessed','--text-primary','--text-secondary','--border-strong-v5','--overlay-backdrop','--focus-ring'])assert.match(css,new RegExp(token.replaceAll('-','\\-')));
   assert.match(css,/\.data-popover,\.palette,\.confirm-dialog,\.onboarding/);
-  assert.match(css,/\.scenario-option:focus-visible/);
+  assert.match(css,/\.pro-input-wrap input/);
 });
