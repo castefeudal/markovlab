@@ -1,12 +1,13 @@
-import * as legacy from './renderers.js?v=5.3.0';
-import { CALCULATORS, calculatorMap } from './calculators.js?v=5.3.0';
-import { REFERENCES } from './references.js?v=5.3.0';
-import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js?v=5.3.0';
-import { icon, logo } from './icons.js?v=5.3.0';
-import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js?v=5.3.0';
-import { searchCalculators as legacySearchFn } from './search.js?v=5.3.0';
-import { RELEASE_CONFIG } from './config.js?v=5.3.0';
-import { WORKFLOWS, activeWorkflowStep, loadWorkflowRun, workflowMap } from './workflows.js?v=5.3.0';
+import * as legacy from './renderers.js?v=5.4.0';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=5.4.0';
+import { REFERENCES } from './references.js?v=5.4.0';
+import { categories, evidenceLabels, methodLabels, l, t, formatNumber, formatUnit } from './i18n.js?v=5.4.0';
+import { icon, logo } from './icons.js?v=5.4.0';
+import { DOMAIN_CONTENT, WHEN_USEFUL, applyResultGuidance, confidenceFor, fieldHelp, relatedFor, visualizationType } from './content.js?v=5.4.0';
+import { searchCalculators as legacySearchFn } from './search.js?v=5.4.0';
+import { RELEASE_CONFIG } from './config.js?v=5.4.0';
+import { WORKFLOWS, activeWorkflowStep, loadWorkflowRun, workflowMap } from './workflows.js?v=5.4.0';
+import { getProConfig } from './pro.js?v=5.4.0';
 
 const bi=(ru,en,lang)=>lang==='ru'?ru:en;
 const esc=legacy.esc;
@@ -145,7 +146,7 @@ export function calculatorPage(calc,state,session,resultData,errors={}){
   const practice=DOMAIN_PRACTICE[calc.category];
   html=html
     .replace('<form class="panel form-panel"',`<form class="panel form-panel" data-mode="basic"`)
-    .replace('<div class="form-intro">',`${proWorkbench(displayCalc,lang)}<div class="form-intro">`)
+    .replace('<div class="form-intro">',`${proWorkbench(displayCalc,state,session,resultData,lang)}<div class="form-intro">`)
     .replace('<div class="calc-grid">',`<aside class="calc-practical-note">${icon('check')}<div><span class="eyebrow">${bi('ГДЕ ПРИМЕНИТЬ','WHERE TO USE IT',lang)}</span><strong>${esc(l(practice.title,lang))}</strong><p>${esc(l(WHEN_USEFUL[calc.id]||practice.text,lang))}</p></div></aside><div class="calc-grid">`);
   const activeWorkflow=activeWorkflowStep(calc.id);
   if(activeWorkflow)html=html.replace('<div class="calc-grid">',`${workflowRail(activeWorkflow,lang,Boolean(resultData))}<div class="calc-grid">`);
@@ -181,11 +182,23 @@ function workflowRail(active,lang,hasResult){
   return `<section class="workflow-rail" aria-label="${bi('Активный путь решения','Active decision workflow',lang)}"><div class="workflow-rail-meta"><a href="#workflows">${icon('workflows')} ${bi('Путь решения','Decision workflow',lang)}</a><span>${run.index+1} / ${workflow.steps.length}</span></div><div><span class="eyebrow">${esc(l(workflow.title,lang))}</span><strong>${esc(l(step.label,lang))}</strong><p>${esc(l(step.why,lang))}</p></div><ol>${workflow.steps.map((item,index)=>`<li class="${index<run.index?'done':''} ${index===run.index?'current':''}" ${index===run.index?'aria-current="step"':''}><b>${index<run.index?icon('check'):String(index+1).padStart(2,'0')}</b><span>${esc(l(item.label,lang))}</span></li>`).join('')}</ol><div class="workflow-rail-actions">${hasResult?`<button class="btn primary" data-action="workflow-next">${isLast?bi('Завершить путь','Finish workflow',lang):bi('Следующий шаг','Next step',lang)} ${icon('arrow')}</button>`:`<span>${bi('Рассчитайте этот шаг, чтобы открыть следующий.','Calculate this step to unlock the next one.',lang)}</span>`}<button class="text-action" data-action="workflow-cancel">${bi('Выйти из пути','Leave workflow',lang)}</button></div></section>`;
 }
 
-function proWorkbench(calc,lang){
-  const numeric=calc.fields.filter(field=>field.type==='number');
+function proValue(field,state,session){
+  if(session?.[field.id]!==undefined)return session[field.id];
+  if(field.profileKey&&state.profile[field.profileKey]!==undefined)return state.profile[field.profileKey];
+  return field.default??'';
+}
+
+function proWorkbench(calc,state,session,resultData,lang){
+  const config=getProConfig(calc);
+  if(config.mode==='none')return `<div class="calc-mode-switch calc-mode-basic-only"><button type="button" role="tab" aria-selected="true" data-action="calc-mode" data-mode="basic">${bi('Основной','Basic',lang)}<small>${bi('быстрый расчёт','quick calculation',lang)}</small></button></div>`;
   const fieldProtocol=calc.fields.map(field=>`<li><strong>${esc(l(field.label,lang))}</strong><span>${esc(fieldHelp(calc,field,lang))}</span></li>`).join('');
-  const scenario=numeric.length?`<div class="pro-sensitivity"><label>${bi('Параметр чувствительности','Sensitivity driver',lang)}<select data-pro-driver aria-label="${bi('Параметр чувствительности','Sensitivity driver',lang)}">${numeric.map(field=>`<option value="${esc(field.id)}">${esc(l(field.label,lang))}</option>`).join('')}</select></label><div class="scenario-buttons" role="radiogroup" aria-label="${bi('Изменение параметра','Driver adjustment',lang)}">${[-10,-5,5,10].map(value=>`<button type="button" class="scenario-option" role="radio" aria-checked="false" aria-pressed="false" data-action="pro-scenario" data-pro-delta="${value}" data-delta="${value}">${value>0?'+':''}${value}%</button>`).join('')}</div><div class="pro-scenario-output" role="status" tabindex="-1" aria-live="polite"><p>${bi('Выберите параметр и изменение — MARKOVLAB сравнит базовый и альтернативный сценарии, не меняя форму.','Choose a driver and adjustment. MARKOVLAB will compare baseline and alternative scenarios without changing the form.',lang)}</p></div></div>`:`<p class="pro-no-scenario">${bi('У этой формулы нет числового параметра для честного сценарного анализа. Pro-режим раскрывает протокол и допущения, не выдумывая ложную точность.','This formula has no numeric driver for an honest sensitivity scenario. Pro mode exposes protocol and assumptions without inventing precision.',lang)}</p>`;
-  return `<div class="calc-mode-switch" role="tablist" aria-label="${bi('Режим калькулятора','Calculator mode',lang)}"><button type="button" role="tab" aria-selected="true" data-action="calc-mode" data-mode="basic">${bi('Основной','Basic',lang)}<small>${bi('быстрый расчёт','quick calculation',lang)}</small></button><button type="button" role="tab" aria-selected="false" data-action="calc-mode" data-mode="pro"><b>PRO</b><small>${bi('сценарии и протокол','scenarios & protocol',lang)}</small></button></div><section class="pro-workbench" role="tabpanel"><header><div><span class="eyebrow">MARKOVLAB PRO</span><h2>${bi('Проверьте устойчивость результата','Test result sensitivity',lang)}</h2></div><span class="badge method">${esc(l(methodLabels[calc.methodType],lang))}</span></header><p>${bi('Формула остаётся той же. Pro добавляет сценарный стресс-тест, полный протокол ввода и технические ограничения. Если дополнительный параметр научно не обоснован, интерфейс его не придумывает.','The formula stays unchanged. Pro adds scenario stress testing, the full input protocol, and technical boundaries. If an extra parameter is not scientifically justified, the interface does not invent one.',lang)}</p>${scenario}<details><summary>${bi('Точный протокол всех входов','Full input protocol',lang)}</summary><ul>${fieldProtocol}</ul></details></section>`;
+  const hasBaseline=Boolean(resultData);
+  const inputs=config.inputs.map(field=>`<label class="pro-scenario-field"><span>${esc(l(field.label,lang))}</span><span class="pro-input-wrap"><input type="text" inputmode="decimal" data-pro-input="${esc(field.id)}" value="${esc(proValue(field,state,session))}" ${hasBaseline?'':'disabled'} aria-label="${esc(l(field.label,lang))} — ${bi('сценарий B','Scenario B',lang)}">${field.unit?`<em>${esc(field.unit)}</em>`:''}</span></label>`).join('');
+  const modeLabel={compare:bi('Сценарий A / B','Scenario A / B',lang),alternatives:bi('Альтернативный вариант','Alternative setup',lang),timeline:bi('Стресс-сценарий','Stress scenario',lang)}[config.mode];
+  const initial=hasBaseline
+    ?bi('Измените один или несколько входов сценария B. MARKOVLAB покажет разницу с последним рассчитанным базовым сценарием.','Change one or more Scenario B inputs. MARKOVLAB will show the difference from the most recently calculated baseline.',lang)
+    :bi('Сначала рассчитайте базовый сценарий ниже. После этого здесь можно будет сравнить его с альтернативой.','Calculate the baseline below first. You will then be able to compare it with an alternative here.',lang);
+  return `<div class="calc-mode-switch" role="tablist" aria-label="${bi('Режим калькулятора','Calculator mode',lang)}"><button type="button" role="tab" aria-selected="true" data-action="calc-mode" data-mode="basic">${bi('Основной','Basic',lang)}<small>${bi('быстрый расчёт','quick calculation',lang)}</small></button><button type="button" role="tab" aria-selected="false" data-action="calc-mode" data-mode="pro"><b>PRO</b><small>${modeLabel}</small></button></div><section class="pro-workbench" role="tabpanel" data-pro-mode="${config.mode}" data-pro-baseline="${hasBaseline?'ready':'required'}"><header><div><span class="eyebrow">MARKOVLAB PRO · ${modeLabel}</span><h2>${esc(l(config.title,lang))}</h2></div><span class="badge method">${esc(l(methodLabels[calc.methodType],lang))}</span></header><p>${esc(l(config.description,lang))}</p><section class="pro-scenario" aria-labelledby="pro-scenario-title"><header><div><span class="eyebrow">${bi('СЦЕНАРИЙ B','SCENARIO B',lang)}</span><h3 id="pro-scenario-title">${bi('Измените реальные входные данные','Change real input values',lang)}</h3></div><button type="button" class="text-action" data-action="pro-copy-baseline" ${hasBaseline?'':'disabled'}>${bi('Вернуть базовые значения','Restore baseline values',lang)}</button></header><div class="pro-scenario-fields">${inputs}</div><div class="pro-scenario-actions"><button type="button" class="btn primary" data-action="pro-compare" ${hasBaseline?'':'disabled'}>${bi('Сравнить с базой','Compare with baseline',lang)} ${icon('arrow')}</button><span>${bi('Изменяются только поля сценария B. Базовый расчёт не перезаписывается.','Only Scenario B fields change. The baseline calculation is never overwritten.',lang)}</span></div><div class="pro-scenario-output" role="status" tabindex="-1" aria-live="polite"><p>${initial}</p></div></section><aside class="pro-boundary"><strong>${bi('Граница модели','Model boundary',lang)}</strong><p>${esc(l(config.limitation,lang))}</p></aside><details><summary>${bi('Точный протокол всех входов','Full input protocol',lang)}</summary><ul>${fieldProtocol}</ul></details></section>`;
 }
 
 function sourceList(calc,lang){

@@ -1,13 +1,15 @@
-import { normalizeImport } from './validators.js?v=5.3.0';
+import { normalizeImport } from './validators.js?v=5.4.0';
 
 const KEY = 'markovlab-state-v4';
 const LEGACY_KEYS = ['markovlab-state-v3','markovlab-state-v2','markovlab-state-v1'];
-const THEMES = new Set(['system','light','paper','dark','midnight']);
+export const THEME_PREFERENCES = Object.freeze(['system','light','paper','dark','midnight']);
+const THEMES = new Set(THEME_PREFERENCES);
 const uid = () => globalThis.crypto?.randomUUID?.() || `ml-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,10)}`;
 
 export const DEFAULT_STATE = Object.freeze({version:4,lang:'en',theme:'system',profile:{},favorites:[],history:[],snapshots:[],recents:[],onboardingDismissed:false});
 const preferredLanguage=()=>typeof navigator!=='undefined'&&String(navigator.language||'').toLowerCase().startsWith('ru')?'ru':'en';
 const fresh = () => ({...structuredClone(DEFAULT_STATE),lang:preferredLanguage()});
+export const normalizeTheme=theme=>THEMES.has(theme)?theme:'system';
 
 export function migrateState(raw) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Number(raw.version || 1) > 4) return fresh();
@@ -16,9 +18,16 @@ export function migrateState(raw) {
     summary:typeof item?.summary==='string'?item.summary:'',
     result:item?.result&&typeof item.result==='object'?item.result:undefined
   })):[];
-  return {...fresh(),...raw,version:4,lang:raw.lang==='ru'?'ru':'en',theme:THEMES.has(raw.theme)?raw.theme:'system',profile:raw.profile&&typeof raw.profile==='object'?raw.profile:{},favorites:Array.isArray(raw.favorites)?raw.favorites:[],history,snapshots:Array.isArray(raw.snapshots)?raw.snapshots:[],recents:Array.isArray(raw.recents)?raw.recents:[],onboardingDismissed:Boolean(raw.onboardingDismissed)};
+  return {...fresh(),...raw,version:4,lang:raw.lang==='ru'?'ru':'en',theme:normalizeTheme(raw.theme),profile:raw.profile&&typeof raw.profile==='object'?raw.profile:{},favorites:Array.isArray(raw.favorites)?raw.favorites:[],history,snapshots:Array.isArray(raw.snapshots)?raw.snapshots:[],recents:Array.isArray(raw.recents)?raw.recents:[],onboardingDismissed:Boolean(raw.onboardingDismissed)};
 }
-export function loadState(){try{const current=localStorage.getItem(KEY),legacy=LEGACY_KEYS.map(key=>localStorage.getItem(key)).find(Boolean),state=migrateState(JSON.parse(current||legacy||'null'));if(!current&&legacy)saveState(state);return state}catch{return fresh()}}
+const readStoredState=key=>{try{const text=localStorage.getItem(key);return text?JSON.parse(text):null}catch{return null}};
+export function loadState(){
+  const entries=[KEY,...LEGACY_KEYS].map(key=>({key,raw:readStoredState(key)})).filter(entry=>entry.raw&&typeof entry.raw==='object'&&!Array.isArray(entry.raw));
+  const selected=entries[0];
+  const state=migrateState(selected?.raw);
+  if(selected&&selected.key!==KEY)saveState(state);
+  return state;
+}
 export function saveState(state){localStorage.setItem(KEY,JSON.stringify({...state,version:4}))}
 export function exportState(state){return JSON.stringify({...state,version:4,exportedAt:new Date().toISOString(),product:'MARKOVLAB'},null,2)}
 export function importState(text,ids){if(typeof text!=='string'||text.length>2_000_000)throw new Error('Import too large');return normalizeImport(JSON.parse(text),ids)}
