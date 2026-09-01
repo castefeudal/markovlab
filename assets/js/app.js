@@ -1,12 +1,12 @@
-import { CALCULATORS, calculatorMap } from './calculators.js?v=5.4.0-r3';
-import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent, normalizeTheme, THEME_PREFERENCES } from './storage.js?v=5.4.0-r3';
-import { route } from './router.js?v=5.4.0-r3';
-import { validateFields } from './validators.js?v=5.4.0-r3';
-import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=5.4.0-r3';
-import { shell, home, calculatorsPage, workflowsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.4.0-r3';
-import { RELEASE_CONFIG } from './config.js?v=5.4.0-r3';
-import { applyResultGuidance } from './content.js?v=5.4.0-r3';
-import { startWorkflow, clearWorkflowRun, recordWorkflowOutput, advanceWorkflow, workflowMap } from './workflows.js?v=5.4.0-r3';
+import { CALCULATORS, calculatorMap } from './calculators.js?v=5.4.0-r4';
+import { loadState, saveState, exportState, importState, clearState, addHistory, addSnapshot, touchRecent, normalizeTheme, THEME_PREFERENCES } from './storage.js?v=5.4.0-r4';
+import { route } from './router.js?v=5.4.0-r4';
+import { validateFields } from './validators.js?v=5.4.0-r4';
+import { categories, methodLabels, l, t, formatUnit } from './i18n.js?v=5.4.0-r4';
+import { shell, home, calculatorsPage, workflowsPage, categoryPage, calculatorPage, profilePage, insightsPage, evidencePage, aboutPage, notFoundPage, onboarding, paletteHtml } from './renderers-v3.js?v=5.4.0-r4';
+import { RELEASE_CONFIG } from './config.js?v=5.4.0-r4';
+import { applyResultGuidance } from './content.js?v=5.4.0-r4';
+import { startWorkflow, clearWorkflowRun, recordWorkflowOutput, advanceWorkflow, workflowMap } from './workflows.js?v=5.4.0-r4';
 
 let state=loadState(),results=new Map(),errors=new Map(),calcModes=new Map(),proScenarios=new Map(),baselineInputs=new Map(),libraryQuery='',libraryView='recommended',paletteQuery='',paletteIndex=0,historyQuery='',historySort='newest',evidenceQuery='',onboardingStep=1,deferredInstall=null,pendingWorker=null;
 const app=document.querySelector('#app'),palette=document.querySelector('#palette'),importFile=document.querySelector('#import-file'),toast=document.querySelector('#toast'),onboardingDialog=document.querySelector('#onboarding'),confirmDialog=document.querySelector('#confirm-dialog');
@@ -114,7 +114,7 @@ app.addEventListener('click',async e=>{
  if(action==='apply-update'&&pendingWorker){pendingWorker.postMessage({type:'SKIP_WAITING'})}
 });
 
-app.addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(action==='settings-menu'||action==='data-menu'){const id=action==='settings-menu'?'settings-popover':'data-popover',other=action==='settings-menu'?'data-popover':'settings-popover',pop=document.querySelector(`#${id}`),btn=e.target.closest('button');document.querySelector(`#${other}`)?.classList.remove('open');pop?.classList.toggle('open');btn?.setAttribute('aria-expanded',String(pop?.classList.contains('open')));return}const lang=e.target.closest('[data-lang]')?.dataset.lang;if(lang){changeLanguage(lang);return}const theme=e.target.closest('[data-theme]')?.dataset.theme;if(theme&&THEME_PREFERENCES.includes(theme))setTheme(theme)});
+app.addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(action==='settings-menu'||action==='data-menu'){const id=action==='settings-menu'?'settings-popover':'data-popover',other=action==='settings-menu'?'data-popover':'settings-popover',pop=document.querySelector(`#${id}`),btn=e.target.closest('button');document.querySelector(`#${other}`)?.classList.remove('open');pop?.classList.toggle('open');btn?.setAttribute('aria-expanded',String(pop?.classList.contains('open')));return}const lang=e.target.closest('[data-lang]')?.dataset.lang;if(lang){changeLanguage(lang);return}const theme=e.target.closest('button[data-theme]')?.dataset.theme;if(theme&&THEME_PREFERENCES.includes(theme))setTheme(theme)});
 
 palette.addEventListener('input',e=>{if(e.target.id==='palette-search'){paletteQuery=e.target.value;paletteIndex=0;updatePalette()}});
 palette.addEventListener('click',e=>{const item=e.target.closest('[data-palette-id]');if(item){palette.close();location.hash=`#calc/${item.dataset.paletteId}`}if(e.target.closest('[data-action="close-palette"]'))palette.close()});
