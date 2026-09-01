@@ -31,6 +31,12 @@ test('Pro is intentionally absent where a second mode adds no decision value',()
   }
 });
 
+test('TDEE Scenario B includes both expenditure and activity assumptions',()=>{
+  const html=calculatorPage(calculatorMap.get('tdee'),state,null,null,{});
+  assert.match(html,/data-pro-input="resting"/);
+  assert.match(html,/data-pro-input="factor"/);
+});
+
 test('Russian worked examples and print inputs use localized option labels',()=>{
   const calc=calculatorMap.get('fat-gain-surplus');
   const html=calculatorPage(calc,state,null,null,{});

@@ -237,8 +237,8 @@
   .pro-scenario-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .pro-scenario-field{display:grid;gap:7px;color:var(--text-primary);font-size:14px;font-weight:750;line-height:1.4}
   .pro-input-wrap{position:relative;display:block}
-  .pro-input-wrap input{width:100%;min-height:48px;padding:0 48px 0 13px;border:1px solid var(--border-strong-v5);border-radius:8px;background:var(--surface-elevated);color:var(--text-primary);font:16px var(--font-ui)}
-  .pro-input-wrap input:disabled{cursor:not-allowed;opacity:.62}
+  .pro-input-wrap input,.pro-input-wrap select{width:100%;min-height:48px;padding:0 48px 0 13px;border:1px solid var(--border-strong-v5);border-radius:8px;background:var(--surface-elevated);color:var(--text-primary);font:16px var(--font-ui)}
+  .pro-input-wrap input:disabled,.pro-input-wrap select:disabled{cursor:not-allowed;opacity:.62}
   .pro-input-wrap em{position:absolute;top:50%;right:13px;transform:translateY(-50%);color:var(--text-secondary);font-size:13px;font-style:normal;font-weight:650}
   .pro-scenario-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
   .pro-scenario-actions .btn,.pro-scenario>header .text-action{min-height:44px}
